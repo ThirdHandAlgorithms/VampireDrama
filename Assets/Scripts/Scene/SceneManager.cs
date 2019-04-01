@@ -4,10 +4,17 @@ using UnityEngine;
 using VampireDrama;
 
 public class SceneManager : MonoBehaviour {
-
-	public GameObject[] Road;
-	public GameObject[] Building;
-    public GameObject[] Water;
+    public GameObject Player;
+    public GameObject[] RoadCrossing;
+    public GameObject[] RoadV;
+    public GameObject[] RoadH;
+    public GameObject[] BuildingV;
+    public GameObject[] BuildingH;
+    public GameObject[] WaterV;
+    public GameObject[] WaterH;
+    public GameObject[] BridgeV;
+    public GameObject[] BridgeH;
+    public GameObject[] Trash;
 
     private Transform objectHolder;
 
@@ -34,22 +41,52 @@ public class SceneManager : MonoBehaviour {
     {
         var line = currentMap.GetLine(currentLine);
 
+        if (currentLine == 0) InitializePlayerPosition(line);
+
         var x = 0;
-        foreach (var construct in line )
+        foreach (var construct in line)
         {
             GameObject templateGameObject = null;
 
-            if (construct.Id == "Road")
+            if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.Vertical)
             {
-                templateGameObject = Road[0];
+                templateGameObject = RoadV[0];
             }
-            else if (construct.Id == "Building")
+            else if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.Horizontal)
             {
-                templateGameObject = Building[0];
+                templateGameObject = RoadH[0];
             }
-            else if (construct.Id == "Water")
+            else if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.None)
             {
-                templateGameObject = Water[0];
+                templateGameObject = RoadCrossing[0];
+            }
+            else if (construct.Id == "Building" && construct.Dir == ConstructHVDirection.Vertical)
+            {
+                templateGameObject = BuildingV[0];
+            }
+            else if (construct.Id == "Building" && construct.Dir == ConstructHVDirection.Horizontal)
+            {
+                templateGameObject = BuildingH[0];
+            }
+            else if (construct.Id == "Water" && construct.Dir == ConstructHVDirection.Vertical)
+            {
+                templateGameObject = WaterV[0];
+            }
+            else if (construct.Id == "Water" && construct.Dir == ConstructHVDirection.Horizontal)
+            {
+                templateGameObject = WaterH[0];
+            }
+            else if (construct.Id == "Bridge" && construct.Dir == ConstructHVDirection.Vertical)
+            {
+                templateGameObject = BridgeV[0];
+            }
+            else if (construct.Id == "Bridge" && construct.Dir == ConstructHVDirection.Horizontal)
+            {
+                templateGameObject = BridgeH[0];
+            }
+            else if (construct.Id == "Dumpster")
+            {
+                templateGameObject = Trash[0];
             }
 
             if (templateGameObject != null)
@@ -59,6 +96,20 @@ public class SceneManager : MonoBehaviour {
             }
 
             x++;
+        }
+    }
+
+    private void InitializePlayerPosition(ConstructionLine line)
+    {
+        var idx = 5;
+        while (idx < line.Count)
+        {
+            if (line[idx].Passable)
+            {
+                Player.transform.position = new Vector3(idx * tileSize, 0f, 0f);
+                break;
+            }
+            idx++;
         }
     }
 

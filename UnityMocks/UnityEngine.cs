@@ -71,11 +71,24 @@
                 return 0f + System.DateTime.Now.ToFileTimeUtc();
             }
         }
+
+        public static float deltaTime
+        {
+            get
+            {
+                return 0f;
+            }
+        }
     }
 
     public static class Input
     {
         public static float GetAxis(string direction)
+        {
+            return 0f;
+        }
+
+        public static float GetAxisRaw(string direction)
         {
             return 0f;
         }
@@ -91,30 +104,99 @@
         }
     }
 
-    public class GameObject
+    public class GameObject : MonoBehaviour
     {
         public string name { get; set; }
 
-        public Transform transform { get; set; }
-
-        public GameObject()
+        public GameObject() : base()
         {
-            transform = new Transform();
+            this.name = "";
         }
 
-        public GameObject(string name)
+        public GameObject(string name) : base()
         {
             this.name = name;
         }
+    }
+
+    public class Component : GameObject
+    {
+
     }
 
     public class Collider2D
     {
     }
 
+    public class LayerMask
+    {
+    }
+
+    public class BoxCollider2D : Collider2D
+    {
+        public bool enabled
+        {
+            get; set;
+        }
+    }
+
+    public class Physics2D
+    {
+        public static RaycastHit2D Linecast(Vector2 from, Vector2 to, LayerMask mask)
+        {
+            return new RaycastHit2D();
+        }
+    }
+
+    public class Rigidbody2D : Transform
+    {
+        public void MovePosition(Vector3 to)
+        {
+            this.position = to;
+        }
+    }
+
+    public class RaycastHit2D : MonoBehaviour
+    {
+
+    }
+
+    public class Vector2
+    {
+        public float x, y;
+
+        public Vector2(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public Vector2(Vector2 v)
+        {
+            this.x = v.x;
+            this.y = v.y;
+        }
+
+        public static Vector2 operator -(Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x - b.x, a.y - b.y);
+        }
+
+        public static Vector2 operator +(Vector2 a, Vector2 b)
+        {
+            return new Vector2(a.x + b.x, a.y + b.y);
+        }
+
+        public static implicit operator Vector3(Vector2 v)
+        {
+            return new Vector3(v);
+        }
+    }
+
     public class Vector3
     {
-        public float x, y, z;
+        public float x, y;
+        public float z;
 
         public Vector3(float x, float y, float z)
         {
@@ -122,28 +204,88 @@
             this.y = y;
             this.z = z;
         }
+
+        public Vector3(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = 0;
+        }
+
+        public Vector3(Vector2 v)
+        {
+            this.x = v.x;
+            this.y = v.y;
+            this.z = 0;
+        }
+
+        public float sqrMagnitude
+        {
+            get
+            {
+                return (float)Math.Sqrt(x * x * y * y);
+            }
+        }
+
+        public static Vector3 operator -(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        public static Vector3 operator +(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+        }
+
+        public static Vector3 operator *(Vector3 a, float f)
+        {
+            return new Vector3(a.x * f, a.y * f, a.z * f);
+        }
+
+        public static Vector3 MoveTowards(Vector3 from, Vector3 to, float time)
+        {
+            var diff = to - from;
+            return from + diff * time;
+        }
+
+        public static implicit operator Vector2(Vector3 v)
+        {
+            return new Vector2(v.x, v.y);
+        }
     }
 
     public class Transform
     {
         public Vector3 position;
 
-        private Object parent;
+        private Object parent = null;
+        private Object component = null;
 
         public void SetParent(Transform parent)
         {
             this.parent = parent;
         }
+
+        public T GetComponent<T>()
+        {
+            return (T)component;
+        }
     }
 
-    public class SpriteRenderer
+    public class SpriteRenderer: MonoBehaviour
     {
-        public Transform transform;
         public bool flipX, flipY;
     }
 
     public class MonoBehaviour
     {
+        public Transform transform { get; set; }
+
+        public MonoBehaviour()
+        {
+            transform = new Transform();
+        }
+
         public GameObject gameObject { get; set; }
 
         public void DontDestroyOnLoad(GameObject obj)
@@ -152,6 +294,11 @@
         }
 
         public void Destroy(GameObject obj)
+        {
+
+        }
+
+        public void StartCoroutine(System.Collections.IEnumerator ret)
         {
 
         }
