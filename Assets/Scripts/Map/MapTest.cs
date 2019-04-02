@@ -1,7 +1,5 @@
 ﻿namespace VampireDrama
 {
-    using UnityEngine;
-    using System.Collections.Generic;
     using RoyT.AStar;
 
     public class MapTest
@@ -22,7 +20,8 @@
                 {
                     if (!construct.Passable)
                     {
-                        grid.BlockCell(new RoyT.AStar.Position(x, y));
+						var p = new Position(x, y);
+                        grid.BlockCell(p);
                     }
 
                     x++;
@@ -33,18 +32,21 @@
 
         public bool IsTraversable()
         {
+            return (GetPath().Length > 0);
+        }
+
+        public Position[] GetPath()
+        {
             var config = MapConfiguration.getInstance();
 
             var movementPattern = new[] {
                 new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(-1, 0)
             };
 
-            RoyT.AStar.Position[] path = grid.GetPath(
-                new RoyT.AStar.Position(config.Width / 2, config.Height - 1),
-                new RoyT.AStar.Position(config.Width / 2, 0),
+            return grid.GetPath(
+                new Position(config.Width / 2, config.Height - 1),
+                new Position(config.Width / 2, 0),
                 movementPattern);
-
-            return (path.Length > 0);
         }
     }
 }

@@ -10,36 +10,14 @@ namespace VampireConsole
         static void Main(string[] args)
         {
             // 40, 41, 48, 57, 58, 59, 65
-            Random.preseed = 0;
+            Random.InitState(1);
 
-            var config = MapConfiguration.getInstance();
-            
-            Map map = new Map();
-            map.GenerateMapWithChunks();
+            SceneManager sceneManager = new SceneManager();
+            sceneManager.InitScene(3);
 
-            MapTest test = new MapTest(map);
-            //if (!test.IsTraversable())
-            //{
-            //    Console.WriteLine("Not traversable");
-            //}
-            while (!test.IsTraversable())
-            {
-                Random.preseed++;
-                Random._randdev = null;
+            var layout = sceneManager.currentMap.GetFullmap();
 
-                map.GenerateMapWithChunks();
-                test = new MapTest(map);
-            }
-
-            Console.WriteLine("Seed used: " + Random.preseed.ToString());
-
-            var layout = map.GetFullmap();
-
-            map.StartNewDynamicMap();
-            var line = map.GetLine(0);
-            line = map.GetLine(1);
-
-            //foreach (var line in layout)
+            foreach (var line in layout)
             {
                 foreach (var construct in line)
                 {

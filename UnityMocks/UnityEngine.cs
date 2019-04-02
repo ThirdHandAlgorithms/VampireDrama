@@ -16,8 +16,8 @@
 
     public class Random
     {
-        public static System.Random _randdev;
-        public static int? preseed;
+        private static System.Random _randdev;
+        private static int? preseed;
 
         private static System.Random getRandDev()
         {
@@ -36,11 +36,25 @@
             return _randdev;
         }
 
+        public static void InitState(int seed)
+        {
+            _randdev = null;
+            preseed = seed;
+        }
+
         public static float value
         {
             get {
                 return getRandDev().Next(0, 100) / 100.0f;
             }
+        }
+    }
+
+    public class Debug
+    {
+        public static void Log(string message)
+        {
+
         }
     }
 
@@ -122,6 +136,11 @@
     public class Component : GameObject
     {
 
+    }
+
+    public class Camera : GameObject
+    {
+        public static Camera[] allCameras;
     }
 
     public class Collider2D
@@ -305,7 +324,7 @@
 
         public Object Instantiate(GameObject obj, Vector3 position, Quaternion q)
         {
-            return null;
+            return new GameObject();
         }
 
         public T GetComponent<T>()
