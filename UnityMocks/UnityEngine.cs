@@ -1,6 +1,7 @@
 ﻿namespace UnityEngine
 {
     using System;
+    using System.Collections.Generic;
 
     public class Quaternion {
         public static Quaternion identity
@@ -113,6 +114,11 @@
         }
 
         public static bool GetButtonUp(string buttonname)
+        {
+            return false;
+        }
+
+        public static bool GetButton(string buttonname)
         {
             return false;
         }
@@ -273,7 +279,7 @@
         }
     }
 
-    public class Transform
+    public class Transform: List<Transform>
     {
         public Vector3 position;
 
@@ -330,6 +336,14 @@
         public T GetComponent<T>()
         {
             return (T)(new Object());
+        }
+    }
+
+    public class Animator
+    {
+        public void Play(string state)
+        {
+
         }
     }
 }

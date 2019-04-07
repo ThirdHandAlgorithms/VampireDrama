@@ -50,7 +50,6 @@ public class SceneManager : MonoBehaviour {
             //Random.InitState(seed);
             currentMap.GenerateMapWithChunks();
             mapTest = new MapTest(currentMap);
-
         }
 
         fullMap = currentMap.GetFullmap();
@@ -63,43 +62,43 @@ public class SceneManager : MonoBehaviour {
 
     private GameObject GetTemplateGameObjectForConstruct(Construct construct)
     {
-        if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.Vertical)
+        if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.Vertical)
         {
             return RoadV[0];
         }
-        else if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.Horizontal)
+        else if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.Horizontal)
         {
             return RoadH[0];
         }
-        else if (construct.Id == "Road" && construct.Dir == ConstructHVDirection.None)
+        else if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.None)
         {
             return RoadCrossing[0];
         }
-        else if (construct.Id == "Building" && construct.Dir == ConstructHVDirection.Vertical)
+        else if (construct.Id == ConstructionType.Building && construct.Dir == ConstructHVDirection.Vertical)
         {
             return BuildingV[0];
         }
-        else if (construct.Id == "Building" && construct.Dir == ConstructHVDirection.Horizontal)
+        else if (construct.Id == ConstructionType.Building && construct.Dir == ConstructHVDirection.Horizontal)
         {
             return BuildingH[0];
         }
-        else if (construct.Id == "Water" && construct.Dir == ConstructHVDirection.Vertical)
+        else if (construct.Id == ConstructionType.Water && construct.Dir == ConstructHVDirection.Vertical)
         {
             return WaterV[0];
         }
-        else if (construct.Id == "Water" && construct.Dir == ConstructHVDirection.Horizontal)
+        else if (construct.Id == ConstructionType.Water && construct.Dir == ConstructHVDirection.Horizontal)
         {
             return WaterH[0];
         }
-        else if (construct.Id == "Bridge" && construct.Dir == ConstructHVDirection.Vertical)
+        else if (construct.Id == ConstructionType.Bridge && construct.Dir == ConstructHVDirection.Vertical)
         {
             return BridgeV[0];
         }
-        else if (construct.Id == "Bridge" && construct.Dir == ConstructHVDirection.Horizontal)
+        else if (construct.Id == ConstructionType.Bridge && construct.Dir == ConstructHVDirection.Horizontal)
         {
             return BridgeH[0];
         }
-        else if (construct.Id == "Dumpster")
+        else if (construct.Id == ConstructionType.Dumpster)
         {
             return Trash[0];
         }
@@ -168,6 +167,14 @@ public class SceneManager : MonoBehaviour {
         }
     }
 
+    public void changeLuminosity()
+    {
+        foreach (var obj in objectHolder)
+        {
+            //
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
 		
@@ -180,7 +187,7 @@ public class SceneManager : MonoBehaviour {
         {
             currentLine = (int)(Player.transform.position.y);
 
-            cameras[0].transform.position = new Vector3(4, Player.transform.position.y, -1f);
+            cameras[0].transform.position = new Vector3(4, Player.transform.position.y, -15f);
         }
     }
 }

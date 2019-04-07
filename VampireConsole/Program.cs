@@ -21,11 +21,11 @@ namespace VampireConsole
             {
                 foreach (var construct in line)
                 {
-                    if (construct.Id == "Dumpster")
+                    if (construct.Id == ConstructionType.Dumpster)
                     {
                         Console.Write('X');
                     }
-                    else if (construct.Id == "Building")
+                    else if (construct.Id == ConstructionType.Building)
                     {
                         if (construct.Dir == ConstructHVDirection.Horizontal)
                         {
@@ -40,11 +40,11 @@ namespace VampireConsole
                             Console.Write('?');
                         }
                     }
-                    else if (construct.Id == "Road")
+                    else if (construct.Id == ConstructionType.Road)
                     {
                         Console.Write(' ');
                     }
-                    else if (construct.Id == "Water")
+                    else if (construct.Id == ConstructionType.Water)
                     {
                         if (construct.Dir == ConstructHVDirection.Horizontal)
                         {
@@ -59,7 +59,7 @@ namespace VampireConsole
                             Console.Write('?');
                         }
                     }
-                    else if (construct.Id == "Bridge")
+                    else if (construct.Id == ConstructionType.Bridge)
                     {
                         Console.Write('#');
                     }

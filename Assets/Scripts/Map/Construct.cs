@@ -9,12 +9,26 @@
         Vertical = 2
     }
 
+    public enum ConstructionType
+    {
+        Road = 0,
+        Building = 1,
+        Water = 2,
+        Bridge = 3,
+        Dumpster = 4,
+        Tavern = 5,
+        Mausoleum = 6,
+        Church = 7,
+        Mansion = 8,
+        Nightclub = 9
+    }
+
     public class Construct
     {
         public bool Passable;
         public bool Standalone;
 
-        public string Id;
+        public ConstructionType Id;
         public string Texture;
 
         public ConstructHVDirection Dir;
@@ -42,7 +56,7 @@
     {
         public Road() : base(true, false, ConstructHVDirection.None)
         {
-            Id = "Road";
+            Id = ConstructionType.Road;
         }
     }
 
@@ -50,7 +64,7 @@
     {
         public Building() : base(false, false, ConstructHVDirection.None)
         {
-            Id = "Building";
+            Id = ConstructionType.Building;
         }
     }
 
@@ -58,7 +72,7 @@
     {
         public Dumpster() : base(false, true, ConstructHVDirection.None)
         {
-            Id = "Dumpster";
+            Id = ConstructionType.Dumpster;
         }
     }
 
@@ -66,7 +80,7 @@
     {
         public Water() : base(false, false, ConstructHVDirection.None)
         {
-            Id = "Water";
+            Id = ConstructionType.Water;
         }
     }
 
@@ -74,7 +88,7 @@
     {
         public Bridge() : base(true, true, ConstructHVDirection.None)
         {
-            Id = "Bridge";
+            Id = ConstructionType.Bridge;
         }
     }
 }
