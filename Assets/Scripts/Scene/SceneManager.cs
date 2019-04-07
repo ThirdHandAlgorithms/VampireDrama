@@ -20,6 +20,9 @@ public class SceneManager : MonoBehaviour {
     public GameObject BorderS;
     public GameObject BorderW;
 
+    public GameObject[] BloodPrefabs;
+    private List<GameObject> cattle;
+
     private Transform objectHolder;
 
     private float tileSize = 1.0f;
@@ -31,6 +34,7 @@ public class SceneManager : MonoBehaviour {
 	public void InitScene(int level)
 	{
 		objectHolder = new GameObject("Scene").transform;
+        cattle = new List<GameObject>();
 
         var config = MapConfiguration.getInstance();
         config.Height = level * 12;
@@ -58,6 +62,42 @@ public class SceneManager : MonoBehaviour {
         {
             RenderLine(lineIdx);
         }
+
+        for (var idx = 0; idx < (lineCount / 6); idx++)
+        {
+            AddBlood();
+        }
+    }
+
+    private GameObject GetNextBloodTemplate()
+    {
+        var nextPick = (int)(Random.value * BloodPrefabs.Length);
+        return BloodPrefabs[nextPick];
+    }
+
+    private bool IsAreaOkForHuman(int x, int y)
+    {
+        var construct = fullMap[y][x];
+        return construct.Passable && (construct.Id == ConstructionType.Road);
+    }
+
+    private Vector3 GetRandomV3()
+    {
+        var config = MapConfiguration.getInstance();
+        return new Vector3((int)(Random.value * config.Width), (int)(Random.value * config.Height), 0);
+    }
+
+    private void AddBlood()
+    {
+        Vector3 position;
+        position = GetRandomV3();
+        while (!IsAreaOkForHuman((int)(position.x), (int)(position.y)))
+        {
+            position = GetRandomV3();
+        }
+
+        var victim = Instantiate(GetNextBloodTemplate(), position, Quaternion.identity) as GameObject;
+        cattle.Add(victim);
     }
 
     private GameObject GetTemplateGameObjectForConstruct(Construct construct)

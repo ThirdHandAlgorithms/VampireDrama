@@ -2,6 +2,18 @@
 {
     using UnityEngine;
 
+    public struct Direction
+    {
+        public int x;
+        public int y;
+
+        public Direction(int x = 0, int y = 0)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public abstract class MovingObject : MonoBehaviour
     {
         public float moveTime = 0.1f;
@@ -12,6 +24,7 @@
         private float inverseMoveTime;
         private float sqrRemainingDistance;
         private Vector3 moveTo;
+        protected Direction lastDirection;
 
         protected bool isMoving;
 
@@ -33,6 +46,9 @@
             hit = Physics2D.Linecast(start, end, blockingLayer);
 
             boxCollider.enabled = true;
+
+            lastDirection.x = xDir;
+            lastDirection.y = yDir;
 
             if (hit.transform == null)
             {

@@ -310,6 +310,8 @@ MonoBehaviour:
   BorderE: {fileID: 1571359256507172, guid: 9f648433416b96a45b88c11715482487, type: 2}
   BorderS: {fileID: 1645210059342856, guid: 2663b09fba91cfc418972c872eca6259, type: 2}
   BorderW: {fileID: 1726959687404250, guid: dc3bd8359050b8f42b07b84b55d7e020, type: 2}
+  BloodPrefabs:
+  - {fileID: 1509958509956854, guid: 9819379c103ad8e459e59f8a78cc2dd9, type: 2}
 --- !u!114 &931804145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +387,11 @@ Prefab:
       propertyPath: RoadCrossing.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: BloodPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4174166643829694, guid: f3bbbc2a9aa494c40ba34e989909e805, type: 2}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -457,6 +464,18 @@ Prefab:
       propertyPath: level
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: BloodPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1509958509956854, guid: 9819379c103ad8e459e59f8a78cc2dd9,
+        type: 2}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: BloodPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1509958509956854, guid: 9819379c103ad8e459e59f8a78cc2dd9,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f3bbbc2a9aa494c40ba34e989909e805, type: 2}
   m_IsPrefabParent: 0
