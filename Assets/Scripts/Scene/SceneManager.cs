@@ -63,7 +63,8 @@ public class SceneManager : MonoBehaviour {
             RenderLine(lineIdx);
         }
 
-        for (var idx = 0; idx < (lineCount / 6); idx++)
+        var amountOfCattle = (lineCount / 6) + ((level - 1) * 2);
+        for (var idx = 0; idx < amountOfCattle; idx++)
         {
             AddBlood();
         }
@@ -75,10 +76,30 @@ public class SceneManager : MonoBehaviour {
         return BloodPrefabs[nextPick];
     }
 
+    private bool IsOccupiedByOtherFood(int x, int y)
+    {
+        foreach (var food in cattle)
+        {
+            if ((food.transform.position.x == x) && (food.transform.position.y == y))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private bool IsAreaOkForHuman(int x, int y)
     {
+        if ((Player.transform.position.x == x) && (Player.transform.position.y == y))
+        {
+            return false;
+        }
+
         var construct = fullMap[y][x];
-        return construct.Passable && (construct.Id == ConstructionType.Road);
+        bool passable = construct.Passable && (construct.Id == ConstructionType.Road);
+
+        return passable && !IsOccupiedByOtherFood(x, y);
     }
 
     private Vector3 GetRandomV3()
