@@ -42,7 +42,7 @@
             hor = (int)(System.Math.Round(Random.value * 2f - 1f));
             ver = (int)(System.Math.Round(Random.value * 2f - 1f));
 
-            while (!((hor != ver) && (hor == 0) || (ver == 0)))
+            while (!((hor != ver) && ((hor == 0) || (ver == 0))))
             {
                 hor = (int)(System.Math.Round(Random.value * 2f - 1f));
                 ver = (int)(System.Math.Round(Random.value * 2f - 1f));
@@ -63,6 +63,11 @@
 
             hitSomething = !Move(hv.x, hv.y, out hit);
             lastMovement = timeNow;
+        }
+
+        public void OnTriggerEnter2D(Collider2D item)
+        {
+            Debug.Log(this.name + " triggered by " + item.gameObject.name);
         }
     }
 }
