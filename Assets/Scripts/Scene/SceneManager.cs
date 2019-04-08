@@ -19,32 +19,53 @@ public class SceneManager : MonoBehaviour {
     public GameObject BorderE;
     public GameObject BorderS;
     public GameObject BorderW;
+    public GameObject Exit;
 
     public GameObject[] BloodPrefabs;
     private List<GameObject> cattle;
 
-    private Transform objectHolder;
+    private List<GameObject> allObjects;
+    private GameObject exitInstance;
 
     private float tileSize = 1.0f;
     public Map currentMap;
     private ConstructionChunk fullMap;
     private int currentLine;
     private int lineCount;
+    private int startAndExit;
+    private string startOfRandomState;
 
-	public void InitScene(int level)
+    private void ClearScene()
+    {
+        foreach (var obj in cattle)
+        {
+            Destroy(obj);
+        }
+        cattle.Clear();
+
+        foreach (var obj in allObjects)
+        {
+            Destroy(obj);
+        }
+        allObjects.Clear();
+    }
+
+    public void InitScene(int level)
 	{
-		objectHolder = new GameObject("Scene").transform;
+        allObjects = new List<GameObject>();
         cattle = new List<GameObject>();
 
         var config = MapConfiguration.getInstance();
         config.Height = level * 12;
         lineCount = config.Height;
         currentLine = 0;
+        startAndExit = 6;
 
         currentMap = new Map();
 
-		//int seed = 1;
+        //int seed = 1;
         //Random.InitState(seed);
+        startOfRandomState = JsonUtility.ToJson(Random.state);
 
         currentMap.GenerateMapWithChunks();
         MapTest mapTest = new MapTest(currentMap);
@@ -52,9 +73,12 @@ public class SceneManager : MonoBehaviour {
         {
             //seed++;
             //Random.InitState(seed);
+            startOfRandomState = JsonUtility.ToJson(Random.state);
             currentMap.GenerateMapWithChunks();
             mapTest = new MapTest(currentMap);
         }
+
+        Debug.Log(startOfRandomState);
 
         fullMap = currentMap.GetFullmap();
 
@@ -68,6 +92,14 @@ public class SceneManager : MonoBehaviour {
         {
             AddBlood();
         }
+    }
+
+    public void Stop()
+    {
+        var playerScript = Player.GetComponent<MovingObject>();
+        playerScript.StopMoving();
+
+        ClearScene();
     }
 
     private GameObject GetNextBloodTemplate()
@@ -171,17 +203,34 @@ public class SceneManager : MonoBehaviour {
     {
         GameObject borderObj;
         borderObj = Instantiate(BorderE, new Vector3(line.Count * tileSize, lineIdx * tileSize, 0f), Quaternion.identity) as GameObject;
-        borderObj.transform.SetParent(objectHolder);
+        allObjects.Add(borderObj);
 
         borderObj = Instantiate(BorderW, new Vector3(-1 * tileSize, lineIdx * tileSize, 0f), Quaternion.identity) as GameObject;
-        borderObj.transform.SetParent(objectHolder);
+        allObjects.Add(borderObj);
 
         if (lineIdx == 0)
         {
             for (var x = 0; x < line.Count; x++)
             {
                 borderObj = Instantiate(BorderS, new Vector3(x * tileSize, -1 * tileSize, 0f), Quaternion.identity) as GameObject;
-                borderObj.transform.SetParent(objectHolder);
+                allObjects.Add(borderObj);
+            }
+        }
+
+        if (lineIdx == lineCount - 1)
+        {
+            for (var x = 0; x < line.Count; x++)
+            {
+                if (x != startAndExit)
+                {
+                    borderObj = Instantiate(BorderN, new Vector3(x * tileSize, lineCount * tileSize, 0f), Quaternion.identity) as GameObject;
+                    allObjects.Add(borderObj);
+                }
+                else
+                {
+                    exitInstance = Instantiate(Exit, new Vector3(x * tileSize, lineCount * tileSize, 0f), Quaternion.identity) as GameObject;
+                    allObjects.Add(exitInstance);
+                }
             }
         }
     }
@@ -205,7 +254,7 @@ public class SceneManager : MonoBehaviour {
             if (templateGameObject != null)
             {
                 var tileObj = Instantiate(templateGameObject, new Vector3(x * tileSize, lineIdx * tileSize, 0f), Quaternion.identity) as GameObject;
-                tileObj.transform.SetParent(objectHolder);
+                allObjects.Add(tileObj);
             }
 
             x++;
@@ -216,21 +265,12 @@ public class SceneManager : MonoBehaviour {
     {
         if (Player == null) return;
 
-        var idx = 5;
-        while (idx < line.Count)
-        {
-            if (line[idx].Passable)
-            {
-                Player.transform.position = new Vector3(idx * tileSize, 0f, 0f);
-                break;
-            }
-            idx++;
-        }
+        Player.transform.position = new Vector3(startAndExit * tileSize, 0f, 0f);
     }
 
     public void changeLuminosity()
     {
-        foreach (var obj in objectHolder)
+        foreach (var obj in allObjects)
         {
             //
         }

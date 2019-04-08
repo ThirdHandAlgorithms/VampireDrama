@@ -88,5 +88,20 @@
             moveTo = end;
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
         }
+
+        public void StopMoving()
+        {
+            if (isMoving)
+            {
+                Debug.Log("stopping");
+                sqrRemainingDistance = 0;
+                transform.position = moveTo;
+                isMoving = false;
+            }
+            else
+            {
+                Debug.Log("not stopping");
+            }
+        }
     }
 }

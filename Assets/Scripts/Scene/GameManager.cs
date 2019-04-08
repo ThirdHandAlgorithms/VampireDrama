@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-
+public class GameManager : MonoBehaviour
+{
 	public static GameManager instance;
 	private SceneManager sceneScript;
 
@@ -27,4 +25,15 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void LevelComplete()
+    {
+        Debug.Log("Level completed!");
+
+        // todo: show score screen and save
+        sceneScript.Stop();
+
+        level++;
+        sceneScript.InitScene(level);
+    }
 }

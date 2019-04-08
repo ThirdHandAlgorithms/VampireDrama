@@ -19,6 +19,9 @@
     {
         private static System.Random _randdev;
         private static int? preseed;
+        private static int called;
+
+        public static SerializableAttribute state;
 
         private static System.Random getRandDev()
         {
@@ -27,10 +30,12 @@
                 if (preseed.HasValue)
                 {
                     _randdev = new System.Random(preseed.Value);
+                    called = 0;
                 }
                 else
                 {
                     _randdev = new System.Random();
+                    called = 0;
                 }
             }
 
@@ -46,6 +51,7 @@
         public static float value
         {
             get {
+                called++;
                 return getRandDev().Next(0, 100) / 100.0f;
             }
         }
@@ -56,6 +62,14 @@
         public static void Log(string message)
         {
 
+        }
+    }
+
+    public class JsonUtility
+    {
+        public static string ToJson(SerializableAttribute value)
+        {
+            return "";
         }
     }
 
@@ -126,14 +140,11 @@
 
     public class GameObject : MonoBehaviour
     {
-        public string name { get; set; }
-
         public GameObject() : base()
         {
-            this.name = "";
         }
 
-        public GameObject(string name) : base()
+        public GameObject(string name) : base(name)
         {
             this.name = name;
         }
@@ -149,7 +160,12 @@
         public static Camera[] allCameras;
     }
 
-    public class Collider2D
+    public class Collider
+    {
+        public GameObject gameObject { get; set; }
+    }
+
+    public class Collider2D: Collider
     {
     }
 
@@ -286,6 +302,11 @@
         private Object parent = null;
         private Object component = null;
 
+        public Transform() : base()
+        {
+            position = new Vector3(0, 0, 0);
+        }
+
         public void SetParent(Transform parent)
         {
             this.parent = parent;
@@ -305,10 +326,18 @@
     public class MonoBehaviour
     {
         public Transform transform { get; set; }
+        public string name { get; set; }
 
-        public MonoBehaviour()
+        public MonoBehaviour() : base()
         {
             transform = new Transform();
+            this.name = "";
+        }
+
+        public MonoBehaviour(string name) : base()
+        {
+            transform = new Transform();
+            this.name = name;
         }
 
         public GameObject gameObject { get; set; }

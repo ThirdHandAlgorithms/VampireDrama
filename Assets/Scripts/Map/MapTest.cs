@@ -39,13 +39,21 @@
         {
             var config = MapConfiguration.getInstance();
 
+            var start = new Position((int)(config.Width / 2), config.Height - 1);
+            var end = new Position((int)(config.Width / 2), 0);
+
+            if ((grid.GetCellCost(start) == float.PositiveInfinity) || (grid.GetCellCost(end) == float.PositiveInfinity))
+            {
+                return new Position[0];
+            }
+
             var movementPattern = new[] {
                 new Offset(-1, 0), new Offset(0, -1), new Offset(1, 0), new Offset(-1, 0)
             };
 
             return grid.GetPath(
-                new Position(config.Width / 2, config.Height - 1),
-                new Position(config.Width / 2, 0),
+                start,
+                end,
                 movementPattern);
         }
     }
