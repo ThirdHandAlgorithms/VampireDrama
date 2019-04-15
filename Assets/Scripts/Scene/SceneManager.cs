@@ -291,4 +291,10 @@ public class SceneManager : MonoBehaviour {
             cameras[0].transform.position = new Vector3(4, Player.transform.position.y, -15f);
         }
     }
+
+    public void Kill(Human target, GameObject obj)
+    {
+        cattle.Remove(obj);
+        Destroy(obj);
+    }
 }

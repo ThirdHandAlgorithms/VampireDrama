@@ -4,6 +4,7 @@
 
     public class Human : MovingAnimation
     {
+        public int LitresOfBlood;
         public int Suspicion;
         public int Intoxication;
         public int Darkness;
@@ -18,6 +19,7 @@
             Suspicion = (int)(Random.value * 5);
             Intoxication = (int)(Random.value * 100);
             Darkness = (int)(Random.value * 25);
+            LitresOfBlood = 5;
 
             lastMovement = Time.time;
 
