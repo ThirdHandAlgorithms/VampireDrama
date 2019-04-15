@@ -197,9 +197,10 @@
         }
     }
 
-    public class RaycastHit2D : MonoBehaviour
+    public struct RaycastHit2D
     {
-
+        public MonoBehaviour collider { get; set; }
+        public Transform transform { get; set; }
     }
 
     public class Vector2
@@ -299,7 +300,8 @@
     {
         public Vector3 position;
 
-        private Object parent = null;
+        public GameObject gameObject { get; set; }
+        public Object parent = null;
         private Object component = null;
 
         public Transform() : base()

@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
 		InitGame();
 	}
 
+    public SceneManager GetCurrentLevel()
+    {
+        return sceneScript;
+    }
+
 	private void InitGame()
 	{
 		sceneScript.InitScene(level);

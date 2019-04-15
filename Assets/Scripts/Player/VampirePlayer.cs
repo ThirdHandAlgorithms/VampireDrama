@@ -8,7 +8,7 @@
         private float lastInput;
 
         public int Experience;
-        public int Hunger;
+        public int Bloodfill;
 
         private SpriteRenderer playerRenderer;
 
@@ -36,7 +36,7 @@
             int hor = (int)Input.GetAxisRaw("Horizontal");
             int ver = (int)Input.GetAxisRaw("Vertical");
 
-            RaycastHit2D hit;
+            RaycastHit2D hit = new RaycastHit2D();
             bool hitSomething = false;
 
             if ((ver == 0) && (hor != 0))
@@ -52,8 +52,32 @@
 
             if (hitSomething)
             {
-                // now what?
+                Transform objectHit = hit.transform;
+                GameObject gameObjHit = objectHit.gameObject;
+
+                Human sheep = gameObjHit.GetComponent<Human>();
+                if (sheep != null)
+                {
+                    if (Fight(sheep, gameObjHit))
+                    {
+                        RaycastHit2D hit2;
+                        Move(hor, ver, out hit2);
+                    }
+                }
             }
+        }
+
+        public bool Fight(Human target, GameObject obj)
+        {
+            Bloodfill += target.LitresOfBlood;
+
+            var level = GameManager.instance.GetCurrentLevel();
+
+            // todo: start some kind of combat sequence
+            level.Kill(target, obj);
+            Experience++;
+
+            return true;
         }
 
         public void OnTriggerEnter2D(Collider2D item)
