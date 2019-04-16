@@ -36,22 +36,27 @@
             isMoving = false;
         }
 
-        protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
+        protected bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
         {
-            Vector2 start = transform.position;
-            Vector2 end = start + new Vector2(xDir, yDir);
-
             boxCollider.enabled = false;
 
             hit = Physics2D.Linecast(start, end, blockingLayer);
 
             boxCollider.enabled = true;
 
-            lastDirection.x = xDir;
-            lastDirection.y = yDir;
+            return (hit.transform != null);
+        }
 
-            if (hit.transform == null)
+        protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
+        {
+            Vector2 start = transform.position;
+            Vector2 end = start + new Vector2(xDir, yDir);
+
+            if (!IsSomethingThere(start, end, out hit))
             {
+                lastDirection.x = xDir;
+                lastDirection.y = yDir;
+
                 //transform.position = end; // to move directly
                 StartSmoothMovement(end);
                 return true;

@@ -297,4 +297,13 @@ public class SceneManager : MonoBehaviour {
         cattle.Remove(obj);
         Destroy(obj);
     }
+
+    public void VampireAlert(Vector2 at)
+    {
+        // todo: overlay alert
+
+        // todo: alert others in a certain radius
+
+        // todo: if there are multiple people, form a pitchfork party
+    }
 }
