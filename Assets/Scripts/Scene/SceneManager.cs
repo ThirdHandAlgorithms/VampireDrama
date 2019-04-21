@@ -23,6 +23,7 @@ public class SceneManager : MonoBehaviour {
     public GameObject Exit;
     public GameObject StreetLight;
     public GameObject[] TavernH;
+    public GameObject[] MausoleumH;
     public Text XPText;
     public Text BloodfillText;
 
@@ -203,6 +204,10 @@ public class SceneManager : MonoBehaviour {
         else if (construct.Id == ConstructionType.Tavern)
         {
             return TavernH[0];
+        }
+        else if (construct.Id == ConstructionType.Mausoleum)
+        {
+            return MausoleumH[0];
         }
 
         return null;

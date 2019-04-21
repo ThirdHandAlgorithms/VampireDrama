@@ -544,6 +544,8 @@ MonoBehaviour:
     type: 3}
   TavernH:
   - {fileID: 1532090562282508, guid: e5379d59903454242981039fb1c52f48, type: 3}
+  MausoleumH:
+  - {fileID: 1532090562282508, guid: 41d9055df09f1d44d8c34f8f20350513, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   BloodPrefabs:
@@ -734,6 +736,11 @@ PrefabInstance:
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
       propertyPath: TavernH.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: MausoleumH.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,

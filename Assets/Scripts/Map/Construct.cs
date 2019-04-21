@@ -81,6 +81,15 @@
         }
     }
 
+    public class Mausoleum : Construct
+    {
+        public Mausoleum() : base(false, false, ConstructHVDirection.None)
+        {
+            Id = ConstructionType.Mausoleum;
+            HasLightSource = false;
+        }
+    }
+
     public class Dumpster : Construct
     {
         public Dumpster() : base(false, true, ConstructHVDirection.None)
