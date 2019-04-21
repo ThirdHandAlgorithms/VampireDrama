@@ -17,6 +17,7 @@
             AllTemplates.Add(getFromTextPreset(preset5()));
             AllTemplates.Add(getFromTextPreset(preset6()));
             AllTemplates.Add(getFromTextPreset(preset7()));
+            AllTemplates.Add(getFromTextPreset(preset8()));
         }
 
         public ConstructionChunk getRandomChunkTemplate()
@@ -65,6 +66,11 @@
                     {
                         current = new Bridge();
                         current.Dir = ConstructHVDirection.Vertical;
+                    }
+                    else if (ch == 'T')
+                    {
+                        current = new Tavern();
+                        current.Dir = ConstructHVDirection.Horizontal;
                     }
                     else if (ch == ' ')
                     {
@@ -166,6 +172,19 @@
             preset[3] = ",,,#,,";
             preset[2] = "  | | ";
             preset[1] = "X== ==";
+            preset[0] = "      ";
+
+            return preset;
+        }
+
+        private string[] preset8()
+        {
+            var preset = new string[6];
+            preset[5] = "      ";
+            preset[4] = "      ";
+            preset[3] = "   T  ";
+            preset[2] = "      ";
+            preset[1] = "      ";
             preset[0] = "      ";
 
             return preset;

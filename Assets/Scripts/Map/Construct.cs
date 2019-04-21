@@ -72,6 +72,15 @@
         }
     }
 
+    public class Tavern : Construct
+    {
+        public Tavern() : base(false, false, ConstructHVDirection.None)
+        {
+            Id = ConstructionType.Tavern;
+            HasLightSource = true;
+        }
+    }
+
     public class Dumpster : Construct
     {
         public Dumpster() : base(false, true, ConstructHVDirection.None)
