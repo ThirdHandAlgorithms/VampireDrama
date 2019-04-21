@@ -21,6 +21,7 @@ public class SceneManager : MonoBehaviour {
     public GameObject BorderS;
     public GameObject BorderW;
     public GameObject Exit;
+    public GameObject StreetLight;
     public Text XPText;
     public Text BloodfillText;
 
@@ -258,6 +259,12 @@ public class SceneManager : MonoBehaviour {
             {
                 var tileObj = Instantiate(templateGameObject, new Vector3(x * tileSize, lineIdx * tileSize, 0f), Quaternion.identity) as GameObject;
                 allObjects.Add(tileObj);
+
+                if (construct.HasLightSource)
+                {
+                    var lightObj = Instantiate(StreetLight, new Vector3(x * tileSize, lineIdx * tileSize, -.5f), Quaternion.identity) as GameObject;
+                    allObjects.Add(lightObj);
+                }
             }
 
             x++;
