@@ -22,6 +22,7 @@ public class SceneManager : MonoBehaviour {
     public GameObject BorderW;
     public GameObject Exit;
     public GameObject StreetLight;
+    public GameObject[] TavernH;
     public Text XPText;
     public Text BloodfillText;
 
@@ -198,6 +199,10 @@ public class SceneManager : MonoBehaviour {
         else if (construct.Id == ConstructionType.Dumpster)
         {
             return Trash[0];
+        }
+        else if (construct.Id == ConstructionType.Tavern)
+        {
+            return TavernH[0];
         }
 
         return null;

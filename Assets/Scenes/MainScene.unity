@@ -542,6 +542,8 @@ MonoBehaviour:
   Exit: {fileID: 8824093162090114942, guid: 135a3eb3e2b521f43b651511e5212111, type: 3}
   StreetLight: {fileID: 6992418941637399855, guid: 9f9e86d15812ec24e80da82429a98862,
     type: 3}
+  TavernH:
+  - {fileID: 1532090562282508, guid: e5379d59903454242981039fb1c52f48, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   BloodPrefabs:
@@ -728,6 +730,11 @@ PrefabInstance:
         type: 2}
       propertyPath: BloodPrefabs.Array.size
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: TavernH.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
