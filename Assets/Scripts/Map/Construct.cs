@@ -90,6 +90,15 @@
         }
     }
 
+    public class Church : Construct
+    {
+        public Church() : base(false, false, ConstructHVDirection.None)
+        {
+            Id = ConstructionType.Church;
+            HasLightSource = true;
+        }
+    }
+
     public class Dumpster : Construct
     {
         public Dumpster() : base(false, true, ConstructHVDirection.None)

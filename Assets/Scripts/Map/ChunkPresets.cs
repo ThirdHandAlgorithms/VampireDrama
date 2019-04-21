@@ -77,6 +77,11 @@
                         current = new Mausoleum();
                         current.Dir = ConstructHVDirection.Horizontal;
                     }
+                    else if (ch == 'C')
+                    {
+                        current = new Church();
+                        current.Dir = ConstructHVDirection.Horizontal;
+                    }
                     else if (ch == ' ')
                     {
                         current = new Road();
@@ -185,7 +190,7 @@
         private string[] preset8()
         {
             var preset = new string[6];
-            preset[5] = "      ";
+            preset[5] = "    C ";
             preset[4] = "      ";
             preset[3] = "   T  ";
             preset[2] = "      ";
