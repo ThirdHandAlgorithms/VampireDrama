@@ -27,7 +27,6 @@
     {
         public bool Passable;
         public bool Standalone;
-        public bool HasLightSource;
 
         public ConstructionType Id;
         public string Texture;
@@ -39,14 +38,12 @@
             Passable = passable;
             Standalone = standalone;
             Dir = direction;
-            HasLightSource = false;
         }
 
         public Construct Clone()
         {
             var clone = new Construct(Passable, Standalone, Dir);
             clone.Id = Id;
-            clone.HasLightSource = HasLightSource;
 
             return clone;
         }
@@ -68,7 +65,6 @@
         public Building() : base(false, false, ConstructHVDirection.None)
         {
             Id = ConstructionType.Building;
-            HasLightSource = true;
         }
     }
 
@@ -93,7 +89,6 @@
         public Bridge() : base(true, true, ConstructHVDirection.None)
         {
             Id = ConstructionType.Bridge;
-            HasLightSource = true;
         }
     }
 }

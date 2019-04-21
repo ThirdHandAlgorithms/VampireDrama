@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a3134f883ce48574dbe330aaa70699ad, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,11 +165,8 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  LitresOfBlood: 0
   Suspicion: 0
   Intoxication: 0
   Darkness: 0
-  OutOfSightOutOfMind: 0
   lastMovement: 0
-  lastIdleMusingTime: 0
   hitSomething: 0

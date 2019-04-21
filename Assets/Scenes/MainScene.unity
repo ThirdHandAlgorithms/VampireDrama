@@ -540,8 +540,6 @@ MonoBehaviour:
   BorderS: {fileID: 1645210059342856, guid: 2663b09fba91cfc418972c872eca6259, type: 3}
   BorderW: {fileID: 1726959687404250, guid: dc3bd8359050b8f42b07b84b55d7e020, type: 3}
   Exit: {fileID: 8824093162090114942, guid: 135a3eb3e2b521f43b651511e5212111, type: 3}
-  StreetLight: {fileID: 6992418941637399855, guid: 9f9e86d15812ec24e80da82429a98862,
-    type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   BloodPrefabs:
