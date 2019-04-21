@@ -72,6 +72,11 @@
                         current = new Tavern();
                         current.Dir = ConstructHVDirection.Horizontal;
                     }
+                    else if (ch == 'M')
+                    {
+                        current = new Mausoleum();
+                        current.Dir = ConstructHVDirection.Horizontal;
+                    }
                     else if (ch == ' ')
                     {
                         current = new Road();
@@ -184,7 +189,7 @@
             preset[4] = "      ";
             preset[3] = "   T  ";
             preset[2] = "      ";
-            preset[1] = "      ";
+            preset[1] = "  M   ";
             preset[0] = "      ";
 
             return preset;
