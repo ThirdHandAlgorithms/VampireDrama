@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using VampireDrama;
 
 public class SceneManager : MonoBehaviour {
@@ -20,6 +21,8 @@ public class SceneManager : MonoBehaviour {
     public GameObject BorderS;
     public GameObject BorderW;
     public GameObject Exit;
+    public Text XPText;
+    public Text BloodfillText;
 
     public GameObject[] BloodPrefabs;
     private List<GameObject> cattle;
@@ -288,7 +291,11 @@ public class SceneManager : MonoBehaviour {
         {
             currentLine = (int)(Player.transform.position.y);
 
-            cameras[0].transform.position = new Vector3(4, Player.transform.position.y, -15f);
+            cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
+
+            var player = Player.GetComponent<VampirePlayer>();
+            XPText.text = "XP: " + player.Experience.ToString();
+            BloodfillText.text = "Blood: " + player.Bloodfill.ToString();
         }
     }
 
