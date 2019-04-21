@@ -24,6 +24,7 @@ public class SceneManager : MonoBehaviour {
     public GameObject StreetLight;
     public GameObject[] TavernH;
     public GameObject[] MausoleumH;
+    public GameObject[] Bloodstain;
     public Text XPText;
     public Text BloodfillText;
 
@@ -318,8 +319,13 @@ public class SceneManager : MonoBehaviour {
 
     public void Kill(Human target, GameObject obj)
     {
+        Vector3 killspot = obj.transform.position;
         cattle.Remove(obj);
         Destroy(obj);
+
+
+        var bloodstain = Instantiate(Bloodstain[0], killspot, Quaternion.identity) as GameObject;
+        allObjects.Add(bloodstain);
     }
 
     public void VampireAlert(Vector2 at)
