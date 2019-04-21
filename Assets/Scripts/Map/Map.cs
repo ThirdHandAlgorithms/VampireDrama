@@ -91,8 +91,6 @@
 
     public class Map
     {
-        public ConstructionLine UnderConstruction;
-        public ConstructionLine Previous;
         public ConstructionChunk Historical;
         public List<ConstructionChunk> TemplatesToUse;
 
@@ -102,179 +100,16 @@
 
         public ConstructionChunk GetFullmap()
         {
-            var map = new ConstructionChunk(Historical.Count + 2);
-
-            if (UnderConstruction != null)
-            {
-                map.Add(UnderConstruction);
-            }
-
-            if (Previous != null)
-            {
-                map.Add(Previous);
-            }
+            var map = new ConstructionChunk(Historical.Count);
 
             map.AddRange(Historical);
 
             return map;
         }
 
-        public void MoveLine()
-        {
-            if (Previous != null)
-            {
-                Historical.Insert(0, Previous);
-            }
-
-            Previous = UnderConstruction;
-            UnderConstruction = null;
-        }
-
-        private Construct GetPreviousConstruct(int x)
-        {
-            if (Previous != null)
-            {
-                return Previous[x];
-            }
-
-            return null;
-        }
-
-        private bool HasPreviousLine()
-        {
-            return (Previous != null);
-        }
-
-        private bool RandomShouldContinue()
-        {
-            return (Random.value >= 0.5);
-        }
-
-        public ConstructHVDirection RandomDirection()
-        {
-            var r = Random.value;
-
-            var preferedDirection = MapConfiguration.getInstance().PreferedDirection;
-            if (preferedDirection != ConstructHVDirection.None)
-            {
-                if (r < 0.75f)
-                {
-                    return preferedDirection;
-                }
-                else if (preferedDirection == ConstructHVDirection.Horizontal)
-                {
-                    return ConstructHVDirection.Vertical;
-                }
-                else
-                {
-                    return ConstructHVDirection.Horizontal;
-                }
-            }
-            else
-            {
-                if (r < 0.5f)
-                {
-                    return ConstructHVDirection.Horizontal;
-                }
-                else
-                {
-                    return ConstructHVDirection.Vertical;
-                }
-            }
-        }
-
-        private Construct CreateRandomConstruct(Construct preference)
-        {
-            var pref = ConstructionPrefabs.getInstance();
-            var newConstruct = pref.CreateRandomConstruct(preference);
-            if (!newConstruct.Standalone && newConstruct.Dir == ConstructHVDirection.None)
-            {
-                newConstruct.Dir = RandomDirection();
-            }
-
-            return newConstruct;
-        }
-
-        private void ConstructLine()
-        {
-            UnderConstruction = new ConstructionLine();
-
-            var config = MapConfiguration.getInstance();
-            int width = config.Width;
-
-            Construct lastGenerated = null;
-            Construct preferTheRoad = new Road();
-            preferTheRoad.Dir = ConstructHVDirection.Vertical;
-
-            for (var x = 0; x < width; x++)
-            {
-                //if (x == width / 2)
-                //{
-                //    lastGenerated = new Road();
-                //    lastGenerated.Dir = ConstructHVDirection.Vertical;
-                //    UnderConstruction.Add(lastGenerated);
-                //    continue;
-                //}
-
-                if ((config.VerticalRoadFrequency > 0) && ((x+1) % config.VerticalRoadFrequency == 0))
-                {
-                    lastGenerated = new Road();
-                    lastGenerated.Dir = ConstructHVDirection.Vertical;
-                    UnderConstruction.Add(lastGenerated);
-                    continue;
-                }
-
-                if ((config.HorizontalRoadFrequency > 0) && ((Historical.Count + 1) % config.HorizontalRoadFrequency == 0))
-                {
-                    lastGenerated = new Road();
-                    lastGenerated.Dir = ConstructHVDirection.Horizontal;
-                    UnderConstruction.Add(lastGenerated);
-                    continue;
-                }
-
-                if (lastGenerated != null)
-                {
-                    if (!lastGenerated.Standalone)
-                    {
-                        if (lastGenerated.Dir == ConstructHVDirection.Horizontal)
-                        {
-                            lastGenerated = CreateRandomConstruct(lastGenerated);
-                            UnderConstruction.Add(lastGenerated);
-                            continue;
-                        }
-                    }
-                }
-
-                var prev = GetPreviousConstruct(x);
-                if (prev != null)
-                {
-                    if (!prev.Standalone)
-                    {
-                        if (prev.Dir == ConstructHVDirection.Vertical)
-                        {
-                            lastGenerated = CreateRandomConstruct(prev);
-                            UnderConstruction.Add(lastGenerated);
-                            continue;
-                        }
-                    }
-                }
-
-                if ((Previous == null) && (x == width / 2))
-                {
-                    lastGenerated = new Road();
-                    lastGenerated.Dir = ConstructHVDirection.Vertical;
-                    UnderConstruction.Add(lastGenerated);
-                    continue;
-                }
-
-                lastGenerated = CreateRandomConstruct(preferTheRoad);
-                UnderConstruction.Add(lastGenerated);
-            }
-        }
-
         private void ConstructLineFromTemplate()
         {
-            UnderConstruction = new ConstructionLine();
+            var UnderConstruction = new ConstructionLine();
 
             var config = MapConfiguration.getInstance();
             int width = config.Width;
@@ -287,27 +122,13 @@
                 lastGenerated = xline[x % 6].Clone();
                 UnderConstruction.Add(lastGenerated);
             }
+
+            Historical.Add(UnderConstruction);
         }
 
         private void Clear()
         {
-            UnderConstruction = null;
-            Previous = null;
             Historical = null;
-        }
-
-        public void GenerateFullMap()
-        {
-            Clear();
-
-            var config = MapConfiguration.getInstance();
-            Historical = new ConstructionChunk(config.Height - 2);
-
-            for (var line = 0; line < config.Height; line++)
-            {
-                ConstructLine();
-                MoveLine();
-            }
         }
 
         public void GenerateMapWithChunks()
@@ -334,7 +155,6 @@
                 }
 
                 ConstructLineFromTemplate();
-                MoveLine();
             }
         }
 
@@ -360,45 +180,17 @@
             }
 
             ConstructionLine lineToReturn = null;
-            if (line > Historical.Count + 1)
+            if (line < Historical.Count)
             {
-                var idx = Historical.Count;
-                if (Previous != null) idx++;
-                while (idx < line)
-                {
-                    ConstructLineFromTemplate();
-                    lineToReturn = UnderConstruction;
-                    MoveLine();
-                    idx++;
-                }
+                lineToReturn = Historical[line];
             }
             else
             {
-                if (line < Historical.Count)
-                {
-                    lineToReturn = Historical[line];
-                }
-                else if (line == Historical.Count)
-                {
-                    lineToReturn = Previous;
-
-                    if (lineToReturn == null)
-                    {
-                        ConstructLineFromTemplate();
-                        lineToReturn = UnderConstruction;
-                        MoveLine();
-                    }
-                }
-                else if (line == Historical.Count + 1)
+                while (line < Historical.Count)
                 {
                     ConstructLineFromTemplate();
-                    lineToReturn = UnderConstruction;
-                    MoveLine();
                 }
-                else
-                {
-                    throw new System.Exception("help");
-                }
+                lineToReturn = Historical[line];
             }
 
             return lineToReturn;
