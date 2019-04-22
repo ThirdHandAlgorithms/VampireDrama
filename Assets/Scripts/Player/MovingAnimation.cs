@@ -15,7 +15,26 @@
 
         protected void UpdateAnimation()
         {
-            if (isMoving)
+            if (isMoving && isAttackMoving)
+            {
+                if (lastDirection.y > 0)
+                {
+                    playerAnim.Play("AttackN");
+                }
+                else if (lastDirection.y < 0)
+                {
+                    playerAnim.Play("AttackS");
+                }
+                else if (lastDirection.x > 0)
+                {
+                    playerAnim.Play("AttackE");
+                }
+                else if (lastDirection.x < 0)
+                {
+                    playerAnim.Play("AttackW");
+                }
+            }
+            else if (isMoving)
             {
                 if (lastDirection.y > 0)
                 {

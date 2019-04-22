@@ -31,6 +31,25 @@
             lastDirection = new Direction(hv.x, hv.y);
         }
 
+        public float GetResistance()
+        {
+            if (KnowsWhatsUp())
+            {
+                if (IsDark())
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (Suspicion / 100f) * (LitresOfBlood / 5f) * ((100f - Intoxication) / 100f);
+                }
+            }
+            else
+            {
+                return (LitresOfBlood / 5f) * ((100f - Intoxication) / 100f);
+            }
+        }
+
         private void ScreamForHelp()
         {
             Debug.Log("HELP! DEMON! VAMPIRE!");
@@ -107,11 +126,21 @@
             Suspicion = System.Math.Min(Suspicion + vision, 100);
         }
 
+        public bool KnowsWhatsUp()
+        {
+            return Suspicion >= 80;
+        }
+
+        public bool IsDark()
+        {
+            return Darkness > 20;
+        }
+
         public void ThinkAndReact()
         {
-            if (Suspicion >= 80)
+            if (KnowsWhatsUp())
             {
-                if (Darkness > 20)
+                if (IsDark())
                 {
                     AskToBeTurned();
                 }

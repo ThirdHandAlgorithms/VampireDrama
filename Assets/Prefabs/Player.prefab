@@ -141,7 +141,7 @@ Animator:
   m_GameObject: {fileID: 1912372597758822}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: f912668559c8caf46acf4c1b64ff07b2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 042e779512e33ca4f8530c540e32d052, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
+  isMoving: 0
   Name: Dracula
   Experience: 0
   Bloodfill: 0
