@@ -58,24 +58,29 @@
                 Human sheep = gameObjHit.GetComponent<Human>();
                 if (sheep != null)
                 {
-                    if (Fight(sheep, gameObjHit))
-                    {
-                        RaycastHit2D hit2;
-                        Move(hor, ver, out hit2);
-                    }
+                    if (sheep.isMoving) return;
+
+                    Fight(sheep, gameObjHit, hor, ver);
                 }
             }
         }
 
-        public bool Fight(Human target, GameObject obj)
+        public bool Fight(Human target, GameObject obj, int hor, int ver)
         {
-            Bloodfill += target.LitresOfBlood;
-
             var level = GameManager.instance.GetCurrentLevel();
 
-            // todo: start some kind of combat sequence
-            level.Kill(target, obj);
-            Experience++;
+            if (target.GetResistance() > 0.5)
+            {
+                target.LitresOfBlood--;
+                AttackMove(hor, ver);
+            }
+            else
+            {
+                FullAttackMove(hor, ver);
+                Bloodfill += target.LitresOfBlood;
+                level.Kill(target, obj);
+                Experience++;
+            }
 
             return true;
         }

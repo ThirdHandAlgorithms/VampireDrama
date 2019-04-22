@@ -24,9 +24,13 @@
         private float inverseMoveTime;
         private float sqrRemainingDistance;
         private Vector3 moveTo;
-        protected Direction lastDirection;
+        private Vector3 moveBackTo;
+        public Direction lastDirection;
 
-        protected bool isMoving;
+        public bool isMoving;
+        protected bool isAttackMoving;
+        protected bool isBackMoving;
+        protected bool isFullAttack;
 
         protected virtual void Start()
         {
@@ -65,6 +69,28 @@
             return false;
         }
 
+        protected void AttackMove(int xDir, int yDir)
+        {
+            Vector2 start = transform.position;
+            Vector2 end = start + new Vector2(xDir * 0.5f, yDir * 0.5f);
+
+            lastDirection.x = xDir;
+            lastDirection.y = yDir;
+
+            StartAttackMovement(start, end);
+        }
+
+        protected void FullAttackMove(int xDir, int yDir)
+        {
+            Vector2 start = transform.position;
+            Vector2 end = start + new Vector2(xDir, yDir);
+
+            lastDirection.x = xDir;
+            lastDirection.y = yDir;
+
+            StartFullAttackMovement(start, end);
+        }
+
         public virtual void Update()
         {
             ContinueMoving();
@@ -74,17 +100,45 @@
         {
             if (sqrRemainingDistance > float.Epsilon)
             {
-                Vector3 newPostion = Vector3.MoveTowards(rb2D.position, moveTo, inverseMoveTime * Time.deltaTime);
+                Vector3 newPosition = Vector3.MoveTowards(rb2D.position, moveTo, inverseMoveTime * Time.deltaTime);
 
-                rb2D.MovePosition(newPostion);
+                rb2D.MovePosition(newPosition);
 
                 sqrRemainingDistance = (transform.position - moveTo).sqrMagnitude;
 
-                isMoving = (sqrRemainingDistance > float.Epsilon);
+                if (sqrRemainingDistance <= float.Epsilon)
+                {
+                    rb2D.MovePosition(moveTo);
+                }
+            }
+
+            if (isAttackMoving && !isFullAttack)
+            {
+                if (!isBackMoving)
+                {
+                    if (sqrRemainingDistance <= float.Epsilon)
+                    {
+                        StartMovingBack();
+                    }
+                }
+                else
+                {
+                    isMoving = (sqrRemainingDistance > float.Epsilon);
+                    if (!isMoving)
+                    {
+                        isAttackMoving = false;
+                        isBackMoving = false;
+                    }
+                }
             }
             else
             {
-                isMoving = false;
+                isMoving = (sqrRemainingDistance > float.Epsilon);
+                if (!isMoving && isAttackMoving)
+                {
+                    isAttackMoving = false;
+                    isFullAttack = false;
+                }
             }
         }
 
@@ -92,6 +146,34 @@
         {
             moveTo = end;
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+            isMoving = true;
+        }
+
+        protected void StartAttackMovement(Vector3 start, Vector3 end)
+        {
+            moveTo = end;
+            moveBackTo = start;
+
+            sqrRemainingDistance = (transform.position - end).sqrMagnitude;
+
+            isMoving = true;
+            isAttackMoving = true;
+            isFullAttack = false;
+            isBackMoving = false;
+        }
+
+        protected void StartFullAttackMovement(Vector3 start, Vector3 end)
+        {
+            StartAttackMovement(start, end);
+
+            isFullAttack = true;
+        }
+
+        protected void StartMovingBack()
+        {
+            isBackMoving = true;
+            moveTo = moveBackTo;
+            sqrRemainingDistance = (transform.position - moveTo).sqrMagnitude;
         }
 
         public void StopMoving()
@@ -102,6 +184,9 @@
                 sqrRemainingDistance = 0;
                 transform.position = moveTo;
                 isMoving = false;
+                isAttackMoving = false;
+                isBackMoving = false;
+                isFullAttack = false;
             }
             else
             {
