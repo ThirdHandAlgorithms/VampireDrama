@@ -11,7 +11,11 @@
 
         public override void Affect(VampirePlayer obj)
         {
-            obj.Bloodfill = System.Math.Max(0, obj.Bloodfill - 1);
+            // only affect if bloodfill is above XP
+            if (obj.Bloodfill > obj.Experience)
+            {
+                obj.Burn(1);
+            }
         }
     }
 }

@@ -28,6 +28,7 @@ public class SceneManager : MonoBehaviour {
     public GameObject[] Bloodstain;
     public Text XPText;
     public Text BloodfillText;
+    public Text TimeOfDayText;
 
     public GameObject[] BloodPrefabs;
     private List<GameObject> cattle;
@@ -42,6 +43,9 @@ public class SceneManager : MonoBehaviour {
     private int lineCount;
     private int startAndExit;
     private string startOfRandomState;
+
+    private float startTimeOfDay;
+    private float lastSunAuraTime;
 
     private void ClearScene()
     {
@@ -100,6 +104,8 @@ public class SceneManager : MonoBehaviour {
         {
             AddBlood();
         }
+
+        startTimeOfDay = Time.time;
     }
 
     public void Stop()
@@ -299,8 +305,20 @@ public class SceneManager : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
+    private void getTimeOfDay(out int Hour, out int Minute)
+    {
+        // 1s realtime is 1minute gametime
+        //  start of your vampire day is 22:00?
+        int currentIngameTimeOfDayInMinutes = (22 * 60) + (int)System.Math.Round(Time.time - startTimeOfDay);
+
+        Hour = (int)(currentIngameTimeOfDayInMinutes / 60f);
+        Minute = (int)(currentIngameTimeOfDayInMinutes - (Hour * 60f));
+
+        Hour = Hour % 24;
+    }
+
+    // Update is called once per frame
+    void Update () {
         var cameras = Camera.allCameras;
         if (cameras.Length > 0)
         {
@@ -311,6 +329,23 @@ public class SceneManager : MonoBehaviour {
             var player = Player.GetComponent<VampirePlayer>();
             XPText.text = "XP: " + player.Experience.ToString();
             BloodfillText.text = "Blood: " + player.Bloodfill.ToString();
+
+            int hour, minute;
+            getTimeOfDay(out hour, out minute);
+            TimeOfDayText.text = "Time: " + hour.ToString() + ":" + minute.ToString("00");
+
+            if (hour >= 6 && hour < 22)
+            {
+                // between 6 and 22 you're going to burn
+                if (Time.time - lastSunAuraTime >= 1f)
+                {
+                    lastSunAuraTime = Time.time;
+
+                    var sun = new SunAuraEffect();
+                    sun.Strength = hour - 5;    // so at 6:00, you lose 1 blood every second, at 7:00 2 blood every second...
+                    ApplyAuraEffectEverywhere(sun);
+                }
+            }
         }
     }
 
@@ -352,5 +387,16 @@ public class SceneManager : MonoBehaviour {
             var vamp = Player.GetComponent<VampirePlayer>();
             if (vamp != null) effect.Affect(vamp);
         }
+    }
+    public void ApplyAuraEffectEverywhere(AuraEffect effect)
+    {
+        foreach (var obj in cattle)
+        {
+            var human = obj.GetComponent<Human>();
+            if (human != null) effect.Affect(human);
+        }
+
+        var vamp = Player.GetComponent<VampirePlayer>();
+        if (vamp != null) effect.Affect(vamp);
     }
 }
