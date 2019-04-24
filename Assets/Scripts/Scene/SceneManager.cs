@@ -294,14 +294,6 @@ public class SceneManager : MonoBehaviour {
         Player.transform.position = new Vector3(startAndExit * tileSize, 0f, 0f);
     }
 
-    public void changeLuminosity()
-    {
-        foreach (var obj in allObjects)
-        {
-            //
-        }
-    }
-
 	// Use this for initialization
 	void Start () {
 		
@@ -335,10 +327,30 @@ public class SceneManager : MonoBehaviour {
 
     public void VampireAlert(Vector2 at)
     {
+        // todo: maybe this should be an aura effect as well....
+
         // todo: overlay alert
 
         // todo: alert others in a certain radius
 
         // todo: if there are multiple people, form a pitchfork party
+    }
+
+    public void ApplyAuraEffect(int posx, int posy, AuraEffect effect)
+    {
+        foreach (var obj in cattle)
+        {
+            if (obj.transform.position.x == posx && obj.transform.position.y == posy)
+            {
+                var human = obj.GetComponent<Human>();
+                if (human != null) effect.Affect(human);
+            }
+        }
+
+        if (Player.transform.position.x == posx && Player.transform.position.y == posy)
+        {
+            var vamp = Player.GetComponent<VampirePlayer>();
+            if (vamp != null) effect.Affect(vamp);
+        }
     }
 }
