@@ -18,6 +18,9 @@
             AllTemplates.Add(getFromTextPreset(preset6()));
             AllTemplates.Add(getFromTextPreset(preset7()));
             AllTemplates.Add(getFromTextPreset(preset8()));
+			AllTemplates.Add(getFromTextPreset(preset9()));
+			AllTemplates.Add(getFromTextPreset(preset10()));
+			
         }
 
         public ConstructionChunk getRandomChunkTemplate()
