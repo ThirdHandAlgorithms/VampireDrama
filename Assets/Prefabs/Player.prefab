@@ -169,7 +169,7 @@ MonoBehaviour:
   isMoving: 0
   Name: Dracula
   Experience: 0
-  Bloodfill: 0
+  Bloodfill: 5
 --- !u!1001 &1919842952662825784
 PrefabInstance:
   m_ObjectHideFlags: 0

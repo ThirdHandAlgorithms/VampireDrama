@@ -11,7 +11,7 @@
 
         public override void Affect(VampirePlayer obj)
         {
-            obj.Bloodfill = System.Math.Max(0, obj.Bloodfill - 1);
+            obj.Burn(1);
         }
     }
 }

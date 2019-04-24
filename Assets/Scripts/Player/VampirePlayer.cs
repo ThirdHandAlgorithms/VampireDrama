@@ -18,6 +18,7 @@
             playerRenderer = GetComponent<SpriteRenderer>();
 
             lastInput = Time.time;
+            Bloodfill = 5;
         }
 
         public override void Update()
@@ -83,6 +84,16 @@
             }
 
             return true;
+        }
+
+        public void Burn(int strength)
+        {
+            Bloodfill = System.Math.Max(0, Bloodfill - strength);
+            if (Bloodfill == 0)
+            {
+                Debug.Log("You just died, queue the high-score screen and start over again");
+                // todo: GameOver();
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D item)
