@@ -199,5 +199,32 @@
 
             return preset;
         }
+		
+		private string[] preset9()
+        {
+            var preset = new string[6];
+            preset[5] = "   = |";
+            preset[4] = " ,#,, ";
+            preset[3] = " ^XT^ ";
+            preset[2] = " ,#,, ";
+            preset[1] = " = =  ";
+            preset[0] = "     |";
+
+            return preset;
+        }
+		
+		private string[] preset10()
+        {
+            var preset = new string[6];
+            preset[5] = "      ";
+            preset[4] = "==  C=";
+            preset[3] = "      ";
+            preset[2] = "=X  ==";
+            preset[1] = "      ";
+            preset[0] = "==  T=";
+
+            return preset;
+        }
+		
     }
 }
