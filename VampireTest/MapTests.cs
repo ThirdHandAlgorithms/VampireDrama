@@ -13,7 +13,7 @@ namespace VampireTest
             var config = MapConfiguration.getInstance();
 
             Map map = new Map();
-            map.GenerateFullMap();
+            //map.GenerateFullMap();
 
             var layout = map.GetFullmap();
 
