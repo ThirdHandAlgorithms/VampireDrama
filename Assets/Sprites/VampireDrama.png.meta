@@ -1,73 +1,201 @@
 fileFormatVersion: 2
 guid: b9239f2d0cfe7e543bd5805b90d5e672
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: VampireDrama_0
-    21300002: VampireDrama_1
-    21300004: VampireDrama_2
-    21300006: VampireDrama_3
-    21300008: VampireDrama_4
-    21300010: VampireDrama_5
-    21300012: VampireDrama_6
-    21300014: VampireDrama_7
-    21300016: VampireDrama_8
-    21300018: VampireDrama_9
-    21300020: VampireDrama_10
-    21300022: VampireDrama_11
-    21300024: VampireDrama_12
-    21300026: VampireDrama_13
-    21300028: VampireDrama_14
-    21300030: VampireDrama_15
-    21300032: VampireDrama_16
-    21300034: VampireDrama_17
-    21300036: VampireDrama_18
-    21300038: VampireDrama_19
-    21300040: VampireDrama_20
-    21300042: VampireDrama_21
-    21300044: VampireDrama_22
-    21300046: VampireDrama_23
-    21300048: VampireDrama_24
-    21300050: VampireDrama_25
-    21300052: VampireDrama_26
-    21300054: VampireDrama_27
-    21300056: VampireDrama_28
-    21300058: VampireDrama_29
-    21300060: VampireDrama_30
-    21300062: VampireDrama_31
-    21300064: VampireDrama_32
-    21300066: VampireDrama_33
-    21300068: VampireDrama_34
-    21300070: VampireDrama_35
-    21300072: VampireDrama_36
-    21300074: VampireDrama_37
-    21300076: VampireDrama_38
-    21300078: VampireDrama_39
-    21300080: VampireDrama_40
-    21300082: VampireDrama_41
-    21300084: VampireDrama_42
-    21300086: VampireDrama_43
-    21300088: VampireDrama_44
-    21300090: VampireDrama_45
-    21300092: VampireDrama_46
-    21300094: VampireDrama_47
-    21300096: VampireDrama_48
-    21300098: VampireDrama_49
-    21300100: VampireDrama_50
-    21300102: VampireDrama_51
-    21300104: VampireDrama_52
-    21300106: VampireDrama_53
-    21300108: VampireDrama_54
-    21300110: VampireDrama_55
-    21300112: VampireDrama_56
-    21300114: VampireDrama_57
-    21300116: VampireDrama_58
-    21300118: VampireDrama_59
-    21300120: VampireDrama_60
-    21300122: VampireDrama_61
-    21300124: VampireDrama_62
-    21300126: VampireDrama_63
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: VampireDrama_0
+  - first:
+      213: 21300002
+    second: VampireDrama_1
+  - first:
+      213: 21300004
+    second: VampireDrama_2
+  - first:
+      213: 21300006
+    second: VampireDrama_3
+  - first:
+      213: 21300008
+    second: VampireDrama_4
+  - first:
+      213: 21300010
+    second: VampireDrama_5
+  - first:
+      213: 21300012
+    second: VampireDrama_6
+  - first:
+      213: 21300014
+    second: VampireDrama_7
+  - first:
+      213: 21300016
+    second: VampireDrama_8
+  - first:
+      213: 21300018
+    second: VampireDrama_9
+  - first:
+      213: 21300020
+    second: VampireDrama_10
+  - first:
+      213: 21300022
+    second: VampireDrama_11
+  - first:
+      213: 21300024
+    second: VampireDrama_12
+  - first:
+      213: 21300026
+    second: VampireDrama_13
+  - first:
+      213: 21300028
+    second: VampireDrama_14
+  - first:
+      213: 21300030
+    second: VampireDrama_15
+  - first:
+      213: 21300032
+    second: VampireDrama_16
+  - first:
+      213: 21300034
+    second: VampireDrama_17
+  - first:
+      213: 21300036
+    second: VampireDrama_18
+  - first:
+      213: 21300038
+    second: VampireDrama_19
+  - first:
+      213: 21300040
+    second: VampireDrama_20
+  - first:
+      213: 21300042
+    second: VampireDrama_21
+  - first:
+      213: 21300044
+    second: VampireDrama_22
+  - first:
+      213: 21300046
+    second: VampireDrama_23
+  - first:
+      213: 21300048
+    second: VampireDrama_24
+  - first:
+      213: 21300050
+    second: VampireDrama_25
+  - first:
+      213: 21300052
+    second: VampireDrama_26
+  - first:
+      213: 21300054
+    second: VampireDrama_27
+  - first:
+      213: 21300056
+    second: VampireDrama_28
+  - first:
+      213: 21300058
+    second: VampireDrama_29
+  - first:
+      213: 21300060
+    second: VampireDrama_30
+  - first:
+      213: 21300062
+    second: VampireDrama_31
+  - first:
+      213: 21300064
+    second: VampireDrama_32
+  - first:
+      213: 21300066
+    second: VampireDrama_33
+  - first:
+      213: 21300068
+    second: VampireDrama_34
+  - first:
+      213: 21300070
+    second: VampireDrama_35
+  - first:
+      213: 21300072
+    second: VampireDrama_36
+  - first:
+      213: 21300074
+    second: VampireDrama_37
+  - first:
+      213: 21300076
+    second: VampireDrama_38
+  - first:
+      213: 21300078
+    second: VampireDrama_39
+  - first:
+      213: 21300080
+    second: VampireDrama_40
+  - first:
+      213: 21300082
+    second: VampireDrama_41
+  - first:
+      213: 21300084
+    second: VampireDrama_42
+  - first:
+      213: 21300086
+    second: VampireDrama_43
+  - first:
+      213: 21300088
+    second: VampireDrama_44
+  - first:
+      213: 21300090
+    second: VampireDrama_45
+  - first:
+      213: 21300092
+    second: VampireDrama_46
+  - first:
+      213: 21300094
+    second: VampireDrama_47
+  - first:
+      213: 21300096
+    second: VampireDrama_48
+  - first:
+      213: 21300098
+    second: VampireDrama_49
+  - first:
+      213: 21300100
+    second: VampireDrama_50
+  - first:
+      213: 21300102
+    second: VampireDrama_51
+  - first:
+      213: 21300104
+    second: VampireDrama_52
+  - first:
+      213: 21300106
+    second: VampireDrama_53
+  - first:
+      213: 21300108
+    second: VampireDrama_54
+  - first:
+      213: 21300110
+    second: VampireDrama_55
+  - first:
+      213: 21300112
+    second: VampireDrama_56
+  - first:
+      213: 21300114
+    second: VampireDrama_57
+  - first:
+      213: 21300116
+    second: VampireDrama_58
+  - first:
+      213: 21300118
+    second: VampireDrama_59
+  - first:
+      213: 21300120
+    second: VampireDrama_60
+  - first:
+      213: 21300122
+    second: VampireDrama_61
+  - first:
+      213: 21300124
+    second: VampireDrama_62
+  - first:
+      213: 21300126
+    second: VampireDrama_63
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -156,13 +284,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a85b88b553fdd64b9ea5106b3857bc5
+      spriteID: 9c8e5308f0f166843873fedc510bb2e9
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -176,13 +305,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59e8071d645cba64d97bb049c2acf2fe
+      spriteID: 52abf11855fd36549b806e17f43621ba
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -196,13 +326,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78a9c391bad1e9b4db749476c166193a
+      spriteID: 8278838d69e53c048b20898628153070
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -216,13 +347,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62f5e88be15dc3242884f4ecffbcde91
+      spriteID: f76a61e35ac1cff4e9437940b6d158e1
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -236,13 +368,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4b776ba604f82c46aeaaf1bd19943c7
+      spriteID: 3ad41251e1a81ed4ca864fdf34210ff5
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -256,13 +389,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b693e3f628c62634a9efa6f4d061278f
+      spriteID: a688c61de099fa14d88cee25fdf5c847
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -276,13 +410,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9527f663810eb1e4a9dab540b308bb0c
+      spriteID: 98e647f339a8ef44db6e2125acea494f
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -291,18 +426,19 @@ TextureImporter:
       name: VampireDrama_7
       rect:
         serializedVersion: 2
-        x: 449
+        x: 448
         y: 192
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d1a264b5146ee441a070a1584f0e8a9
+      spriteID: 0e84594a736985945b7f521098858e2a
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -316,13 +452,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa5642f351ec6254d8c5bf592c68f8e0
+      spriteID: 0a245f4c1a30fd94192b13c9b5e4bb75
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -336,13 +473,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32257dbe9ff213a43b14dc4ab21998ed
+      spriteID: fd04c8bec3569514da463b8692249166
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -356,13 +494,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f15bd61b0d5804e4ebe11da4ec3c1d09
+      spriteID: 83beaa13a27fda54d9ebdb803bb51351
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -376,13 +515,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7a4cd07cb299884b82d17520bc07b6d
+      spriteID: 60e5bf70e7f4e7045913d419f2bb4568
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -396,13 +536,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 426c505fabbde824e9ee2920922721d9
+      spriteID: 1c6acc2b33550a541af8135ec134f83a
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -416,13 +557,14 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6acd11e5c4309d4fbe645566acf84bf
+      spriteID: 68bd9029b4559114b9c506d945cd09a9
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -431,18 +573,19 @@ TextureImporter:
       name: VampireDrama_14
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
+        x: 0
+        y: 64
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23316a68a2292ea4bae10cd30c7f2d97
+      spriteID: 181fafbd8b2269f44b15a53d8377e879
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -451,18 +594,19 @@ TextureImporter:
       name: VampireDrama_15
       rect:
         serializedVersion: 2
-        x: 320
-        y: 128
+        x: 64
+        y: 64
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d23b5eb364c1e04490ab1de32a6246e
+      spriteID: 6738e14ba8d9093468e0a5cfb83bd239
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -471,18 +615,19 @@ TextureImporter:
       name: VampireDrama_16
       rect:
         serializedVersion: 2
-        x: 384
-        y: 128
+        x: 128
+        y: 64
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55d58be20bfcb384591f387c6396e43e
+      spriteID: 2c6a8f884478fa941a277af7663a514e
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -491,458 +636,19 @@ TextureImporter:
       name: VampireDrama_17
       rect:
         serializedVersion: 2
-        x: 448
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca3da21e86e9b9b4d98b67184dded3e8
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_18
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a141a861c5862f4eb6a0f06ac56588f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_19
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b93d5b25f28dea24f8d2774a0094889c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_20
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 814085f8666ae4a4294c49fcae8f5a20
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_21
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9d6e9c9b8b9ccf347b632c1c9ef0a397
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f46a0893b24f6bb4380fe3f2d7b861ba
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_23
-      rect:
-        serializedVersion: 2
         x: 192
         y: 64
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e255caaa2f3cd1f46ae539b198b3a530
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_24
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cde2aa837726f9543a0b6a68c8220078
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_25
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a372c8de0c63db448324f30039af4cf
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_26
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c7b695063faa3b043b1d231251f92c07
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_27
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae8566c969ba7ef4ba6cb206c41f9bf7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_28
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac7c9e5c5a432a349afcdda68c17925d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_29
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25d69a7b88757b544b58108b3ea2dc7a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_30
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 65ecca9b799a6b84bbe379abaef5ddab
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_31
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d2d88c369dbd194fa6e06cb8b7e8e7b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_32
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d07b62e05a3d8b8498c420bf2635ae25
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_33
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d12349d34a36eed41a21da4147476598
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_34
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b56f96ff2c50f3419a504a0714555ee
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_35
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5de769b349d47214f87ee44c1f2d6b5b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_36
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c8e7390c96416b4881761dd4d62246e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_37
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 543aaa2a3f003e84fabda33f62c1d2ab
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_38
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eea052c31f555594a8514f9fafe60d68
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VampireDrama_39
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe8f21a1e93136c48a82feffbfd3690f
+      spriteID: 924d4f525f498e74e92125c489517c23
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -950,11 +656,13 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: bb8fb533799da3440811731e2f685f9c
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
