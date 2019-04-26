@@ -10,17 +10,12 @@
         public ChunkTemplates()
         {
             AllTemplates = new List<ConstructionChunk>();
-            AllTemplates.Add(getFromTextPreset(preset1()));
-            AllTemplates.Add(getFromTextPreset(preset2()));
-            AllTemplates.Add(getFromTextPreset(preset3()));
-            AllTemplates.Add(getFromTextPreset(preset4()));
-            AllTemplates.Add(getFromTextPreset(preset5()));
-            AllTemplates.Add(getFromTextPreset(preset6()));
-            AllTemplates.Add(getFromTextPreset(preset7()));
-            AllTemplates.Add(getFromTextPreset(preset8()));
-			AllTemplates.Add(getFromTextPreset(preset9()));
-			AllTemplates.Add(getFromTextPreset(preset10()));
-			
+
+            var presets6x6 = Resources.LoadAll("6x6", typeof(TextAsset));
+            foreach (var obj in presets6x6)
+            {
+                AllTemplates.Add(getFromTextPreset(getLinesFromTextAsset((TextAsset)obj)));
+            }
         }
 
         public ConstructionChunk getRandomChunkTemplate()
@@ -94,6 +89,10 @@
                     {
                         current = new Road();
                     }
+                    else
+                    {
+                        throw new System.Exception("Invalid character " + ch.ToString());
+                    }
 
                     currentLine.Add(current);
                 }
@@ -104,135 +103,9 @@
             return preset;
         }
 
-        private string[] preset1()
+        private static string[] getLinesFromTextAsset(TextAsset textFile)
         {
-            var preset = new string[6];
-            preset[5] = "======";
-            preset[4] = "      ";
-            preset[3] = "| ====";
-            preset[2] = "|     ";
-            preset[1] = "| X | ";
-            preset[0] = "| | | ";
-
-            return preset;
+            return textFile.text.Replace("\r\n", "\n").Split('\n');
         }
-
-        private string[] preset2()
-        {
-            var preset = new string[6];
-            preset[5] = "======";
-            preset[4] = "      ";
-            preset[3] = " ==X |";
-            preset[2] = "     |";
-            preset[1] = " | | |";
-            preset[0] = " | | |";
-
-            return preset;
-        }
-
-        private string[] preset3()
-        {
-            var preset = new string[6];
-            preset[5] = " =====";
-            preset[4] = "      ";
-            preset[3] = " |  | ";
-            preset[2] = " |  |X";
-            preset[1] = "      ";
-            preset[0] = "===== ";
-
-            return preset;
-        }
-
-        private string[] preset4()
-        {
-            var preset = new string[6];
-            preset[5] = "  |  |";
-            preset[4] = "==|  |";
-            preset[3] = "     |";
-            preset[2] = "==| X|";
-            preset[1] = "  |  |";
-            preset[0] = "  |  |";
-
-            return preset;
-        }
-
-        private string[] preset5()
-        {
-            var preset = new string[6];
-            preset[5] = " ^|   ";
-            preset[4] = " ^| X=";
-            preset[3] = " @    ";
-            preset[2] = " ^| ==";
-            preset[1] = " ^|   ";
-            preset[0] = " ^| ==";
-
-            return preset;
-        }
-
-        private string[] preset6()
-        {
-            var preset = new string[6];
-            preset[5] = "=== ==";
-            preset[4] = "      ";
-            preset[3] = ",,,#,,";
-            preset[2] = "      ";
-            preset[1] = "=== ==";
-            preset[0] = "      ";
-
-            return preset;
-        }
-
-        private string[] preset7()
-        {
-            var preset = new string[6];
-            preset[5] = "=== ==";
-            preset[4] = "  | | ";
-            preset[3] = ",,,#,,";
-            preset[2] = "  | | ";
-            preset[1] = "X== ==";
-            preset[0] = "      ";
-
-            return preset;
-        }
-
-        private string[] preset8()
-        {
-            var preset = new string[6];
-            preset[5] = "    C ";
-            preset[4] = "      ";
-            preset[3] = "   T  ";
-            preset[2] = "      ";
-            preset[1] = "  M   ";
-            preset[0] = "      ";
-
-            return preset;
-        }
-		
-		private string[] preset9()
-        {
-            var preset = new string[6];
-            preset[5] = "   = |";
-            preset[4] = " ,#,, ";
-            preset[3] = " ^XT^ ";
-            preset[2] = " ,#,, ";
-            preset[1] = " = =  ";
-            preset[0] = "     |";
-
-            return preset;
-        }
-		
-		private string[] preset10()
-        {
-            var preset = new string[6];
-            preset[5] = "      ";
-            preset[4] = "==  C=";
-            preset[3] = "      ";
-            preset[2] = "=X  ==";
-            preset[1] = "      ";
-            preset[0] = "==  T=";
-
-            return preset;
-        }
-		
     }
 }

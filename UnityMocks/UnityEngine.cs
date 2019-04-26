@@ -377,4 +377,27 @@
 
         }
     }
+
+    public class Asset
+    {
+
+    }
+
+    public class TextAsset : Asset
+    {
+        public string text { get; set; }
+    }
+
+    public class Resources
+    {
+        public static T Load<T>(string path)
+        {
+            return (T)(new Object());
+        }
+
+        public static object[] LoadAll(string folder, Type systemTypeInstance)
+        {
+            return new object[0];
+        }
+    }
 }

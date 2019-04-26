@@ -27,6 +27,7 @@
         public GameObject[] ChurchH;
         public GameObject[] Bloodstain;
         public GameObject[] BloodPrefabs;
+        public GameObject[] BridgeBottomH;
 
         protected List<GameObject> humans;
         protected List<GameObject> allObjects;
@@ -78,12 +79,16 @@
             {
                 RenderLine(lineIdx);
             }
-
-            var amountOfHumans = (lineCount / 6) + ((level - 1) * 2);
+            int amountOfHumans = getHumanCountForLevel(level);
             for (var idx = 0; idx < amountOfHumans; idx++)
             {
                 AddHuman();
             }
+        }
+
+        private int getHumanCountForLevel(int level)
+        {
+            return (lineCount / 6) + ((level - 1) * 2);
         }
 
         private GameObject GetRandomHumanTemplate()
@@ -174,6 +179,10 @@
             else if (construct.Id == ConstructionType.Bridge && construct.Dir == ConstructHVDirection.Horizontal)
             {
                 return BridgeH[0];
+            }
+            else if (construct.Id == ConstructionType.BridgeBottom && construct.Dir == ConstructHVDirection.Horizontal)
+            {
+                return BridgeBottomH[0];
             }
             else if (construct.Id == ConstructionType.Dumpster)
             {
@@ -278,7 +287,6 @@
 
             Player.transform.position = new Vector3(startAndExit * tileSize, 0f, 0f);
         }
-
 
         protected void ClearScene()
         {

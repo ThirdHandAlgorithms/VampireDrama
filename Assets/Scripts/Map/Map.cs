@@ -1,8 +1,7 @@
 ﻿namespace VampireDrama
 {
     using System.Collections.Generic;
-    using UnityEngine;
-
+    
     public class MapConfiguration {
         private static MapConfiguration _instance = null;
 
@@ -39,60 +38,12 @@
         }
     }
 
-    public class ConstructionPrefabs
-    {
-        private static ConstructionPrefabs _instance;
-        private static List<Construct> Prefabs;
-
-        public ConstructionPrefabs()
-        {
-            Prefabs = new List<Construct>();
-            Prefabs.Add(new Road());
-            Prefabs.Add(new Building());
-            Prefabs.Add(new Dumpster());
-            Prefabs.Add(new Water());
-        }
-
-        public Construct CreateRandomConstruct(Construct preference)
-        {
-            if (preference == null)
-            {
-                return Prefabs[(int)(Random.value * Prefabs.Count)].Clone();
-            }
-            else
-            {
-                var r = Random.value;
-                if (r < 0.5)
-                {
-                    return preference.Clone();
-                }
-                else
-                {
-                    var newConstruct = CreateRandomConstruct(null);
-                    while (newConstruct.GetHashCode() == preference.GetHashCode())
-                    {
-                        newConstruct = CreateRandomConstruct(null);
-                    }
-                    return newConstruct;
-                }
-            }
-        }
-
-        public static ConstructionPrefabs getInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new ConstructionPrefabs();
-            }
-
-            return _instance;
-        }
-    }
-
     public class Map
     {
         public ConstructionChunk Historical;
         public List<ConstructionChunk> TemplatesToUse;
+        private int templateWidth = 6;
+        private int templateHeight = 6;
 
         public Map()
         {
@@ -114,12 +65,11 @@
             var config = MapConfiguration.getInstance();
             int width = config.Width;
 
-            Construct lastGenerated = null;
             for (var x = 0; x < width; x++)
             {
-                var xtemplate = TemplatesToUse[x / 6];
-                var xline = xtemplate[Historical.Count % 6];
-                lastGenerated = xline[x % 6].Clone();
+                var xtemplate = TemplatesToUse[x / templateWidth];
+                var xline = xtemplate[Historical.Count % templateWidth];
+                var lastGenerated = xline[x % templateWidth].Clone();
                 UnderConstruction.Add(lastGenerated);
             }
 
@@ -144,7 +94,7 @@
 
             for (var line = 0; line < config.Height; line++)
             {
-                if (line % 6 == 0)
+                if (line % templateHeight == 0)
                 {
                     TemplatesToUse.Clear();
                     TemplatesToUse.Add(templates.getRandomChunkTemplate());
@@ -168,7 +118,7 @@
 
         public ConstructionLine GetLine(int line)
         {
-            if (line % 6 == 0)
+            if (line % templateHeight == 0)
             {
                 var templates = new ChunkTemplates();
                 TemplatesToUse.Clear();
@@ -179,7 +129,7 @@
                 TemplatesToUse.Add(templates.getRandomChunkTemplate());
             }
 
-            ConstructionLine lineToReturn = null;
+            ConstructionLine lineToReturn;
             if (line < Historical.Count)
             {
                 lineToReturn = Historical[line];
