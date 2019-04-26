@@ -42,11 +42,13 @@
     {
         public ConstructionChunk Historical;
         public List<ConstructionChunk> TemplatesToUse;
-        private int templateWidth = 6;
-        private int templateHeight = 6;
+        private int templateWidth = 12;
+        private int templateHeight = 12;
+        private ChunkTemplates possibleTemplates;
 
         public Map()
         {
+            possibleTemplates = new ChunkTemplates();
         }
 
         public ConstructionChunk GetFullmap()
@@ -83,29 +85,28 @@
 
         public void GenerateMapWithChunks()
         {
-            var templates = new ChunkTemplates();
-            
             Clear();
 
             TemplatesToUse = new List<ConstructionChunk>(5);
 
             var config = MapConfiguration.getInstance();
-            Historical = new ConstructionChunk(config.Height - 2);
+            Historical = new ConstructionChunk(config.Height);
 
             for (var line = 0; line < config.Height; line++)
             {
                 if (line % templateHeight == 0)
                 {
-                    TemplatesToUse.Clear();
-                    TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                    TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                    TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                    TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                    TemplatesToUse.Add(templates.getRandomChunkTemplate());
+                    InitNewTemplatesToUse(possibleTemplates);
                 }
 
                 ConstructLineFromTemplate();
             }
+        }
+
+        private void InitNewTemplatesToUse(ChunkTemplates templates)
+        {
+            TemplatesToUse.Clear();
+            TemplatesToUse.Add(templates.GetRandomChunk12x12Template());
         }
 
         public void StartNewDynamicMap()
@@ -113,20 +114,14 @@
             Clear();
 
             TemplatesToUse = new List<ConstructionChunk>(5);
-            Historical = new ConstructionChunk(0);
+            Historical = new ConstructionChunk(templateHeight);
         }
 
         public ConstructionLine GetLine(int line)
         {
             if (line % templateHeight == 0)
             {
-                var templates = new ChunkTemplates();
-                TemplatesToUse.Clear();
-                TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                TemplatesToUse.Add(templates.getRandomChunkTemplate());
-                TemplatesToUse.Add(templates.getRandomChunkTemplate());
+                InitNewTemplatesToUse(possibleTemplates);
             }
 
             ConstructionLine lineToReturn;

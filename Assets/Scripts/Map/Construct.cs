@@ -1,12 +1,5 @@
 ﻿namespace VampireDrama
 {
-    public enum ConstructHVDirection
-    {
-        None = 0,
-        Horizontal = 1,
-        Vertical = 2
-    }
-
     public class Construct
     {
         public bool Passable;
@@ -14,9 +7,16 @@
         public bool HasLightSource;
 
         public ConstructionType Id;
-        public string Texture;
-
         public ConstructHVDirection Dir;
+
+        public Construct(PossibleConstruct construct)
+        {
+            Id = construct.Id;
+            Passable = construct.Passable;
+            Standalone = construct.Standalone;
+            HasLightSource = construct.HasLightSource;
+            Dir = construct.Direction;
+        }
 
         public Construct(bool passable, bool standalone, ConstructHVDirection direction)
         {

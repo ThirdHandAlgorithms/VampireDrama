@@ -10,12 +10,9 @@
         public int Experience;
         public int Bloodfill;
 
-        private SpriteRenderer playerRenderer;
-
         protected override void Start()
         {
             base.Start();
-            playerRenderer = GetComponent<SpriteRenderer>();
 
             lastInput = Time.time;
             Bloodfill = 5;
