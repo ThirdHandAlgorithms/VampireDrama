@@ -8,3 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 04f916de164d89642acc846c96bafb35
+  - enabled: 1
+    path: Assets/Scenes/ScoreScreen.unity
+    guid: f474a2be362e9a943ac4617d1b457255
+  m_configObjects: {}
