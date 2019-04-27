@@ -24,17 +24,17 @@
                 int y = (int)transform.position.y;
 
                 var effect = new HolyAuraEffect();
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x - 1, y - 1, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x, y - 1, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x + 1, y - 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x - 1, y - 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x, y - 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x + 1, y - 1, effect);
 
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x - 1, y, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x, y, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x + 1, y, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x - 1, y, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x, y, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x + 1, y, effect);
 
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x - 1, y + 1, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x, y + 1, effect);
-                GameManager.instance.GetCurrentLevel().ApplyAuraEffect(x + 1, y + 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x - 1, y + 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x, y + 1, effect);
+                GameManager.GetCurrentLevel().ApplyAuraEffect(x + 1, y + 1, effect);
             }
         }
     }

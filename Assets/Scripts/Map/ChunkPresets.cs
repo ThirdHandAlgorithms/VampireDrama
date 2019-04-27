@@ -85,6 +85,7 @@
             var r = Random.value;
             int idxTemplate = (int)((All12x12Templates.Count - 1) * r);
 
+
             return All12x12Templates[idxTemplate];
         }
 
