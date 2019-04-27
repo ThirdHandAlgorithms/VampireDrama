@@ -9,8 +9,23 @@ public class ScoreScene : MonoBehaviour
 
     public void Start()
     {
-        var stats = GameGlobals.GetInstance().PlayerStats;
+        var globals = GameGlobals.GetInstance();
+        var stats = globals.PlayerStats;
         BloodText.text = stats.Bloodfill.ToString();
+
+        int hour, minute;
+        getHMFromTime(globals.TimeSpentOnLevel, out hour, out minute);
+        Time.text = hour.ToString() + ":" + minute.ToString("00");
+    }
+
+    private void getHMFromTime(float time, out int Hour, out int Minute)
+    {
+        int currentIngameTimeOfDayInMinutes = (int)System.Math.Round(time);
+
+        Hour = (int)(currentIngameTimeOfDayInMinutes / 60f);
+        Minute = (int)(currentIngameTimeOfDayInMinutes - (Hour * 60f));
+
+        Hour = Hour % 24;
     }
 
     public void Update()

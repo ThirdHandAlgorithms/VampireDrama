@@ -12,6 +12,11 @@ public class SceneManager : LevelConstruction
     private float lastSunAuraTime;
     private PlayerStats currentPlayerStats;
 
+    public float GetTimeSpentOnLevel()
+    {
+        return Time.time - startTimeOfDay;
+    }
+
     public PlayerStats Stop()
     {
         var playerScript = Player.GetComponent<VampirePlayer>();

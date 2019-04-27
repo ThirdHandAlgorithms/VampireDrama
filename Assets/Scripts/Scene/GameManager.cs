@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         var globals = GameGlobals.GetInstance();
         globals.PlayerStats = stats;
         globals.LevelCompleted = level;
+        globals.TimeSpentOnLevel = sceneScript.GetTimeSpentOnLevel();
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("ScoreScreen");
 

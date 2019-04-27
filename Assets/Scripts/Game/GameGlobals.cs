@@ -5,6 +5,7 @@
         private static GameGlobals instance = null;
         public PlayerStats PlayerStats;
         public int LevelCompleted;
+        public float TimeSpentOnLevel;
 
         public GameGlobals()
         {
