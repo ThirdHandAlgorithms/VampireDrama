@@ -27,7 +27,7 @@ public class SceneManager : LevelConstruction
     }
 
     // Update is called once per frame
-    public void Update ()
+    public void Update()
     {
         var cameras = Camera.allCameras;
         if (cameras.Length > 0)
