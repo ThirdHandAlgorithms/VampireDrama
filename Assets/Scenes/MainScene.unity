@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -88,6 +95,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -160,9 +168,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -302,12 +311,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247537482}
   m_CullTransparentMesh: 0
---- !u!1 &635171931 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1912372597758822, guid: 3466058c18c85964d9484bb95f34f560,
-    type: 3}
-  m_PrefabInstance: {fileID: 772969741}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &688187630
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +369,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 773f0e8f3d28cc3409e815285cdabdfa, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -387,68 +390,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688187630}
   m_CullTransparentMesh: 1
---- !u!1001 &772969741
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1912372597758822, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4323053669983962, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8912246549455810073, guid: 3466058c18c85964d9484bb95f34f560,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3466058c18c85964d9484bb95f34f560, type: 3}
 --- !u!1 &829693246
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +536,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbc50e3d7e240e4a93848162fe205a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 635171931}
+  PlayerPrefab: {fileID: 1912372597758822, guid: 3466058c18c85964d9484bb95f34f560,
+    type: 3}
   RoadCrossing:
   - {fileID: 1609172827344564, guid: f3a07d9b102270440b17de960ff33e32, type: 3}
   RoadV:
@@ -654,7 +596,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa5a6431ab01b9428826934a12df3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
 --- !u!1 &1212246471
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +660,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1338412496
 PrefabInstance:
@@ -850,7 +791,7 @@ PrefabInstance:
         type: 2}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 635171931}
+      objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
       propertyPath: BorderE
@@ -952,7 +893,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 773f0e8f3d28cc3409e815285cdabdfa, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -1031,7 +972,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 773f0e8f3d28cc3409e815285cdabdfa, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0

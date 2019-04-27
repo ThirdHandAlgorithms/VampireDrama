@@ -53,7 +53,7 @@
         private void ScreamForHelp()
         {
             Debug.Log("HELP! DEMON! VAMPIRE!");
-            var level = GameManager.instance.GetCurrentLevel();
+            var level = GameManager.GetCurrentLevel();
             level.VampireAlert(transform.position);
         }
 

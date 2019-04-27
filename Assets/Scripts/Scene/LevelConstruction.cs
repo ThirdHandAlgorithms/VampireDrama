@@ -5,7 +5,7 @@
 
     public class LevelConstruction : MonoBehaviour
     {
-        public GameObject Player;
+        public GameObject PlayerPrefab;
         public GameObject[] RoadCrossing;
         public GameObject[] RoadV;
         public GameObject[] RoadH;
@@ -29,6 +29,7 @@
         public GameObject[] BloodPrefabs;
         public GameObject[] BridgeBottomH;
 
+        protected GameObject Player;
         protected List<GameObject> humans;
         protected List<GameObject> allObjects;
         protected GameObject exitInstance;
@@ -42,10 +43,13 @@
 
         public LevelConstruction()
         {
+            Debug.Log("Constructor");
         }
 
         public virtual void InitScene(int level)
         {
+            Debug.Log("InitScene " + level.ToString());
+
             allObjects = new List<GameObject>();
             humans = new List<GameObject>();
 
@@ -72,6 +76,9 @@
             }
 
             Debug.Log(startOfRandomState);
+
+            Player = Instantiate(PlayerPrefab, new Vector3(5f, 0f, 0f), Quaternion.identity) as GameObject;
+            Debug.Log("Player?");
 
             fullMap = currentMap.GetFullmap();
 
@@ -290,6 +297,8 @@
 
         protected void ClearScene()
         {
+            Destroy(Player);
+
             foreach (var obj in humans)
             {
                 Destroy(obj);

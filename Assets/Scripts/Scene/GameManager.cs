@@ -1,33 +1,39 @@
 ﻿using UnityEngine;
+using VampireDrama;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager instance;
 	private SceneManager sceneScript;
 
-	public int level;
+	private int level;
 
-	void Awake () {
-		if (instance == null) instance = this;
-		else if (instance != this) Destroy(gameObject);	
-
-		DontDestroyOnLoad(gameObject);
+	public void Awake()
+    {
+        Debug.Log("Awake");
+        instance = this;
 		sceneScript = GetComponent<SceneManager>();
 		InitGame();
 	}
-
-    public SceneManager GetCurrentLevel()
+    private static GameManager getInstance()
     {
-        return sceneScript;
+        return instance;
     }
 
-	private void InitGame()
+    public static SceneManager GetCurrentLevel()
+    {
+        return GameManager.getInstance().sceneScript;
+    }
+
+    private void InitGame()
 	{
-		sceneScript.InitScene(level);
+        level = GameGlobals.GetInstance().LevelCompleted + 1;
+
+        sceneScript.InitScene(level);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update() {
 		
 	}
 
@@ -35,10 +41,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Level completed!");
 
-        // todo: show score screen and save
-        sceneScript.Stop();
+        var stats = sceneScript.Stop();
+        var globals = GameGlobals.GetInstance();
+        globals.PlayerStats = stats;
+        globals.LevelCompleted = level;
 
-        level++;
-        sceneScript.InitScene(level);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ScoreScreen");
+
+
+        //level++;
+        //sceneScript.InitScene(level);
     }
 }

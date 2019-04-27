@@ -7,15 +7,15 @@
         public string Name;
         private float lastInput;
 
-        public int Experience;
-        public int Bloodfill;
+        public PlayerStats Stats;
 
         protected override void Start()
         {
             base.Start();
 
+            Stats = GameGlobals.GetInstance().PlayerStats;
+
             lastInput = Time.time;
-            Bloodfill = 5;
         }
 
         public override void Update()
@@ -65,7 +65,7 @@
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)
         {
-            var level = GameManager.instance.GetCurrentLevel();
+            var level = GameManager.GetCurrentLevel();
 
             if (target.GetResistance() > 0.5)
             {
@@ -75,9 +75,9 @@
             else
             {
                 FullAttackMove(hor, ver);
-                Bloodfill += target.LitresOfBlood;
+                Stats.Bloodfill += target.LitresOfBlood;
                 level.Kill(target, obj);
-                Experience++;
+                Stats.Experience++;
             }
 
             return true;
@@ -85,8 +85,8 @@
 
         public void Burn(int strength)
         {
-            Bloodfill = System.Math.Max(0, Bloodfill - strength);
-            if (Bloodfill == 0)
+            Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
+            if (Stats.Bloodfill == 0)
             {
                 Debug.Log("You just died, queue the high-score screen and start over again");
                 // todo: GameOver();

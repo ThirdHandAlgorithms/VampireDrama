@@ -10,15 +10,20 @@ public class SceneManager : LevelConstruction
 
     private float startTimeOfDay;
     private float lastSunAuraTime;
+    private PlayerStats currentPlayerStats;
 
-    public void Stop()
+    public PlayerStats Stop()
     {
-        var playerScript = Player.GetComponent<MovingObject>();
+        var playerScript = Player.GetComponent<VampirePlayer>();
         playerScript.StopMoving();
 
+        currentPlayerStats = playerScript.Stats;
+
         ClearScene();
+
+        return currentPlayerStats;
     }
-        
+
     public override void InitScene(int level)
     {
         base.InitScene(level);
@@ -30,7 +35,7 @@ public class SceneManager : LevelConstruction
     public void Update()
     {
         var cameras = Camera.allCameras;
-        if (cameras.Length > 0)
+        if ((Player != null) && (cameras.Length > 0))
         {
             cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
 
@@ -80,8 +85,9 @@ public class SceneManager : LevelConstruction
     private void DisplayPlayerStats()
     {
         var player = Player.GetComponent<VampirePlayer>();
-        XPText.text = "XP: " + player.Experience.ToString();
-        BloodfillText.text = "Blood: " + player.Bloodfill.ToString();
+        currentPlayerStats = player.Stats;
+        XPText.text = "XP: " + currentPlayerStats.Experience.ToString();
+        BloodfillText.text = "Blood: " + currentPlayerStats.Bloodfill.ToString();
     }
 
     public void Kill(Human target, GameObject obj)
@@ -89,7 +95,6 @@ public class SceneManager : LevelConstruction
         Vector3 killspot = obj.transform.position;
         humans.Remove(obj);
         Destroy(obj);
-
 
         var bloodstain = Instantiate(Bloodstain[0], killspot, Quaternion.identity) as GameObject;
         allObjects.Add(bloodstain);
