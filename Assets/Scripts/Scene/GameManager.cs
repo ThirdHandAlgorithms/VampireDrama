@@ -53,4 +53,17 @@ public class GameManager : MonoBehaviour
         //level++;
         //sceneScript.InitScene(level);
     }
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over, Man!");
+
+        var stats = sceneScript.Stop();
+        var globals = GameGlobals.GetInstance();
+        globals.PlayerStats = stats;
+        globals.LevelCompleted = level;
+        globals.TimeSpentOnLevel = sceneScript.GetTimeSpentOnLevel();
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverScreen");
+    }
 }

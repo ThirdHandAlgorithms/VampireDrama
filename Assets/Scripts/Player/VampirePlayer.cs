@@ -94,7 +94,8 @@
             if (Stats.Bloodfill == 0)
             {
                 Debug.Log("You just died, queue the high-score screen and start over again");
-                // todo: GameOver();
+
+                GameManager.instance.GameOver();
             }
         }
 
