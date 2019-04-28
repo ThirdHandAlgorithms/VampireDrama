@@ -45,7 +45,6 @@
 
         public LevelConstruction()
         {
-            Debug.Log("Constructor");
         }
 
         public virtual void InitScene(int level)
@@ -93,6 +92,11 @@
             {
                 AddHuman();
             }
+        }
+
+        public Vector2 GetExitPosition()
+        {
+            return exitInstance.transform.position;
         }
 
         private int getHumanCountForLevel(int level)

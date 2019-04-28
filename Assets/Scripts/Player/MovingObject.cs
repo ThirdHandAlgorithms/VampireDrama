@@ -40,7 +40,7 @@
             isMoving = false;
         }
 
-        protected bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
+        protected virtual bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
         {
             boxCollider.enabled = false;
 
