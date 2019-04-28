@@ -50,3 +50,6 @@ TagManager:
   - name: Units
     uniqueID: 2066495187
     locked: 0
+  - name: Blood
+    uniqueID: 394872743
+    locked: 0
