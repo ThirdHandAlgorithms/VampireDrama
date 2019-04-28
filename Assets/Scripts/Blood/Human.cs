@@ -4,7 +4,7 @@
 
     public class Human : MovingAnimation
     {
-        public int LitresOfBlood;
+        public float LitresOfBlood;
         public int Suspicion;
         public int Intoxication;
         public int Darkness;
@@ -14,6 +14,8 @@
         public bool hitSomething;
         public RaycastHit2D hit;
 
+        private float Strength;
+
         protected override void Start()
         {
             base.Start();
@@ -21,8 +23,9 @@
             Suspicion = (int)(Random.value * 5);
             Intoxication = (int)(Random.value * 100);
             Darkness = (int)(Random.value * 25);
-            LitresOfBlood = 5;
+            LitresOfBlood = 5f;
             OutOfSightOutOfMind = 10;
+            Strength = Random.value * GameManager.GetCurrentLevel().Level;
 
             lastMovement = Time.time;
             lastIdleMusingTime = Time.time;
@@ -41,12 +44,38 @@
                 }
                 else
                 {
-                    return (Suspicion / 100f) * (LitresOfBlood / 5f) * ((100f - Intoxication) / 100f);
+                    return System.Math.Min(1, (Suspicion / 100f) * (LitresOfBlood / 5f) * (Strength + ((100f - Intoxication) / 100f)));
                 }
             }
             else
             {
-                return (LitresOfBlood / 5f) * ((100f - Intoxication) / 100f);
+                return (LitresOfBlood / 5f) * (Strength + ((100f - Intoxication) / 100f));
+            }
+        }
+
+        public bool IsVeryDrunk()
+        {
+            return Intoxication > 50;
+        }
+
+        public bool IsVerySuspicious()
+        {
+            return Suspicion > 50;
+        }
+
+        public void LoseBlood(float hitStrength, VampirePlayer attacker)
+        {
+            LitresOfBlood -= hitStrength * (1 + (Intoxication / 100f));
+
+            if (!KnowsWhatsUp() && IsVeryDrunk())
+            {
+                Suspicion = System.Math.Max(51, Suspicion);
+            }
+            else if (!IsVeryDrunk())
+            {
+                Suspicion = System.Math.Max(80, Suspicion);
+                lastDirection.x = (int)(attacker.transform.position.x - transform.position.x);
+                lastDirection.y = (int)(attacker.transform.position.y - transform.position.y);
             }
         }
 

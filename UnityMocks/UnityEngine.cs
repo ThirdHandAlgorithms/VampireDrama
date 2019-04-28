@@ -301,8 +301,8 @@
         public Vector3 position;
 
         public GameObject gameObject { get; set; }
-        public Object parent = null;
-        private Object component = null;
+        public object parent = null;
+        private object component = null;
 
         public Transform() : base()
         {
@@ -320,7 +320,12 @@
         }
     }
 
-    public class SpriteRenderer: MonoBehaviour
+    public class Renderer: MonoBehaviour
+    {
+        public bool enabled { get; set; }
+    }
+
+    public class SpriteRenderer: Renderer
     {
         public bool flipX, flipY;
     }
@@ -368,9 +373,19 @@
         {
             return (T)(new Object());
         }
+
+        public T[] GetComponentsInChildren<T>()
+        {
+            return new T[0];
+        }
+
+        public T[] GetComponents<T>()
+        {
+            return new T[0];
+        }
     }
 
-    public class Animator
+    public class Animator: Component
     {
         public void Play(string state)
         {

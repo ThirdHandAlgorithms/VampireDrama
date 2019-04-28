@@ -41,6 +41,8 @@
         protected int startAndExit;
         protected string startOfRandomState;
 
+        public int Level { get; set; }
+
         public LevelConstruction()
         {
             Debug.Log("Constructor");
@@ -49,6 +51,7 @@
         public virtual void InitScene(int level)
         {
             Debug.Log("InitScene " + level.ToString());
+            Level = level;
 
             allObjects = new List<GameObject>();
             humans = new List<GameObject>();

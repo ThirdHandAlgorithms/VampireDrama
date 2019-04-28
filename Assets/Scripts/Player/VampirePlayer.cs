@@ -63,19 +63,24 @@
             }
         }
 
+        public float GetBasicStrength()
+        {
+            return 1f;
+        }
+
         public bool Fight(Human target, GameObject obj, int hor, int ver)
         {
             var level = GameManager.GetCurrentLevel();
 
             if (target.GetResistance() > 0.5)
             {
-                target.LitresOfBlood--;
+                target.LoseBlood(GetBasicStrength() * Random.value, this);
                 AttackMove(hor, ver);
             }
             else
             {
                 FullAttackMove(hor, ver);
-                Stats.Bloodfill += target.LitresOfBlood;
+                Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
                 level.Kill(target, obj);
                 Stats.Experience++;
             }
