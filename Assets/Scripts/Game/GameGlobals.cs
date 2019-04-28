@@ -20,5 +20,14 @@
 
             return instance;
         }
+
+        public void Reset()
+        {
+            PlayerStats.Bloodfill = 0;
+            PlayerStats.Experience = 0;
+
+            LevelCompleted = 0;
+            TimeSpentOnLevel = 0;
+        }
     }
 }
