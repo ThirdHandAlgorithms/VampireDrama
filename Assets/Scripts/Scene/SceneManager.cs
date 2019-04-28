@@ -107,13 +107,16 @@ public class SceneManager : LevelConstruction
 
     public void VampireAlert(Vector2 at)
     {
-        // todo: maybe this should be an aura effect as well....
-
-        // todo: overlay alert
-
-        // todo: alert others in a certain radius
-
-        // todo: if there are multiple people, form a pitchfork party
+        foreach (var obj in humans)
+        {
+            var human = obj.GetComponent<Human>();
+            human.MakeAwareOfVampire(at);
+            if (human.KnowsWhatsUp())
+            {
+                var path = GetPathToPlayer(obj.transform.position);
+                human.StartWalkingPath(path);
+            }
+        }
     }
 
     public void ApplyAuraEffect(int posx, int posy, AuraEffect effect)

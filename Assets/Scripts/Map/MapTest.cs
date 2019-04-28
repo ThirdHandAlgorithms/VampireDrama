@@ -35,13 +35,8 @@
             return (GetPath().Length > 0);
         }
 
-        public Position[] GetPath()
+        public Position[] GetPath(Position start, Position end)
         {
-            var config = MapConfiguration.getInstance();
-
-            var start = new Position((int)(config.Width / 2), config.Height - 1);
-            var end = new Position((int)(config.Width / 2), 0);
-
             if ((grid.GetCellCost(start) == float.PositiveInfinity) || (grid.GetCellCost(end) == float.PositiveInfinity))
             {
                 return new Position[0];
@@ -55,6 +50,16 @@
                 start,
                 end,
                 movementPattern);
+        }
+
+        public Position[] GetPath()
+        {
+            var config = MapConfiguration.getInstance();
+
+            var start = new Position((int)(config.Width / 2), config.Height - 1);
+            var end = new Position((int)(config.Width / 2), 0);
+
+            return GetPath(start, end);
         }
     }
 }

@@ -81,7 +81,6 @@
             Debug.Log(startOfRandomState);
 
             Player = Instantiate(PlayerPrefab, new Vector3(5f, 0f, 0f), Quaternion.identity) as GameObject;
-            Debug.Log("Player?");
 
             fullMap = currentMap.GetFullmap();
 
@@ -317,5 +316,13 @@
             allObjects.Clear();
         }
 
+        protected RoyT.AStar.Position[] GetPathToPlayer(Vector3 from)
+        {
+            MapTest mapTest = new MapTest(currentMap);
+            var start = new RoyT.AStar.Position((int)from.x, (int)from.y);
+            var end = new RoyT.AStar.Position((int)Player.transform.position.x, (int)Player.transform.position.y);
+
+            return mapTest.GetPath(start, end);
+        }
     }
 }

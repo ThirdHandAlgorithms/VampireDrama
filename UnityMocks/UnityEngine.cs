@@ -233,6 +233,14 @@
         {
             return new Vector3(v);
         }
+
+        public float sqrMagnitude
+        {
+            get
+            {
+                return (float)Math.Sqrt(x * x * y * y);
+            }
+        }
     }
 
     public class Vector3

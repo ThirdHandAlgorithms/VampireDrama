@@ -1,6 +1,7 @@
 ﻿namespace VampireDrama
 {
     using UnityEngine;
+    using System.Collections.Generic;
 
     public class Human : MovingAnimation
     {
@@ -13,11 +14,14 @@
         public float lastIdleMusingTime;
         public bool hitSomething;
         public RaycastHit2D hit;
+        private List<RoyT.AStar.Position> currentPath;
 
         private float Strength;
 
         protected override void Start()
         {
+            currentPath = new List<RoyT.AStar.Position>();
+
             base.Start();
 
             Suspicion = (int)(Random.value * 5);
@@ -61,6 +65,11 @@
         public bool IsVerySuspicious()
         {
             return Suspicion > 50;
+        }
+
+        public bool IsAlerted()
+        {
+            return KnowsWhatsUp();
         }
 
         public void LoseBlood(float hitStrength, VampirePlayer attacker)
@@ -155,6 +164,26 @@
             Suspicion = System.Math.Min(Suspicion + vision, 100);
         }
 
+        public void MakeAwareOfVampire(Vector2 at)
+        {
+            // sight is hearing here, but we dont have a hearing property
+            var distance = at - new Vector2(transform.position.x, transform.position.y);
+
+            if (distance.sqrMagnitude < 200)
+            {
+                Suspicion = System.Math.Min(Suspicion + (int)(200 - distance.sqrMagnitude), 100);
+            }
+        }
+
+        public void StartWalkingPath(RoyT.AStar.Position[] path)
+        {
+            currentPath.Clear();
+            currentPath.AddRange(path);
+            
+            // first node is the current position
+            if (currentPath.Count > 0) currentPath.RemoveAt(0);
+        }
+
         public bool KnowsWhatsUp()
         {
             return Suspicion >= 80;
@@ -192,10 +221,26 @@
                 return;
             }
 
-            var hv = getRandomDirection();
+            if (currentPath.Count > 0)
+            {
+                var hv = currentPath[0];
+                currentPath.RemoveAt(0);
 
-            hitSomething = !Move(hv.x, hv.y, out hit);
-            lastMovement = timeNow;
+                hitSomething = !Move((int)(hv.X - transform.position.x), (int)(hv.Y - transform.position.y), out hit);
+                lastMovement = timeNow;
+
+                if (!IsAlerted())
+                {
+                    currentPath.Clear();
+                }
+            }
+            else
+            {
+                var hv = getRandomDirection();
+
+                hitSomething = !Move(hv.x, hv.y, out hit);
+                lastMovement = timeNow;
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D item)
