@@ -15,6 +15,7 @@
         public bool hitSomething;
         public RaycastHit2D hit;
         private List<RoyT.AStar.Position> currentPath;
+        private bool ActuallySeeingAVampire;
 
         private float Strength;
 
@@ -24,6 +25,7 @@
 
             base.Start();
 
+            ActuallySeeingAVampire = false;
             Suspicion = (int)(Random.value * 5);
             Intoxication = (int)(Random.value * 100);
             Darkness = (int)(Random.value * 25);
@@ -126,6 +128,18 @@
             return new Direction(hor, ver);
         }
 
+        protected override bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
+        {
+            var level = GameManager.GetCurrentLevel();
+            if (end == level.GetExitPosition())
+            {
+                hit = new RaycastHit2D();
+                return true;
+            }
+
+            return base.IsSomethingThere(start, end, out hit);
+        }
+
         public void IdleMusings()
         {
             var timeNow = Time.time;
@@ -145,10 +159,12 @@
                 VampirePlayer vampire = gameObjHit.GetComponent<VampirePlayer>();
                 if (vampire != null)
                 {
+                    ActuallySeeingAVampire = true;
                     IncreaseSuspicion(sight, hit.transform.position - transform.position);
                 }
                 else
                 {
+                    ActuallySeeingAVampire = false;
                     Suspicion = System.Math.Max(Suspicion - OutOfSightOutOfMind, 0);
                 }
 
@@ -202,7 +218,7 @@
                 {
                     AskToBeTurned();
                 }
-                else
+                else if (ActuallySeeingAVampire)
                 {
                     ScreamForHelp();
                 }
