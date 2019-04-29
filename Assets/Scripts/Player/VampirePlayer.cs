@@ -74,8 +74,13 @@
 
             if (target.GetResistance() > 0.5)
             {
-                target.LoseBlood(GetBasicStrength() * Random.value, this);
+                var originalPosition = transform.position;
                 AttackMove(hor, ver);
+
+                onAttackHalfway = () =>
+                {
+                    target.LoseBlood(GetBasicStrength() * Random.value, originalPosition);
+                };
             }
             else
             {
@@ -89,6 +94,17 @@
         }
 
         public void Burn(int strength)
+        {
+            Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
+            if (Stats.Bloodfill == 0)
+            {
+                Debug.Log("You just died, queue the high-score screen and start over again");
+
+                GameManager.instance.GameOver();
+            }
+        }
+
+        public void ReceivePunch(int strength)
         {
             Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
             if (Stats.Bloodfill == 0)

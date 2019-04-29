@@ -16,6 +16,8 @@
         public RaycastHit2D hit;
         private List<RoyT.AStar.Position> currentPath;
         private bool ActuallySeeingAVampire;
+        private float lastHit;
+        private float hitCooldown;
 
         private float Strength;
 
@@ -32,7 +34,9 @@
             LitresOfBlood = 5f;
             OutOfSightOutOfMind = 10;
             Strength = Random.value * GameManager.GetCurrentLevel().Level;
+            hitCooldown = 5f;
 
+            lastHit = Time.time;
             lastMovement = Time.time;
             lastIdleMusingTime = Time.time;
 
@@ -74,7 +78,7 @@
             return KnowsWhatsUp();
         }
 
-        public void LoseBlood(float hitStrength, VampirePlayer attacker)
+        public void LoseBlood(float hitStrength, Vector3 attackerPosition)
         {
             LitresOfBlood -= hitStrength * (1 + (Intoxication / 100f));
 
@@ -85,8 +89,8 @@
             else if (!IsVeryDrunk())
             {
                 Suspicion = System.Math.Max(80, Suspicion);
-                lastDirection.x = (int)(attacker.transform.position.x - transform.position.x);
-                lastDirection.y = (int)(attacker.transform.position.y - transform.position.y);
+                lastDirection.x = (int)(attackerPosition.x - transform.position.x);
+                lastDirection.y = (int)(attackerPosition.y - transform.position.y);
             }
         }
 
@@ -172,6 +176,29 @@
             }
         }
 
+        protected bool IsVampireRightInFront(out VampirePlayer vampire)
+        {
+            vampire = null;
+
+            Vector2 start = transform.position;
+            Vector2 end = start + new Vector2(lastDirection.x, lastDirection.y);
+
+            RaycastHit2D hit = new RaycastHit2D();
+            if (IsSomethingThere(start, end, out hit))
+            {
+                Transform objectHit = hit.transform;
+                GameObject gameObjHit = objectHit.gameObject;
+
+                vampire = gameObjHit.GetComponent<VampirePlayer>();
+                if (vampire != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void IncreaseSuspicion(int sight, Vector2 distance)
         {
             float walkingDistance = System.Math.Abs(distance.x) + System.Math.Abs(distance.y);
@@ -225,6 +252,11 @@
             }
         }
 
+        protected bool IsOnCooldown()
+        {
+            return (Time.time - lastHit) < hitCooldown;
+        }
+
         public override void Update()
         {
             base.Update();
@@ -234,6 +266,20 @@
             if (timeNow - lastMovement < getMovementTime())
             {
                 IdleMusings();
+                return;
+            }
+
+            VampirePlayer vampire;
+            if (!IsDark() && KnowsWhatsUp() && !IsOnCooldown() && IsVampireRightInFront(out vampire))
+            {
+                AttackMove(lastDirection.x, lastDirection.y);
+
+                onAttackHalfway = () =>
+                {
+                    vampire.ReceivePunch((int)System.Math.Ceiling(Strength * Random.value));
+                };
+
+                lastHit = Time.time;
                 return;
             }
 

@@ -14,6 +14,8 @@
         }
     }
 
+    public delegate void DelegateOnAttackHalfwayPoint();
+
     public abstract class MovingObject : MonoBehaviour
     {
         public float moveTime = 0.1f;
@@ -31,6 +33,8 @@
         protected bool isAttackMoving;
         protected bool isBackMoving;
         protected bool isFullAttack;
+
+        protected DelegateOnAttackHalfwayPoint onAttackHalfway;
 
         protected virtual void Start()
         {
@@ -174,6 +178,8 @@
             isBackMoving = true;
             moveTo = moveBackTo;
             sqrRemainingDistance = (transform.position - moveTo).sqrMagnitude;
+
+            onAttackHalfway.Invoke();
         }
 
         public void StopMoving()
