@@ -320,7 +320,7 @@
             allObjects.Clear();
         }
 
-        protected RoyT.AStar.Position[] GetPathToPlayer(Vector3 from)
+        public RoyT.AStar.Position[] GetPathToPlayer(Vector3 from)
         {
             MapTest mapTest = new MapTest(currentMap);
             var start = new RoyT.AStar.Position((int)from.x, (int)from.y);

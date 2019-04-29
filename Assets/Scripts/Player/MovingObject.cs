@@ -25,6 +25,7 @@
         private Rigidbody2D rb2D;
         private float inverseMoveTime;
         private float sqrRemainingDistance;
+        private Vector3 moveFrom;
         private Vector3 moveTo;
         private Vector3 moveBackTo;
         public Direction lastDirection;
@@ -42,6 +43,18 @@
             rb2D = GetComponent<Rigidbody2D>();
             inverseMoveTime = 1f / moveTime;
             isMoving = false;
+        }
+
+        public Vector2 GetOriginalPosition()
+        {
+            if (isMoving)
+            {
+                return moveFrom;
+            }
+            else
+            {
+                return transform.position;
+            }
         }
 
         protected virtual bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
@@ -148,6 +161,7 @@
 
         protected void StartSmoothMovement(Vector3 end)
         {
+            moveFrom = transform.position;
             moveTo = end;
             sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             isMoving = true;
@@ -155,6 +169,7 @@
 
         protected void StartAttackMovement(Vector3 start, Vector3 end)
         {
+            moveFrom = start;
             moveTo = end;
             moveBackTo = start;
 

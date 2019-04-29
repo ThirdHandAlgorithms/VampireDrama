@@ -176,6 +176,84 @@
             }
         }
 
+        protected void PeripheralVisionAngles(out int startAngle, out int stopAngle)
+        {
+            if ((lastDirection.x == -1) && (lastDirection.y == 0))
+            {
+                startAngle = -150;
+                stopAngle = -30;
+            }
+            else if ((lastDirection.x == 1) && (lastDirection.y == 0))
+            {
+                startAngle = 30;
+                stopAngle = 150;
+            }
+            else if ((lastDirection.x == 0) && (lastDirection.y == 1))
+            {
+                startAngle = -60;
+                stopAngle = 60;
+            }
+            else if ((lastDirection.x == 0) && (lastDirection.y == -1))
+            {
+                startAngle = 120;
+                stopAngle = 240;
+            }
+            else
+            {
+                startAngle = 0;
+                stopAngle = 0;
+            }
+        }
+
+        protected void VampireScanAndAim()
+        {
+            Vector2 start = transform.position;
+            int sight = ((100 - Intoxication) / 10) + 1;
+
+            int startAngle;
+            int stopAngle;
+            PeripheralVisionAngles(out startAngle, out stopAngle);
+
+            for (var angle = startAngle; angle <= stopAngle; angle += 10)
+            {
+                double x = System.Math.Sin(angle * System.Math.PI / 180.0) * sight;
+                double y = System.Math.Cos(angle * System.Math.PI / 180.0) * sight;
+
+                Vector2 end = start + new Vector2((float)x, (float)y);
+
+                RaycastHit2D hit = new RaycastHit2D();
+                if (IsSomethingThere(start, end, out hit))
+                {
+                    Transform objectHit = hit.transform;
+                    GameObject gameObjHit = objectHit.gameObject;
+
+                    VampirePlayer vampire = gameObjHit.GetComponent<VampirePlayer>();
+                    if (vampire != null)
+                    {
+                        var vampPos = vampire.GetOriginalPosition();
+                        var diffX = vampPos.x - start.x;
+                        var diffY = vampPos.y - start.y;
+                        if ((diffX >= -1) && (diffX <= 1) && (diffY == 0))
+                        {
+                            lastDirection.x = (int)diffX;
+                            lastDirection.y = 0;
+                        }
+                        else if ((diffY >= -1) && (diffY <= 1) && (diffX == 0))
+                        {
+                            lastDirection.x = 0;
+                            lastDirection.y = (int)diffY;
+                        }
+                        else
+                        {
+                            var path = GameManager.GetCurrentLevel().GetPathToPlayer(transform.position);
+                            StartWalkingPath(path);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+
         protected bool IsVampireRightInFront(out VampirePlayer vampire)
         {
             vampire = null;
@@ -249,6 +327,14 @@
                 {
                     ScreamForHelp();
                 }
+                else
+                {
+                    VampireScanAndAim();
+                }
+            }
+            else if (IsVerySuspicious())
+            {
+                VampireScanAndAim();
             }
         }
 
@@ -307,7 +393,7 @@
 
         public void OnTriggerEnter2D(Collider2D item)
         {
-            Debug.Log(this.name + " triggered by " + item.gameObject.name);
+            //Debug.Log(this.name + " triggered by " + item.gameObject.name);
         }
     }
 }

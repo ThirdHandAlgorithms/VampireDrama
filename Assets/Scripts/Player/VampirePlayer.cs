@@ -117,7 +117,7 @@
 
         public void OnTriggerEnter2D(Collider2D item)
         {
-            Debug.Log(this.name + " triggered by " + item.gameObject.name);
+            //Debug.Log(this.name + " triggered by " + item.gameObject.name);
         }
     }
 }
