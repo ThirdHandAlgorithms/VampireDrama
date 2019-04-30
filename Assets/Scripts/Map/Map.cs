@@ -75,7 +75,7 @@
                 UnderConstruction.Add(lastGenerated);
             }
 
-            Historical.Add(UnderConstruction);
+            Historical.Insert(0, UnderConstruction);
         }
 
         private void Clear()
