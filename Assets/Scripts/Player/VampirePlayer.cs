@@ -87,7 +87,7 @@
                 FullAttackMove(hor, ver);
                 Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
                 level.Kill(target, obj);
-                Stats.Experience++;
+                Stats.Experience += 10;
             }
 
             return true;

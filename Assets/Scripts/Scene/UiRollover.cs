@@ -8,7 +8,7 @@ public class UiRollover : MonoBehaviour
     public Text transitionTxt;
     public float animationTime = 1.5f; 
 
-    public float desiredNr, initialNr, currentNr;
+    public float desiredNr = 0, initialNr = 0, currentNr = 0;
 
     public void setNr(float value)
     {

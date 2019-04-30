@@ -12,6 +12,8 @@ public class SceneManager : LevelConstruction
     private float lastSunAuraTime;
     private PlayerStats currentPlayerStats;
 
+    private UiRollover XPRollover;
+
     public float GetTimeSpentOnLevel()
     {
         return Time.time - startTimeOfDay;
@@ -33,6 +35,9 @@ public class SceneManager : LevelConstruction
     {
         base.InitScene(level);
 
+        XPRollover = new UiRollover();
+        XPRollover.transitionTxt = XPText;
+
         startTimeOfDay = Time.time;
     }
 
@@ -51,6 +56,8 @@ public class SceneManager : LevelConstruction
             DisplayTimeOfDay(hour, minute);
 
             HandleTimeOfDay(hour);
+
+            XPRollover.UpdateNr();
         }
     }
 
@@ -91,7 +98,10 @@ public class SceneManager : LevelConstruction
     {
         var player = Player.GetComponent<VampirePlayer>();
         currentPlayerStats = player.Stats;
-        XPText.text = "XP: " + currentPlayerStats.Experience.ToString();
+        //XPText.text = "XP: " + currentPlayerStats.Experience.ToString();
+
+        XPRollover.setNr(currentPlayerStats.Experience);
+
         BloodfillText.text = "Blood: " + currentPlayerStats.Bloodfill.ToString();
     }
 
