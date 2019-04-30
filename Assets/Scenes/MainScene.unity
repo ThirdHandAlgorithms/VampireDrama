@@ -158,7 +158,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -318,7 +318,7 @@ SpriteRenderer:
   m_SortingLayerID: 394872743
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c742d5862a0502489992c115369dcd0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &247537482
@@ -499,7 +499,7 @@ SpriteRenderer:
   m_SortingLayerID: 394872743
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c742d5862a0502489992c115369dcd0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -507,7 +507,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &508122637
@@ -701,7 +701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -130, y: -20.000002}
+  m_AnchoredPosition: {x: -130, y: -20}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &759754189
@@ -760,7 +760,7 @@ SpriteRenderer:
   m_SortingLayerID: 394872743
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c742d5862a0502489992c115369dcd0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -768,7 +768,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &829693246
@@ -961,7 +961,8 @@ MonoBehaviour:
   - {fileID: 1413321323189438, guid: 96c834e23d6b0cc46b4b05cabcf89b2e, type: 3}
   - {fileID: 1565667635693750, guid: ee4f02036f9c2554e9e9c3a84eb7a806, type: 3}
   - {fileID: 1389379551073354, guid: 134b637b0dd9d2247b45c7340e74828a, type: 3}
-  BridgeBottomH: []
+  BridgeBottomH:
+  - {fileID: 1517841448877270, guid: eec8b44ff369b324a9761878dfe42824, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   TimeOfDayText: {fileID: 1890321003}
@@ -1071,7 +1072,7 @@ SpriteRenderer:
   m_SortingLayerID: 394872743
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c742d5862a0502489992c115369dcd0, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1079,7 +1080,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1212246471
@@ -1265,6 +1266,11 @@ PrefabInstance:
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
       propertyPath: ChurchH.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
+      propertyPath: BridgeBottomH.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
