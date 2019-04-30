@@ -158,19 +158,29 @@
             if (IsSomethingThere(start, end, out hit))
             {
                 Transform objectHit = hit.transform;
-                GameObject gameObjHit = objectHit.gameObject;
+                if (objectHit != null)
+                {
+                    GameObject gameObjHit = objectHit.gameObject;
 
-                VampirePlayer vampire = gameObjHit.GetComponent<VampirePlayer>();
-                if (vampire != null)
-                {
-                    ActuallySeeingAVampire = true;
-                    IncreaseSuspicion(sight, hit.transform.position - transform.position);
+                    VampirePlayer vampire = gameObjHit.GetComponent<VampirePlayer>();
+                    if (vampire != null)
+                    {
+                        ActuallySeeingAVampire = true;
+                        IncreaseSuspicion(sight, hit.transform.position - transform.position);
+                    }
+                    else
+                    {
+                        ActuallySeeingAVampire = false;
+                        Suspicion = System.Math.Max(Suspicion - OutOfSightOutOfMind, 0);
+                    }
+
+                    ThinkAndReact();
                 }
-                else
-                {
-                    ActuallySeeingAVampire = false;
-                    Suspicion = System.Math.Max(Suspicion - OutOfSightOutOfMind, 0);
-                }
+            }
+            else
+            {
+                ActuallySeeingAVampire = false;
+                Suspicion = System.Math.Max(Suspicion - OutOfSightOutOfMind, 0);
 
                 ThinkAndReact();
             }
