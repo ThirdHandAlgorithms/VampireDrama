@@ -60,7 +60,24 @@
 
                     Fight(sheep, gameObjHit, hor, ver);
                 }
+
+                Item item = gameObjHit.GetComponent<Item>();
+                if (item != null)
+                {
+                    var inventory = GetInventory();
+                    if (inventory.AddItem(item))
+                    {
+                        Destroy(item.gameObject);
+                    }
+
+                    Move(hor, ver, out hit);
+                }
             }
+        }
+
+        public Inventory GetInventory()
+        {
+            return Camera.allCameras[0].GetComponentInChildren<Inventory>() as Inventory;
         }
 
         public float GetBasicStrength()

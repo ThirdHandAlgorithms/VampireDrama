@@ -27,7 +27,25 @@ public class Inventory : MonoBehaviour
         
         for (; i < itemSlots.Length; i++)
         {
-            itemSlots[i].Item = null;        }
+            itemSlots[i].Item = null;
+        }
     }
 
+    public bool IsFull()
+    {
+        return (items.Count >= 2);
+    }
+
+    // todo: make removeitem()
+
+    public bool AddItem(Item item)
+    {
+        if (IsFull())
+            return false;
+
+        items.Add(item);
+        RefreshUI();
+
+        return true;
+    }
 }

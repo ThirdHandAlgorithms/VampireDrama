@@ -1,6 +1,7 @@
 ﻿namespace VampireDrama
 {
     using UnityEngine;
+    using UnityEditor;
     using System.Collections.Generic;
 
     public class LevelConstruction : MonoBehaviour
@@ -28,6 +29,9 @@
         public GameObject[] Bloodstain;
         public GameObject[] BloodPrefabs;
         public GameObject[] BridgeBottomH;
+        public GameObject[] ItemPrefabs;
+
+        private bool itemAdded;
 
         protected GameObject Player;
         protected List<GameObject> humans;
@@ -87,6 +91,7 @@
             {
                 RenderLine(lineIdx);
             }
+
             int amountOfHumans = getHumanCountForLevel(level);
             for (var idx = 0; idx < amountOfHumans; idx++)
             {
@@ -288,6 +293,12 @@
                     {
                         AddStreetlight(x * tileSize, lineIdx * tileSize);
                     }
+                }
+
+                if (!itemAdded && construct.Passable)
+                {
+                    AddInstance(ItemPrefabs[0], x * tileSize, lineIdx * tileSize);
+                    itemAdded = true;
                 }
 
                 x++;

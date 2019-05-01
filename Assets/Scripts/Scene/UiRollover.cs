@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class UiRollover : MonoBehaviour
+public class UiRollover
 {
     public Text transitionTxt;
     public float animationTime = 1.5f; 
