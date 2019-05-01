@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     [SerializeField] Image Image;    
-    private Item _item;
-    public Item Item {
+    private InventoryItem _item;
+    public InventoryItem Item {
         get { return _item; }
         set { 
             _item = value; 

@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using VampireDrama;
 //using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] List<Item> items;
     [SerializeField] Transform itemsParent;
     [SerializeField] ItemSlot[] itemSlots;
 
@@ -19,31 +17,34 @@ public class Inventory : MonoBehaviour
 
     private void RefreshUI()
     {
-        int i = 0;
-        for (; i < items.Count && i < itemSlots.Length; i++)
-        {
-            itemSlots[i].Item = items[i];
-        }
-        
-        for (; i < itemSlots.Length; i++)
+        var globals = GameGlobals.GetInstance();
+
+        for (var i = 0; i < itemSlots.Length; i++)
         {
             itemSlots[i].Item = null;
+        }
+
+        for (var i = 0; i < globals.PlayerStats.Items.Count && i < itemSlots.Length; i++)
+        {
+            itemSlots[i].Item = globals.PlayerStats.Items[i];
         }
     }
 
     public bool IsFull()
     {
-        return (items.Count >= 2);
+        var globals = GameGlobals.GetInstance();
+        return (globals.PlayerStats.Items.Count >= 2);
     }
 
     // todo: make removeitem()
 
-    public bool AddItem(Item item)
+    public bool AddItem(InventoryItem item)
     {
         if (IsFull())
             return false;
 
-        items.Add(item);
+        var globals = GameGlobals.GetInstance();
+        globals.PlayerStats.Items.Add(item);
         RefreshUI();
 
         return true;

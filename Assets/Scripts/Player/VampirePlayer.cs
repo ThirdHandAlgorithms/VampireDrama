@@ -65,9 +65,9 @@
                 if (item != null)
                 {
                     var inventory = GetInventory();
-                    if (inventory.AddItem(item))
+                    if (inventory.AddItem(item.CreateInventoryItem()))
                     {
-                        Destroy(item.gameObject);
+                        GameManager.GetCurrentLevel().PickUpItem(item);
                     }
 
                     Move(hor, ver, out hit);

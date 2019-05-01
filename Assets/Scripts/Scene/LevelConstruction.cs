@@ -305,6 +305,12 @@
             }
         }
 
+        public void PickUpItem(Item item)
+        {
+            allObjects.Remove(item.gameObject);
+            Destroy(item.gameObject);
+        }
+
         private void InitializePlayerPosition(ConstructionLine line)
         {
             if (Player == null) return;
