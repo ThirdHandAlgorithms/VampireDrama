@@ -12,7 +12,11 @@ public class SceneManager : LevelConstruction
     private float lastSunAuraTime;
     private PlayerStats currentPlayerStats;
 
+    // Rollover bizzlenizzle
     private UiRollover XPRollover;
+    private UiRollover BloodfillRollover;
+    private UiRollover TimeRollover;
+
 
     public float GetTimeSpentOnLevel()
     {
@@ -38,6 +42,12 @@ public class SceneManager : LevelConstruction
         XPRollover = new UiRollover();
         XPRollover.transitionTxt = XPText;
 
+        BloodfillRollover = new UiRollover();
+        BloodfillRollover.transitionTxt = BloodfillText;
+
+        TimeRollover = new UiRollover();
+        TimeRollover.transitionTxt = TimeOfDayText;
+
         startTimeOfDay = Time.time;
     }
 
@@ -58,6 +68,8 @@ public class SceneManager : LevelConstruction
             HandleTimeOfDay(hour);
 
             XPRollover.UpdateNr();
+            BloodfillRollover.UpdateNr();
+            //TimeRollover.UpdateNr();
         }
     }
 
@@ -92,6 +104,8 @@ public class SceneManager : LevelConstruction
     private void DisplayTimeOfDay(int hour, int minute)
     {
         TimeOfDayText.text = "Time: " + hour.ToString() + ":" + minute.ToString("00");
+
+        //TimeRollover.setNr(Time.time);
     }
 
     private void DisplayPlayerStats()
@@ -102,7 +116,9 @@ public class SceneManager : LevelConstruction
 
         XPRollover.setNr(currentPlayerStats.Experience);
 
-        BloodfillText.text = "Blood: " + currentPlayerStats.Bloodfill.ToString();
+        //BloodfillText.text = "Blood: " + currentPlayerStats.Bloodfill.ToString();
+
+        BloodfillRollover.setNr(currentPlayerStats.Bloodfill);
     }
 
     public void Kill(Human target, GameObject obj)

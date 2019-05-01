@@ -36,7 +36,7 @@ public class UiRollover : MonoBehaviour
                currentNr = desiredNr;  
         }
              
-        transitionTxt.text = currentNr.ToString();
+        transitionTxt.text = currentNr.ToString("0");
         
     }
 }
