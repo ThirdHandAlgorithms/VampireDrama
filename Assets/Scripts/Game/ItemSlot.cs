@@ -17,7 +17,7 @@ public class ItemSlot : MonoBehaviour
                 Image.enabled = false;
             }
             else{
-                Image.sprite = _item.Icon;
+                Image.sprite = _item.Stats.Icon;
                 Image.enabled = true;
             }
         }

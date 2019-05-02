@@ -30,7 +30,7 @@
             moveTime = 0.4f;
             foreach (var item in globals.PlayerStats.Items)
             {
-                moveTime += item.TravelSpeed;
+                moveTime += item.Stats.TravelSpeed;
             }
 
             if (Input.GetButtonDown("Fire1"))
@@ -94,7 +94,7 @@
             var globals = GameGlobals.GetInstance();
             foreach (var item in globals.PlayerStats.Items)
             {
-                strength += item.Strength;
+                strength += item.Stats.Strength;
             }
 
             return strength;

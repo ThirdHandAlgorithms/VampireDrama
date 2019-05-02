@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class InventoryItem
+[System.Serializable]
+public struct ItemStats
 {
     public string ItemName;
     public Sprite Icon;
@@ -8,21 +9,20 @@ public class InventoryItem
     public float TravelSpeed;
 }
 
+public class InventoryItem
+{
+    public ItemStats Stats;
+}
+
 public class Item : MonoBehaviour
 {
-    public string ItemName;
-    public Sprite Icon;
-    public float Strength;
-    public float TravelSpeed;
+    public ItemStats Stats;
 
     public InventoryItem CreateInventoryItem()
     {
-        var clone = new InventoryItem();
-        clone.ItemName = ItemName;
-        clone.Icon = Icon;
-        clone.Strength = Strength;
-        clone.TravelSpeed = TravelSpeed;
+        var item = new InventoryItem();
+        item.Stats = Stats;
 
-        return clone;
+        return item;
     }
 }
