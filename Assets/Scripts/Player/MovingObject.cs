@@ -23,7 +23,6 @@
 
         private BoxCollider2D boxCollider;
         private Rigidbody2D rb2D;
-        private float inverseMoveTime;
         private float sqrRemainingDistance;
         private Vector3 moveFrom;
         private Vector3 moveTo;
@@ -41,7 +40,6 @@
         {
             boxCollider = GetComponent<BoxCollider2D>();
             rb2D = GetComponent<Rigidbody2D>();
-            inverseMoveTime = 1f / moveTime;
             isMoving = false;
         }
 
@@ -117,6 +115,8 @@
         {
             if (sqrRemainingDistance > float.Epsilon)
             {
+                float inverseMoveTime = 1f / moveTime;
+
                 Vector3 newPosition = Vector3.MoveTowards(rb2D.position, moveTo, inverseMoveTime * Time.deltaTime);
 
                 rb2D.MovePosition(newPosition);

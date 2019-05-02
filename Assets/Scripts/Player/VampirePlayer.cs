@@ -26,6 +26,13 @@
             var timeNow = Time.time;
             if (timeNow - lastInput < 0.2f) return;
 
+            var globals = GameGlobals.GetInstance();
+            moveTime = 0.4f;
+            foreach (var item in globals.PlayerStats.Items)
+            {
+                moveTime += item.TravelSpeed;
+            }
+
             if (Input.GetButtonDown("Fire1"))
             {
                 // do something
