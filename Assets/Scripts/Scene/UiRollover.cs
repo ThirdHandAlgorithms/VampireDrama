@@ -22,9 +22,13 @@ public class UiRollover
     {
         if(currentNr !=desiredNr)
         {
-            if(initialNr < desiredNr)
+            if (initialNr < desiredNr)
             {
                 currentNr += (animationTime * Time.deltaTime) * (desiredNr - initialNr);
+            }
+            else if (initialNr > desiredNr)
+            {
+                currentNr -= (animationTime * Time.deltaTime) * (initialNr - desiredNr);
             }
         }
         else
