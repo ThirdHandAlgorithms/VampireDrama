@@ -80,7 +80,7 @@
 
         public void LoseBlood(float hitStrength, Vector3 attackerPosition)
         {
-            LitresOfBlood -= hitStrength * (1 + (Intoxication / 100f));
+            LitresOfBlood = System.Math.Max(1, LitresOfBlood - (hitStrength * (1 + (Intoxication / 100f))));
 
             if (!KnowsWhatsUp() && IsVeryDrunk())
             {
