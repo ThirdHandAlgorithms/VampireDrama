@@ -94,8 +94,7 @@ public class SceneManager : LevelConstruction
             {
                 lastSunAuraTime = Time.time;
 
-                var sun = new SunAuraEffect();
-                sun.Strength = hour - 5;    // so at 6:00, you lose 1 blood every second, at 7:00 2 blood every second...
+                var sun = new SunAuraEffect(hour - 5);  // so at 6:00, you lose 1 blood every second, at 7:00 2 blood every second...
                 ApplyAuraEffectEverywhere(sun);
             }
         }

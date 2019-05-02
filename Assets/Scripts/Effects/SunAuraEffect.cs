@@ -2,7 +2,10 @@
 {
     public class SunAuraEffect : AuraEffect
     {
-        public int Strength { get; set; }
+        public SunAuraEffect(float strength)
+        {
+            Strength = strength;
+        }
 
         public override void Affect(Human obj)
         {
@@ -12,7 +15,7 @@
         public override void Affect(VampirePlayer obj)
         {
             // slowly start burning vampire
-            obj.Burn(Strength);
+            obj.Burn((int)Strength);
         }
     }
 }

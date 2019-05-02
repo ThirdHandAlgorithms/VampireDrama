@@ -5,6 +5,7 @@
 
     public class Human : MovingAnimation
     {
+        public float MaxBlood;
         public float LitresOfBlood;
         public int Suspicion;
         public int Intoxication;
@@ -32,6 +33,7 @@
             Intoxication = (int)(Random.value * 100);
             Darkness = (int)(Random.value * 25);
             LitresOfBlood = 5f;
+            MaxBlood = 5f;
             OutOfSightOutOfMind = 10;
             Strength = Random.value * GameManager.GetCurrentLevel().Level;
             hitCooldown = 5f;
@@ -54,12 +56,12 @@
                 }
                 else
                 {
-                    return System.Math.Min(1, (Suspicion / 100f) * (LitresOfBlood / 5f) * (Strength + ((100f - Intoxication) / 100f)));
+                    return System.Math.Min(1, (Suspicion / 100f) * (LitresOfBlood / MaxBlood) * (Strength + ((100f - Intoxication) / 100f)));
                 }
             }
             else
             {
-                return (LitresOfBlood / 5f) * (Strength + ((100f - Intoxication) / 100f));
+                return (LitresOfBlood / MaxBlood) * (Strength + ((100f - Intoxication) / 100f));
             }
         }
 

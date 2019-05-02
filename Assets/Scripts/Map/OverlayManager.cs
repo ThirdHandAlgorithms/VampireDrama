@@ -8,7 +8,6 @@
         private Animator healthbarAnim = null;
         private Human human = null;
         private SpriteRenderer buffRenderer = null;
-        private SpriteRenderer healthbarRenderer = null;
 
         public void Start()
 		{
@@ -20,7 +19,6 @@
             }
 
             buffRenderer = buffAnim.gameObject.GetComponent<SpriteRenderer>();
-            healthbarRenderer = healthbarAnim.gameObject.GetComponent<SpriteRenderer>();
 
             human = (gameObject.transform.parent as Transform).GetComponent<Human>();
         }
@@ -36,7 +34,7 @@
 
         private void updateHealthbar()
         {
-            var percentage = human.LitresOfBlood / 5f * 100f;
+            var percentage = human.LitresOfBlood / human.MaxBlood * 100f;
             if (percentage > 90) healthbarAnim.Play("Hp100");
             else if (percentage > 80) healthbarAnim.Play("Hp90");
             else if (percentage > 70) healthbarAnim.Play("Hp80");
