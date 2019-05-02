@@ -82,7 +82,15 @@
 
         public float GetBasicStrength()
         {
-            return 1f;
+            float strength = 1f;
+
+            var globals = GameGlobals.GetInstance();
+            foreach (var item in globals.PlayerStats.Items)
+            {
+                strength += item.Strength;
+            }
+
+            return strength;
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)
