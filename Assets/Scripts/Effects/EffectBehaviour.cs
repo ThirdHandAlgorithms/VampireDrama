@@ -4,16 +4,14 @@
 
     public class EffectBehaviour : MonoBehaviour
     {
-        public int Range;
-        public int Strength;
+        public int Range = 1;
+        public int Strength = 1;
         public float tickTime = 1f;
 
         protected float lastTick;
 
         public virtual void Start()
         {
-            Range = 3;
-            Strength = 1;
             lastTick = Time.time;
         }
 

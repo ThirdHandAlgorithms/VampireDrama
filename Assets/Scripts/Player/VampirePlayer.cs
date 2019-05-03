@@ -1,5 +1,6 @@
 ﻿namespace VampireDrama
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
     public class VampirePlayer : MovingAnimation
@@ -18,8 +19,38 @@
             lastInput = Time.time;
         }
 
+        protected void UpdateItemEffects()
+        {
+            var globals = GameGlobals.GetInstance();
+            foreach (var item in globals.PlayerStats.Items)
+            {
+                var toRemove = PossibleEffectsUtils.ListAll();
+
+                foreach (var effectEnum in item.Stats.Effects)
+                {
+                    toRemove.Remove(effectEnum);
+
+                    var comp = PossibleEffectsUtils.GetComponentFor(effectEnum, gameObject);
+                    if (comp == null)
+                    {
+                        PossibleEffectsUtils.AddComponentFor(effectEnum, gameObject, item.Stats.ItemLevel);
+                    }
+                }
+
+                foreach (var effectEnum in toRemove)
+                {
+                    var comp = PossibleEffectsUtils.GetComponentFor(effectEnum, gameObject);
+                    if (comp != null)
+                    {
+                        Destroy(comp);
+                    }
+                }
+            }
+        }
+
         public override void Update()
 		{
+            UpdateItemEffects();
             base.Update();
             if (isMoving) return;
 
@@ -119,7 +150,7 @@
                 FullAttackMove(hor, ver);
                 Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
                 level.Kill(target, obj);
-                Stats.Experience += 10;
+                Stats.Experience += 1;
             }
 
             return true;
