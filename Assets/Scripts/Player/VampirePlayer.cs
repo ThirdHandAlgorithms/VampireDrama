@@ -7,6 +7,7 @@
     {
         public string Name;
         private float lastInput;
+        private float maxDefense = 100;
 
         public PlayerStats Stats;
 
@@ -118,17 +119,28 @@
             return Camera.allCameras[0].GetComponentInChildren<Inventory>() as Inventory;
         }
 
-        public float GetBasicStrength()
+        public float GetTotalStrength()
         {
             float strength = 1f;
 
-            var globals = GameGlobals.GetInstance();
-            foreach (var item in globals.PlayerStats.Items)
+            foreach (var item in Stats.Items)
             {
                 strength += item.Stats.Strength;
             }
 
             return strength;
+        }
+
+        public float GetTotalDefense()
+        {
+            float defense = 0;
+
+            foreach (var item in Stats.Items)
+            {
+                defense += item.Stats.Defense;
+            }
+
+            return defense;
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)
@@ -142,7 +154,7 @@
 
                 onAttackHalfway = () =>
                 {
-                    target.LoseBlood(GetBasicStrength() * Random.value, originalPosition);
+                    target.LoseBlood(GetTotalStrength() * Random.value, originalPosition);
                 };
             }
             else
@@ -169,12 +181,20 @@
 
         public void ReceivePunch(int strength)
         {
-            Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
-            if (Stats.Bloodfill == 0)
+            var defense = GetTotalDefense();
+            if (Random.value < defense / maxDefense)
             {
-                Debug.Log("You just died, queue the high-score screen and start over again");
+                Debug.Log("Attack dodged");
+            }
+            else
+            {
+                Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
+                if (Stats.Bloodfill == 0)
+                {
+                    Debug.Log("You just died, queue the high-score screen and start over again");
 
-                GameManager.instance.GameOver();
+                    GameManager.instance.GameOver();
+                }
             }
         }
 

@@ -7,6 +7,7 @@ public struct ItemStats
     public string ItemName;
     public Sprite Icon;
     public float Strength;
+    public float Defense;
     public float TravelSpeed;
     public int ItemLevel;
     public PossibleEffects[] Effects;

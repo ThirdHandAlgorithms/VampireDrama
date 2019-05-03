@@ -284,7 +284,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 32d65bdbcbb545d468277d0fb39d3c3f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   BridgeBottomH:
   - {fileID: 1517841448877270, guid: eec8b44ff369b324a9761878dfe42824, type: 3}
   ItemPrefabs:
-  - {fileID: 5477247290407607681, guid: 4e536bffa16801d45937752cf461f46b, type: 3}
+  - {fileID: 5477247290407607681, guid: f183d5d53b8ad3c4492f606db0653bc2, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   TimeOfDayText: {fileID: 1890321003}
