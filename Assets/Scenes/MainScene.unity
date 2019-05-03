@@ -284,7 +284,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 32d65bdbcbb545d468277d0fb39d3c3f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6065d1c1eb6981444bb481613c4cd11c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733358368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -1323,7 +1323,10 @@ MonoBehaviour:
   BridgeBottomH:
   - {fileID: 1517841448877270, guid: eec8b44ff369b324a9761878dfe42824, type: 3}
   ItemPrefabs:
+  - {fileID: 5477247290407607681, guid: 5ad39775306d2304f9e8a263fa146bbd, type: 3}
   - {fileID: 5477247290407607681, guid: f183d5d53b8ad3c4492f606db0653bc2, type: 3}
+  - {fileID: 5477247290407607681, guid: 1e2e2c97a1aac214c9d3146f36032a6c, type: 3}
+  - {fileID: 5477247290407607681, guid: 4e536bffa16801d45937752cf461f46b, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   TimeOfDayText: {fileID: 1890321003}
@@ -1729,7 +1732,7 @@ PrefabInstance:
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
       propertyPath: ItemPrefabs.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}

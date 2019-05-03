@@ -66,12 +66,23 @@
             return (hit.transform != null);
         }
 
+        protected virtual bool IsSomethingAtTheEnd(Vector2 end, out RaycastHit2D hit)
+        {
+            boxCollider.enabled = false;
+
+            hit = Physics2D.Linecast(end, end, blockingLayer);
+
+            boxCollider.enabled = true;
+
+            return (hit.transform != null);
+        }
+
         protected bool Move(int xDir, int yDir, out RaycastHit2D hit)
         {
             Vector2 start = transform.position;
             Vector2 end = start + new Vector2(xDir, yDir);
 
-            if (!IsSomethingThere(start, end, out hit))
+            if (!IsSomethingAtTheEnd(end, out hit))
             {
                 lastDirection.x = xDir;
                 lastDirection.y = yDir;

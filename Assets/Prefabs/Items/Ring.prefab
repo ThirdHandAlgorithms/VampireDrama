@@ -97,7 +97,10 @@ MonoBehaviour:
     ItemName: Ring
     Icon: {fileID: 21300000, guid: 6065d1c1eb6981444bb481613c4cd11c, type: 3}
     Strength: 20
+    Defense: 0
     TravelSpeed: 0
+    ItemLevel: 1
+    Effects: 03000000
 --- !u!61 &3636731006111860715
 BoxCollider2D:
   m_ObjectHideFlags: 0

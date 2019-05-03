@@ -57,7 +57,8 @@ public class SceneManager : LevelConstruction
         var cameras = Camera.allCameras;
         if ((Player != null) && (cameras.Length > 0))
         {
-            cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
+            //cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
+            cameras[0].transform.position = new Vector3(6 + (Player.transform.position.x - 6), Player.transform.position.y, -15f);
 
             DisplayPlayerStats();
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1314752695047613455}
   - component: {fileID: 3636731006111860715}
   m_Layer: 8
-  m_Name: Sword
+  m_Name: HolySword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     ItemName: Sword
     Icon: {fileID: 21300000, guid: 627f05383f6b58640ac9b1ee9dddbbdc, type: 3}
     Strength: 3
-    TravelSpeed: 1
+    Defense: 0
     TravelSpeed: 0
     ItemLevel: 3
     Effects: 01000000

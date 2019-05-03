@@ -8,6 +8,7 @@
         public string Name;
         private float lastInput;
         private float maxDefense = 100;
+        private bool nextMoveIsJump;
 
         public PlayerStats Stats;
 
@@ -16,6 +17,7 @@
             base.Start();
 
             Stats = GameGlobals.GetInstance().PlayerStats;
+            nextMoveIsJump = false;
 
             lastInput = Time.time;
         }
@@ -67,7 +69,7 @@
 
             if (Input.GetButtonDown("Fire1"))
             {
-                // do something
+                nextMoveIsJump = true;
             }
 
             int hor = (int)Input.GetAxisRaw("Horizontal");
@@ -75,6 +77,13 @@
 
             RaycastHit2D hit = new RaycastHit2D();
             bool hitSomething = false;
+
+            if (nextMoveIsJump && ((hor != 0) || (ver != 0)))
+            {
+                hor *= 2;
+                ver *= 2;
+                nextMoveIsJump = false;
+            }
 
             if ((ver == 0) && (hor != 0))
             {
