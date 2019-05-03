@@ -32,6 +32,8 @@
         public GameObject[] ItemPrefabs;
 
         private bool itemAdded;
+        private bool canAddItemToMap;
+        private int shouldAddItemAtLineIdx;
 
         protected GameObject Player;
         protected List<GameObject> humans;
@@ -82,6 +84,13 @@
             }
 
             Debug.Log(startOfRandomState);
+
+            canAddItemToMap = false;
+            if (Random.value >= 0.5)
+            {
+                canAddItemToMap = true;
+                shouldAddItemAtLineIdx = (int)(Random.value * lineCount);
+            }
 
             Player = Instantiate(PlayerPrefab, new Vector3(5f, 0f, 0f), Quaternion.identity) as GameObject;
 
@@ -295,9 +304,9 @@
                     }
                 }
 
-                if (!itemAdded && construct.Passable)
+                if (canAddItemToMap && (lineIdx == shouldAddItemAtLineIdx) && !itemAdded && construct.Passable)
                 {
-                    AddInstance(ItemPrefabs[0], x * tileSize, lineIdx * tileSize);
+                    AddInstance(ItemPrefabs[(int)(ItemPrefabs.Length * Random.value)], x * tileSize, lineIdx * tileSize);
                     itemAdded = true;
                 }
 
