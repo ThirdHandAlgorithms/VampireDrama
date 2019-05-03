@@ -121,3 +121,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Range: 3
   Strength: 1
+  tickTime: 1

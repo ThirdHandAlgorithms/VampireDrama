@@ -1,11 +1,13 @@
 ﻿namespace VampireDrama
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
     public class VampirePlayer : MovingAnimation
     {
         public string Name;
         private float lastInput;
+        private float maxDefense = 100;
 
         public PlayerStats Stats;
 
@@ -18,8 +20,38 @@
             lastInput = Time.time;
         }
 
+        protected void UpdateItemEffects()
+        {
+            var globals = GameGlobals.GetInstance();
+            foreach (var item in globals.PlayerStats.Items)
+            {
+                var toRemove = PossibleEffectsUtils.ListAll();
+
+                foreach (var effectEnum in item.Stats.Effects)
+                {
+                    toRemove.Remove(effectEnum);
+
+                    var comp = PossibleEffectsUtils.GetComponentFor(effectEnum, gameObject);
+                    if (comp == null)
+                    {
+                        PossibleEffectsUtils.AddComponentFor(effectEnum, gameObject, item.Stats.ItemLevel);
+                    }
+                }
+
+                foreach (var effectEnum in toRemove)
+                {
+                    var comp = PossibleEffectsUtils.GetComponentFor(effectEnum, gameObject);
+                    if (comp != null)
+                    {
+                        Destroy(comp);
+                    }
+                }
+            }
+        }
+
         public override void Update()
 		{
+            UpdateItemEffects();
             base.Update();
             if (isMoving) return;
 
@@ -87,17 +119,28 @@
             return Camera.allCameras[0].GetComponentInChildren<Inventory>() as Inventory;
         }
 
-        public float GetBasicStrength()
+        public float GetTotalStrength()
         {
             float strength = 1f;
 
-            var globals = GameGlobals.GetInstance();
-            foreach (var item in globals.PlayerStats.Items)
+            foreach (var item in Stats.Items)
             {
                 strength += item.Stats.Strength;
             }
 
             return strength;
+        }
+
+        public float GetTotalDefense()
+        {
+            float defense = 0;
+
+            foreach (var item in Stats.Items)
+            {
+                defense += item.Stats.Defense;
+            }
+
+            return defense;
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)
@@ -111,7 +154,7 @@
 
                 onAttackHalfway = () =>
                 {
-                    target.LoseBlood(GetBasicStrength() * Random.value, originalPosition);
+                    target.LoseBlood(GetTotalStrength() * Random.value, originalPosition);
                 };
             }
             else
@@ -119,7 +162,7 @@
                 FullAttackMove(hor, ver);
                 Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
                 level.Kill(target, obj);
-                Stats.Experience += 10;
+                Stats.Experience += 1;
             }
 
             return true;
@@ -138,12 +181,20 @@
 
         public void ReceivePunch(int strength)
         {
-            Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
-            if (Stats.Bloodfill == 0)
+            var defense = GetTotalDefense();
+            if (Random.value < defense / maxDefense)
             {
-                Debug.Log("You just died, queue the high-score screen and start over again");
+                Debug.Log("Attack dodged");
+            }
+            else
+            {
+                Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
+                if (Stats.Bloodfill == 0)
+                {
+                    Debug.Log("You just died, queue the high-score screen and start over again");
 
-                GameManager.instance.GameOver();
+                    GameManager.instance.GameOver();
+                }
             }
         }
 
