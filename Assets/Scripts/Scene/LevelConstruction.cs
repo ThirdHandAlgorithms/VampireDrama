@@ -354,5 +354,19 @@
 
             return mapTest.GetPath(start, end);
         }
+
+        public bool AddItem(ItemStats stats, Vector3 position)
+        {
+            foreach (var prefabItem in ItemPrefabs)
+            {
+                if (prefabItem.GetComponent<Item>().Stats.Equals(stats))
+                {
+                    AddInstance(prefabItem, position.x, position.y);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

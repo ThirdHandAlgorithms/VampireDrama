@@ -72,6 +72,24 @@
                 nextMoveIsJump = true;
             }
 
+            if (Input.GetButtonDown("Fire2"))
+            {
+                RaycastHit2D currentPoshit;
+                if (!IsSomethingAtTheEnd(transform.position, out currentPoshit))
+                {
+                    var inv = GetInventory();
+                    var item = inv.FirstItem();
+                    if (item != null)
+                    {
+                        var level = GameManager.GetCurrentLevel();
+                        if (level.AddItem(item.Stats, transform.position))
+                        {
+                            inv.RemoveItem(item);
+                        }
+                    }
+                }
+            }
+
             int hor = (int)Input.GetAxisRaw("Horizontal");
             int ver = (int)Input.GetAxisRaw("Vertical");
 

@@ -11,6 +11,11 @@ public struct ItemStats
     public float TravelSpeed;
     public int ItemLevel;
     public PossibleEffects[] Effects;
+
+    public bool Equals(ItemStats other)
+    {
+        return (other.ItemName == ItemName);
+    }
 }
 
 public class InventoryItem

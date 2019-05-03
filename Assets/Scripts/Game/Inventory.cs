@@ -36,6 +36,17 @@ public class Inventory : MonoBehaviour
         return (globals.PlayerStats.Items.Count >= 2);
     }
 
+    public InventoryItem FirstItem()
+    {
+        var globals = GameGlobals.GetInstance();
+        if (globals.PlayerStats.Items.Count > 0)
+        {
+            return globals.PlayerStats.Items[0];
+        }
+
+        return null;
+    }
+
     public bool RemoveItem(InventoryItem item)
     {
         var globals = GameGlobals.GetInstance();
