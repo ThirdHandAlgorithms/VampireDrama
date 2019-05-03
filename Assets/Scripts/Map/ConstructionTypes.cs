@@ -59,14 +59,26 @@
         private void Populate()
         {
             all = new List<PossibleConstruct>();
+            all.Add(new PossibleConstruct { Ascii = ' ', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
             all.Add(new PossibleConstruct { Ascii = ' ', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '┐', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '┘', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '┌', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '└', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '│', Id = ConstructionType.Road, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = '|', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Vertical });
             all.Add(new PossibleConstruct { Ascii = '=', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal });
+            all.Add(new PossibleConstruct { Ascii = '═', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal });
+            all.Add(new PossibleConstruct { Ascii = '║', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Vertical });
+            all.Add(new PossibleConstruct { Ascii = '╗', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '╚', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.None });
+            all.Add(new PossibleConstruct { Ascii = '╝', Id = ConstructionType.Building, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.None });
             all.Add(new PossibleConstruct { Ascii = '#', Id = ConstructionType.Bridge, Passable = true, HasLightSource = true, Direction = ConstructHVDirection.Vertical });
             all.Add(new PossibleConstruct { Ascii = '@', Id = ConstructionType.Bridge, Passable = true, HasLightSource = true, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = '&', Id = ConstructionType.BridgeBottom, Passable = false, HasLightSource = false, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = '^', Id = ConstructionType.Water, Passable = false, HasLightSource = false, Direction = ConstructHVDirection.Vertical });
             all.Add(new PossibleConstruct { Ascii = ',', Id = ConstructionType.Water, Passable = false, HasLightSource = false, Direction = ConstructHVDirection.Horizontal });
+            all.Add(new PossibleConstruct { Ascii = '≈', Id = ConstructionType.Water, Passable = false, HasLightSource = false, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = 'T', Id = ConstructionType.Tavern, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = 'M', Id = ConstructionType.Mausoleum, Passable = false, HasLightSource = false, Direction = ConstructHVDirection.Horizontal });
             all.Add(new PossibleConstruct { Ascii = 'C', Id = ConstructionType.Church, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal });

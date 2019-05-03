@@ -62,7 +62,7 @@
             humans = new List<GameObject>();
 
             var config = MapConfiguration.getInstance();
-            config.Height = level * 12;
+            config.Height = (level + 1) * 12;
             lineCount = config.Height;
             startAndExit = 6;
 
