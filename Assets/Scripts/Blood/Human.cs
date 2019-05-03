@@ -5,12 +5,12 @@
 
     public class Human : MovingAnimation
     {
-        public float MaxBlood;
-        public float LitresOfBlood;
+        public float MaxBlood = 5f;
+        public float LitresOfBlood = 5f;
         public int Suspicion;
         public int Intoxication;
         public int Darkness;
-        public int OutOfSightOutOfMind;
+        public int OutOfSightOutOfMind = 5;
         public float lastMovement;
         public float lastIdleMusingTime;
         public bool hitSomething;
@@ -18,7 +18,7 @@
         private List<RoyT.AStar.Position> currentPath;
         private bool ActuallySeeingAVampire;
         private float lastHit;
-        private float hitCooldown;
+        private float hitCooldown = 5f;
 
         private float Strength;
 
@@ -32,11 +32,7 @@
             Suspicion = (int)(Random.value * 5);
             Intoxication = (int)(Random.value * 100);
             Darkness = (int)(Random.value * 25);
-            LitresOfBlood = 5f;
-            MaxBlood = 5f;
-            OutOfSightOutOfMind = 10;
             Strength = Random.value * GameManager.GetCurrentLevel().Level;
-            hitCooldown = 5f;
 
             lastHit = Time.time;
             lastMovement = Time.time;

@@ -167,11 +167,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isMoving: 0
-  LitresOfBlood: 0
+  MaxBlood: 5
+  LitresOfBlood: 5
   Suspicion: 0
   Intoxication: 0
   Darkness: 0
-  OutOfSightOutOfMind: 0
+  OutOfSightOutOfMind: 5
   lastMovement: 0
   lastIdleMusingTime: 0
   hitSomething: 0
