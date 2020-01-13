@@ -187,7 +187,7 @@
             {
                 return BuildingV[0];
             }
-            else if (construct.Id == ConstructionType.Building && construct.Dir == ConstructHVDirection.Horizontal)
+            else if (construct.Id == ConstructionType.Building)
             {
                 return BuildingH[0];
             }
