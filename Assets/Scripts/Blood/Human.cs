@@ -44,6 +44,9 @@
 
         public float GetResistance()
         {
+            // edge case, max draining by attack is until 1litre of blood, this human will not be able to fight back, trust me
+            if (LitresOfBlood == 1) return 0f;
+
             if (KnowsWhatsUp())
             {
                 if (IsDark())
