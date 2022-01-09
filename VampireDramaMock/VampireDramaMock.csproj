@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Assets\Scripts\AStar\Grid.cs" Link="Grid.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\MinHeap.cs" Link="MinHeap.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\MinHeapNode.cs" Link="MinHeapNode.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\MovementPatterns.cs" Link="MovementPatterns.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\Offset.cs" Link="Offset.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\PathFinder.cs" Link="PathFinder.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\PathFinder.Debug.cs" Link="PathFinder.Debug.cs" />
+    <Compile Include="..\Assets\Scripts\AStar\Position.cs" Link="Position.cs" />
+    <Compile Include="..\Assets\Scripts\Blood\Human.cs" Link="Human.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\AuraEffect.cs" Link="AuraEffect.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\EffectBehaviour.cs" Link="EffectBehaviour.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\HolyAura.cs" Link="HolyAura.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\HolyAuraEffect.cs" Link="HolyAuraEffect.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\PossibleEffects.cs" Link="PossibleEffects.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\SelfHealing.cs" Link="SelfHealing.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\SelfHealingEffect.cs" Link="SelfHealingEffect.cs" />
+    <Compile Include="..\Assets\Scripts\Effects\SunAuraEffect.cs" Link="SunAuraEffect.cs" />
+    <Compile Include="..\Assets\Scripts\Game\GameGlobals.cs" Link="GameGlobals.cs" />
+    <Compile Include="..\Assets\Scripts\Game\Inventory.cs" Link="Inventory.cs" />
+    <Compile Include="..\Assets\Scripts\Game\Item.cs" Link="Item.cs" />
+    <Compile Include="..\Assets\Scripts\Game\ItemSlot.cs" Link="ItemSlot.cs" />
+    <Compile Include="..\Assets\Scripts\Map\ChunkPresets.cs" Link="ChunkPresets.cs" />
+    <Compile Include="..\Assets\Scripts\Map\Construct.cs" Link="Construct.cs" />
+    <Compile Include="..\Assets\Scripts\Map\ConstructionTypes.cs" Link="ConstructionTypes.cs" />
+    <Compile Include="..\Assets\Scripts\Map\Map.cs" Link="Map.cs" />
+    <Compile Include="..\Assets\Scripts\Map\MapExit.cs" Link="MapExit.cs" />
+    <Compile Include="..\Assets\Scripts\Map\MapTest.cs" Link="MapTest.cs" />
+    <Compile Include="..\Assets\Scripts\Map\OverlayManager.cs" Link="OverlayManager.cs" />
+    <Compile Include="..\Assets\Scripts\Player\MovingAnimation.cs" Link="MovingAnimation.cs" />
+    <Compile Include="..\Assets\Scripts\Player\MovingObject.cs" Link="MovingObject.cs" />
+    <Compile Include="..\Assets\Scripts\Player\PlayerStats.cs" Link="PlayerStats.cs" />
+    <Compile Include="..\Assets\Scripts\Player\VampirePlayer.cs" Link="VampirePlayer.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\GameManager.cs" Link="GameManager.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\GameOverScene.cs" Link="GameOverScene.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\LevelConstruction.cs" Link="LevelConstruction.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\SceneManager.cs" Link="SceneManager.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\ScoreScene.cs" Link="ScoreScene.cs" />
+    <Compile Include="..\Assets\Scripts\Scene\UiRollover.cs" Link="UiRollover.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UnityMocks\UnityMocks.csproj" />
+  </ItemGroup>
+
+</Project>

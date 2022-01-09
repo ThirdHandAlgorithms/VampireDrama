@@ -150,7 +150,7 @@
         }
     }
 
-    public class Component : GameObject
+    public class Component
     {
 
     }
@@ -326,6 +326,11 @@
         {
             return (T)component;
         }
+
+        public T[] GetComponentsInChildren<T>()
+        {
+            return new T[0];
+        }
     }
 
     public class Renderer: MonoBehaviour
@@ -338,7 +343,7 @@
         public bool flipX, flipY;
     }
 
-    public class MonoBehaviour
+    public class MonoBehaviour: Component
     {
         public Transform transform { get; set; }
         public string name { get; set; }
@@ -362,7 +367,7 @@
 
         }
 
-        public void Destroy(GameObject obj)
+        public void Destroy(Component obj)
         {
 
         }
@@ -377,9 +382,19 @@
             return new GameObject();
         }
 
+        public T AddComponent<T>() where T: new()
+        {
+            return new T();
+        }
+
         public T GetComponent<T>()
         {
             return (T)(new Object());
+        }
+
+        public T GetComponentInChildren<T>() where T: new()
+        {
+            return new T();
         }
 
         public T[] GetComponentsInChildren<T>()
@@ -395,6 +410,8 @@
 
     public class Animator: Component
     {
+        public GameObject gameObject;
+
         public void Play(string state)
         {
 
@@ -422,5 +439,20 @@
         {
             return new object[0];
         }
+    }
+
+    [System.AttributeUsage(System.AttributeTargets.Field)]
+    public class SerializeField : System.Attribute
+    {
+    }
+
+    public class Sprite
+    {
+    }
+
+    public class Image
+    {
+        public bool enabled;
+        public Sprite sprite;
     }
 }
