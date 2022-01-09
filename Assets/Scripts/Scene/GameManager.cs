@@ -30,10 +30,16 @@ public class GameManager : MonoBehaviour
         level = GameGlobals.GetInstance().LevelCompleted + 1;
 
         sceneScript.InitScene(level);
-	}
-	
-	// Update is called once per frame
-	public void Update() {
+        TriggerInventoryUI();
+    }
+
+    private void TriggerInventoryUI()
+    {
+        Camera.allCameras[0].GetComponentInChildren<Inventory>();
+    }
+
+    // Update is called once per frame
+    public void Update() {
 		
 	}
 
