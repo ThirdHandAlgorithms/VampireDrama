@@ -1,7 +1,6 @@
 ﻿namespace VampireDrama
 {
     using UnityEngine;
-    using UnityEditor;
     using System.Collections.Generic;
 
     public class LevelConstruction : MonoBehaviour
@@ -143,6 +142,9 @@
             {
                 return false;
             }
+
+            if (y >= fullMap.Count) return false;
+            if (x >= fullMap[y].Count) return false;
 
             var construct = fullMap[y][x];
             bool passable = construct.Passable && (construct.Id == ConstructionType.Road);
