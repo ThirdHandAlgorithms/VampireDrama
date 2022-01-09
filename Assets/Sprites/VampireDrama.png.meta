@@ -1,28 +1,66 @@
 fileFormatVersion: 2
 guid: b9239f2d0cfe7e543bd5805b90d5e672
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: VampireDrama_0
-    21300002: VampireDrama_1
-    21300004: VampireDrama_2
-    21300006: VampireDrama_3
-    21300008: VampireDrama_4
-    21300010: VampireDrama_5
-    21300012: VampireDrama_6
-    21300014: VampireDrama_7
-    21300016: VampireDrama_8
-    21300018: VampireDrama_9
-    21300020: VampireDrama_10
-    21300022: VampireDrama_11
-    21300024: VampireDrama_12
-    21300026: VampireDrama_13
-    21300028: VampireDrama_14
-    21300030: VampireDrama_15
-    21300032: VampireDrama_16
-    21300034: VampireDrama_17
-    21300036: VampireDrama_18
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: VampireDrama_0
+  - first:
+      213: 21300002
+    second: VampireDrama_1
+  - first:
+      213: 21300004
+    second: VampireDrama_2
+  - first:
+      213: 21300006
+    second: VampireDrama_3
+  - first:
+      213: 21300008
+    second: VampireDrama_4
+  - first:
+      213: 21300010
+    second: VampireDrama_5
+  - first:
+      213: 21300012
+    second: VampireDrama_6
+  - first:
+      213: 21300014
+    second: VampireDrama_7
+  - first:
+      213: 21300016
+    second: VampireDrama_8
+  - first:
+      213: 21300018
+    second: VampireDrama_9
+  - first:
+      213: 21300020
+    second: VampireDrama_10
+  - first:
+      213: 21300022
+    second: VampireDrama_11
+  - first:
+      213: 21300024
+    second: VampireDrama_12
+  - first:
+      213: 21300026
+    second: VampireDrama_13
+  - first:
+      213: 21300028
+    second: VampireDrama_14
+  - first:
+      213: 21300030
+    second: VampireDrama_15
+  - first:
+      213: 21300032
+    second: VampireDrama_16
+  - first:
+      213: 21300034
+    second: VampireDrama_17
+  - first:
+      213: 21300036
+    second: VampireDrama_18
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -42,6 +80,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -51,8 +91,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 2
     wrapV: 2
     wrapW: 2
@@ -73,11 +113,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 8192
     resizeAlgorithm: 1
@@ -88,7 +132,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 8192
     resizeAlgorithm: 1
@@ -99,6 +144,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -118,6 +164,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5dd55d519c26e894aabfdb5958b397ea
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -138,6 +185,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 96ada3aa0b5565147b2ffadbaadf1c91
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -158,6 +206,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bc609629019942c4d869fcedd71f31f1
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -178,6 +227,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7bba340d2c56a13449337ed86a19891a
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -198,6 +248,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 442280b42ad8f334d9c17c34541ce351
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -218,6 +269,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9efd414e01c8b6443a0e5d63fd350d10
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -238,6 +290,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: dfa8bd402e01234418bbaa9e28db5657
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -258,6 +311,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d9ac5b5988af7974b8f3c1df37241203
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -278,6 +332,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fe934bfeb7c0e654e910e1267fd7429d
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -298,6 +353,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f21c5395f83e2c14c8c0b790701a45f9
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -318,6 +374,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e655020a9c640ba4aa8e24c14817ea5a
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -338,6 +395,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 88ce241d9d5c4414cb05ed292d3ea193
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -358,6 +416,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e35380a89ea0534468bc4d6bb45cf61f
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -378,6 +437,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fc88a1f5fc4c0ac49a38f7d7e3566528
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -398,6 +458,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 36ccfd59b1f05354c8ccf4998b233f8b
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -418,6 +479,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 00d3b6477b9a1634ebd3b0e3f3788a67
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -438,6 +500,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a854fca8f764ba949a09fb2866b101ae
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -458,6 +521,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ac3f22a4cd418a047b24c1ac429690fe
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -478,6 +542,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0858acfff7b4214409d506cf18f87479
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -486,10 +551,32 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: bb8fb533799da3440811731e2f685f9c
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      VampireDrama_16: 21300032
+      VampireDrama_8: 21300016
+      VampireDrama_1: 21300002
+      VampireDrama_13: 21300026
+      VampireDrama_11: 21300022
+      VampireDrama_7: 21300014
+      VampireDrama_4: 21300008
+      VampireDrama_12: 21300024
+      VampireDrama_17: 21300034
+      VampireDrama_5: 21300010
+      VampireDrama_14: 21300028
+      VampireDrama_0: 21300000
+      VampireDrama_2: 21300004
+      VampireDrama_3: 21300006
+      VampireDrama_9: 21300018
+      VampireDrama_10: 21300020
+      VampireDrama_15: 21300030
+      VampireDrama_18: 21300036
+      VampireDrama_6: 21300012
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
