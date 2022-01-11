@@ -9,6 +9,7 @@
         private float lastInput;
         private float maxDefense = 100;
         private bool nextMoveIsJump;
+        public float baseMoveTime = 1.0f;
 
         public PlayerStats Stats;
 
@@ -60,12 +61,7 @@
             var timeNow = Time.time;
             if (timeNow - lastInput < 0.2f) return;
 
-            var globals = GameGlobals.GetInstance();
-            moveTime = 0.4f;
-            foreach (var item in globals.PlayerStats.Items)
-            {
-                moveTime += item.Stats.TravelSpeed;
-            }
+            moveTime = this.GetTotalMovementSpeed();
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -168,6 +164,18 @@
             }
 
             return defense;
+        }
+
+        public float GetTotalMovementSpeed()
+        {
+            float moveTime = baseMoveTime;
+
+            foreach (var item in Stats.Items)
+            {
+                moveTime += item.Stats.TravelSpeed;
+            }
+
+            return moveTime;
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)

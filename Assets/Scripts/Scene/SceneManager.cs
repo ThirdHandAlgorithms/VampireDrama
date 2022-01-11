@@ -8,6 +8,10 @@ public class SceneManager : LevelConstruction
     public Text BloodfillText;
     public Text TimeOfDayText;
 
+    public Text StrText;
+    public Text DefText;
+    public Text SpdText;
+
     private float startTimeOfDay;
     private float lastSunAuraTime;
     private PlayerStats currentPlayerStats;
@@ -17,6 +21,9 @@ public class SceneManager : LevelConstruction
     private UiRollover BloodfillRollover;
     private UiRollover TimeRollover;
 
+    private UiRollover StrRollover;
+    private UiRollover DefRollover;
+    private UiRollover SpdRollover;
 
     public float GetTimeSpentOnLevel()
     {
@@ -48,6 +55,15 @@ public class SceneManager : LevelConstruction
         TimeRollover = new UiRollover();
         TimeRollover.transitionTxt = TimeOfDayText;
 
+        StrRollover = new UiRollover();
+        StrRollover.transitionTxt = StrText;
+
+        DefRollover = new UiRollover();
+        DefRollover.transitionTxt = DefText;
+
+        SpdRollover = new UiRollover();
+        SpdRollover.transitionTxt = SpdText;
+
         startTimeOfDay = Time.time;
     }
 
@@ -70,7 +86,10 @@ public class SceneManager : LevelConstruction
 
             XPRollover.UpdateNr();
             BloodfillRollover.UpdateNr();
-            //TimeRollover.UpdateNr();
+
+            StrRollover.UpdateNr();
+            DefRollover.UpdateNr();
+            SpdRollover.UpdateNr();
         }
     }
 
@@ -104,21 +123,18 @@ public class SceneManager : LevelConstruction
     private void DisplayTimeOfDay(int hour, int minute)
     {
         TimeOfDayText.text = "Time: " + hour.ToString() + ":" + minute.ToString("00");
-
-        //TimeRollover.setNr(Time.time);
     }
 
     private void DisplayPlayerStats()
     {
         var player = Player.GetComponent<VampirePlayer>();
         currentPlayerStats = player.Stats;
-        //XPText.text = "XP: " + currentPlayerStats.Experience.ToString();
-
         XPRollover.setNr(currentPlayerStats.Experience);
-
-        //BloodfillText.text = "Blood: " + currentPlayerStats.Bloodfill.ToString();
-
         BloodfillRollover.setNr(currentPlayerStats.Bloodfill);
+
+        StrRollover.setNr(player.GetTotalDefense());
+        DefRollover.setNr(player.GetTotalStrength());
+        SpdRollover.setNr(player.GetTotalMovementSpeed() * 10);
     }
 
     public void Kill(Human target, GameObject obj)
