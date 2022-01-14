@@ -455,4 +455,15 @@
         public bool enabled;
         public Sprite sprite;
     }
+
+    public class Mathf
+    {
+        public static float Epsilon = 0.1f;
+
+        public static float Abs(float v)
+        {
+            if (v < 0) return v * -1;
+            return v;
+        }
+    }
 }
