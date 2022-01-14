@@ -132,7 +132,7 @@
             if (sqrRemainingDistance > float.Epsilon)
             {
                 float inverseMoveTime = 1f / (1f - (GetTotalMovementSpeed() / 100.0f));
-                if (inverseMoveTime < 0) inverseMoveTime = float.Epsilon;
+                if (inverseMoveTime <= 0) inverseMoveTime = float.Epsilon;
 
                 Vector3 newPosition = Vector3.MoveTowards(rb2D.position, moveTo, inverseMoveTime * Time.deltaTime);
 
