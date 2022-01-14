@@ -9,7 +9,6 @@
         private float lastInput;
         private float maxDefense = 100;
         private bool nextMoveIsJump;
-        public float baseMoveTime = 1.0f;
 
         public PlayerStats Stats;
 
@@ -60,8 +59,6 @@
 
             var timeNow = Time.time;
             if (timeNow - lastInput < 0.2f) return;
-
-            moveTime = this.GetTotalMovementSpeed();
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -166,16 +163,16 @@
             return defense;
         }
 
-        public float GetTotalMovementSpeed()
+        public override float GetTotalMovementSpeed()
         {
-            float moveTime = baseMoveTime;
+            float moveTime = baseMoveSpeed;
 
             foreach (var item in Stats.Items)
             {
                 moveTime += item.Stats.TravelSpeed;
             }
 
-            return moveTime;
+            return moveTime + Stats.Bloodfill;
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)
@@ -185,8 +182,8 @@
             if (target.GetResistance() > 0.5)
             {
                 var originalPosition = transform.position;
-                AttackMove(hor, ver);
 
+                AttackMove(hor, ver);
                 onAttackHalfway = () =>
                 {
                     target.LoseBlood(GetTotalStrength() * Random.value, originalPosition);
@@ -195,9 +192,12 @@
             else
             {
                 FullAttackMove(hor, ver);
-                Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
-                level.Kill(target, obj);
-                Stats.Experience += 1;
+                onAttackHalfway = () =>
+                {
+                    Stats.Bloodfill += (int)System.Math.Floor(target.LitresOfBlood);
+                    level.Kill(target, obj);
+                    Stats.Experience += 1;
+                };
             }
 
             return true;

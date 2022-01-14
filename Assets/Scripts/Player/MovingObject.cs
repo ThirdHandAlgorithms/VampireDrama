@@ -18,14 +18,14 @@
 
     public abstract class MovingObject : MonoBehaviour
     {
-        public float moveTime = 0.1f;
+        public float baseMoveSpeed = 1.0f;
         public LayerMask blockingLayer;
 
         private BoxCollider2D boxCollider;
         private Rigidbody2D rb2D;
         private float sqrRemainingDistance;
-        private Vector3 moveFrom;
-        private Vector3 moveTo;
+        public Vector3 moveFrom;
+        public Vector3 moveTo;
         private Vector3 moveBackTo;
         public Direction lastDirection;
 
@@ -122,11 +122,17 @@
             ContinueMoving();
         }
 
+        public virtual float GetTotalMovementSpeed()
+        {
+            return baseMoveSpeed;
+        }
+
         protected void ContinueMoving()
         {
             if (sqrRemainingDistance > float.Epsilon)
             {
-                float inverseMoveTime = 1f / moveTime;
+                float inverseMoveTime = 1f / (1f - (GetTotalMovementSpeed() / 100.0f));
+                if (inverseMoveTime < 0) inverseMoveTime = float.Epsilon;
 
                 Vector3 newPosition = Vector3.MoveTowards(rb2D.position, moveTo, inverseMoveTime * Time.deltaTime);
 
@@ -166,6 +172,7 @@
                 {
                     isAttackMoving = false;
                     isFullAttack = false;
+                    onAttackHalfway.Invoke();
                 }
             }
         }

@@ -55,12 +55,12 @@
                 }
                 else
                 {
-                    return System.Math.Min(1, (Suspicion / 100f) * (LitresOfBlood / MaxBlood) * (Strength + ((100f - Intoxication) / 100f)));
+                    return System.Math.Min(1, (Suspicion / 100f) * (LitresOfBlood / MaxBlood) * (GetStrength() + ((100f - Intoxication) / 100f)));
                 }
             }
             else
             {
-                return (LitresOfBlood / MaxBlood) * (Strength + ((100f - Intoxication) / 100f));
+                return (LitresOfBlood / MaxBlood) * (GetStrength() + ((100f - Intoxication) / 100f));
             }
         }
 
@@ -97,14 +97,14 @@
 
         private void ScreamForHelp()
         {
-            Debug.Log("HELP! DEMON! VAMPIRE!");
+            //Debug.Log("HELP! DEMON! VAMPIRE!");
             var level = GameManager.GetCurrentLevel();
             level.VampireAlert(transform.position);
         }
 
         private void AskToBeTurned()
         {
-            Debug.Log("I want to be a vampire too...");
+            //Debug.Log("I want to be a vampire too...");
         }
 
         private float getMovementTime()
@@ -309,11 +309,14 @@
 
         public void StartWalkingPath(RoyT.AStar.Position[] path)
         {
-            currentPath.Clear();
-            currentPath.AddRange(path);
-            
-            // first node is the current position
-            if (currentPath.Count > 0) currentPath.RemoveAt(0);
+            if (currentPath != null)
+            {
+                currentPath.Clear();
+                currentPath.AddRange(path);
+
+                // first node is the current position
+                if (currentPath.Count > 0) currentPath.RemoveAt(0);
+            }
         }
 
         public bool KnowsWhatsUp()
@@ -354,6 +357,13 @@
             return (Time.time - lastHit) < hitCooldown;
         }
 
+        public float GetStrength()
+        {
+            var level = GameManager.GetCurrentLevel();
+            // mob mentality makes humans stronger
+            return Strength * (1.0f + level.GetHeatMapAverageAtPoint((int)transform.position.x, (int)transform.position.y));
+        }
+
         public override void Update()
         {
             base.Update();
@@ -373,7 +383,7 @@
 
                 onAttackHalfway = () =>
                 {
-                    vampire.ReceivePunch((int)System.Math.Ceiling(Strength * Random.value));
+                    vampire.ReceivePunch((int)System.Math.Ceiling(GetStrength() * Random.value));
                 };
 
                 lastHit = Time.time;
