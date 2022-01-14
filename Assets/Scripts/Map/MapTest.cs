@@ -18,7 +18,7 @@
                 int x = 0;
                 foreach (var construct in line)
                 {
-                    if (!construct.Passable)
+                    if (!construct.Template.Passable)
                     {
 						var p = new Position(x, y);
                         grid.BlockCell(p);

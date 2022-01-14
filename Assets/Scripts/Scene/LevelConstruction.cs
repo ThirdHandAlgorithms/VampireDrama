@@ -16,6 +16,7 @@
         public GameObject[] BridgeV;
         public GameObject[] BridgeH;
         public GameObject[] Trash;
+        public GameObject PoliceDepartmentH;
         public GameObject BorderN;
         public GameObject BorderE;
         public GameObject BorderS;
@@ -46,6 +47,9 @@
         protected int startAndExit;
         protected string startOfRandomState;
 
+        protected int mapWidth;
+        protected int mapHeight;
+
         public int Level { get; set; }
 
         public LevelConstruction()
@@ -64,6 +68,9 @@
             config.Height = (level + 1) * 12;
             lineCount = config.Height;
             startAndExit = 6;
+
+            mapWidth = config.Width;
+            mapHeight = config.Height;
 
             currentMap = new Map();
 
@@ -85,7 +92,7 @@
             Debug.Log(startOfRandomState);
 
             canAddItemToMap = false;
-            if (Random.value >= 0.5)
+            //if (Random.value >= 0.5)
             {
                 canAddItemToMap = true;
                 shouldAddItemAtLineIdx = (int)(Random.value * lineCount);
@@ -123,31 +130,75 @@
             return BloodPrefabs[nextPick];
         }
 
-        private bool IsOccupiedByOtherHumans(int x, int y)
+        protected bool IsSortOfTheSamePosition(Vector3 a, Vector3 b)
         {
+            return ((Mathf.Abs(a.x - b.x) <= Mathf.Epsilon) &&
+                (Mathf.Abs(a.y - b.y) <= Mathf.Epsilon));
+        }
+
+        protected bool IsOccupiedByOtherHumans(int x, int y)
+        {
+            Vector3 position = new Vector3(x, y, 0);
             foreach (var food in humans)
             {
-                if ((food.transform.position.x == x) && (food.transform.position.y == y))
+                if (IsSortOfTheSamePosition(position, food.transform.position))
                 {
                     return true;
+                }
+                else
+                {
+                    var human = food.GetComponent<Human>();
+                    if (human.isMoving)
+                    {
+                        if (IsSortOfTheSamePosition(human.moveFrom, position))
+                        {
+                            return true;
+                        }
+                        else if (IsSortOfTheSamePosition(human.moveTo, position))
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
 
             return false;
         }
 
-        private bool IsAreaOkForHuman(int x, int y)
+        protected bool IsWithinMapBounds(int x, int y)
         {
-            if ((Player.transform.position.x == x) && (Player.transform.position.y == y))
-            {
-                return false;
-            }
-
+            if (y < 0) return false;
+            if (x < 0) return false;
             if (y >= fullMap.Count) return false;
             if (x >= fullMap[y].Count) return false;
 
+            return true;
+        }
+
+        protected bool IsAreaOkForHuman(int x, int y)
+        {
+            if (!IsWithinMapBounds(x, y)) return false;
+
+            var position = new Vector3(x, y, 0);
+
+            if (IsSortOfTheSamePosition(position, Player.transform.position))
+            {
+                return false;
+            }
+            else
+            {
+                var vamp = Player.GetComponent<VampirePlayer>();
+                if (vamp.isMoving)
+                {
+                    if (IsSortOfTheSamePosition(position, vamp.moveFrom) || IsSortOfTheSamePosition(position, vamp.moveTo))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             var construct = fullMap[y][x];
-            bool passable = construct.Passable && (construct.Id == ConstructionType.Road);
+            bool passable = construct.Template.Passable && (construct.Template.Id == ConstructionType.Road);
 
             return passable && !IsOccupiedByOtherHumans(x, y);
         }
@@ -171,63 +222,106 @@
             humans.Add(human);
         }
 
+        public GameObject SpawnHumanAtPoint(Vector3 position, GameObject template)
+        {
+            var human = Instantiate(template, position, Quaternion.identity) as GameObject;
+            humans.Add(human);
+            return human;
+        }
+
+        public GameObject SpawnRandomHumanAtPoint(int x, int y)
+        {
+            Vector3 position = new Vector3(x, y, 0);
+            return SpawnHumanAtPoint(position, GetRandomHumanTemplate());
+        }
+
+        protected float GetHeatMapLineSumAtPoint(int x, int y)
+        {
+            float sum = 0f;
+
+            if (IsWithinMapBounds(x - 2, y) && IsOccupiedByOtherHumans(x - 2, y)) sum += 1;
+            if (IsWithinMapBounds(x - 1, y) && IsOccupiedByOtherHumans(x - 1, y)) sum += 1;
+            if (IsWithinMapBounds(x, y) && IsOccupiedByOtherHumans(x, y)) sum += 1;
+            if (IsWithinMapBounds(x + 1, y) && IsOccupiedByOtherHumans(x + 1, y)) sum += 1;
+            if (IsWithinMapBounds(x + 2, y) && IsOccupiedByOtherHumans(x + 2, y)) sum += 1;
+
+            return sum;
+        }
+
+        public float GetHeatMapAverageAtPoint(int x, int y)
+        {
+            float sum = 0f;
+
+            sum += GetHeatMapLineSumAtPoint(x, y - 2);
+            sum += GetHeatMapLineSumAtPoint(x, y - 1);
+            sum += GetHeatMapLineSumAtPoint(x, y);
+            sum += GetHeatMapLineSumAtPoint(x, y + 1);
+            sum += GetHeatMapLineSumAtPoint(x, y + 2);
+
+            return sum / 25.0f;
+        }
+
         private GameObject GetTemplateGameObjectForConstruct(Construct construct)
         {
-            if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.Vertical)
+            if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return RoadV[0];
             }
-            else if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.Horizontal)
+            else if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Horizontal)
             {
                 return RoadH[0];
             }
-            else if (construct.Id == ConstructionType.Road && construct.Dir == ConstructHVDirection.None)
+            else if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.None)
             {
                 return RoadCrossing[0];
             }
-            else if (construct.Id == ConstructionType.Building && construct.Dir == ConstructHVDirection.Vertical)
+            else if (construct.Template.Id == ConstructionType.Building && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return BuildingV[0];
             }
-            else if (construct.Id == ConstructionType.Building)
+            else if (construct.Template.Id == ConstructionType.Building)
             {
                 return BuildingH[0];
             }
-            else if (construct.Id == ConstructionType.Water && construct.Dir == ConstructHVDirection.Vertical)
+            else if (construct.Template.Id == ConstructionType.Water && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return WaterV[0];
             }
-            else if (construct.Id == ConstructionType.Water && construct.Dir == ConstructHVDirection.Horizontal)
+            else if (construct.Template.Id == ConstructionType.Water && construct.Template.Direction == ConstructHVDirection.Horizontal)
             {
                 return WaterH[0];
             }
-            else if (construct.Id == ConstructionType.Bridge && construct.Dir == ConstructHVDirection.Vertical)
+            else if (construct.Template.Id == ConstructionType.Bridge && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return BridgeV[0];
             }
-            else if (construct.Id == ConstructionType.Bridge && construct.Dir == ConstructHVDirection.Horizontal)
+            else if (construct.Template.Id == ConstructionType.Bridge && construct.Template.Direction == ConstructHVDirection.Horizontal)
             {
                 return BridgeH[0];
             }
-            else if (construct.Id == ConstructionType.BridgeBottom && construct.Dir == ConstructHVDirection.Horizontal)
+            else if (construct.Template.Id == ConstructionType.BridgeBottom && construct.Template.Direction == ConstructHVDirection.Horizontal)
             {
                 return BridgeBottomH[0];
             }
-            else if (construct.Id == ConstructionType.Dumpster)
+            else if (construct.Template.Id == ConstructionType.Dumpster)
             {
                 return Trash[0];
             }
-            else if (construct.Id == ConstructionType.Tavern)
+            else if (construct.Template.Id == ConstructionType.Tavern)
             {
                 return TavernH[0];
             }
-            else if (construct.Id == ConstructionType.Mausoleum)
+            else if (construct.Template.Id == ConstructionType.Mausoleum)
             {
                 return MausoleumH[0];
             }
-            else if (construct.Id == ConstructionType.Church)
+            else if (construct.Template.Id == ConstructionType.Church)
             {
                 return ChurchH[0];
+            }
+            else if (construct.Template.Id == ConstructionType.PoliceDepartment && construct.Template.Direction == ConstructHVDirection.Horizontal)
+            {
+                return PoliceDepartmentH;
             }
 
             return null;
@@ -300,13 +394,13 @@
                 {
                     AddInstance(templateGameObject, x * tileSize, lineIdx * tileSize);
 
-                    if (construct.HasLightSource)
+                    if (construct.Template.HasLightSource)
                     {
                         AddStreetlight(x * tileSize, lineIdx * tileSize);
                     }
                 }
 
-                if (canAddItemToMap && (lineIdx == shouldAddItemAtLineIdx) && !itemAdded && construct.Passable)
+                if (canAddItemToMap && (lineIdx == shouldAddItemAtLineIdx) && !itemAdded && construct.Template.Passable)
                 {
                     AddInstance(ItemPrefabs[(int)(ItemPrefabs.Length * Random.value)], x * tileSize, lineIdx * tileSize);
                     itemAdded = true;

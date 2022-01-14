@@ -18,7 +18,7 @@ namespace VampireTest
             var layout = map.GetFullmap();
 
             // test player starting point
-            Assert.AreEqual(true, layout[layout.Count - 1][config.Width / 2].Passable);
+            Assert.AreEqual(true, layout[layout.Count - 1][config.Width / 2].Template.Passable);
 
             // todo: test astar
 

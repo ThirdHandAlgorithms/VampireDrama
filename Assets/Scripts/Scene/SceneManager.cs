@@ -83,6 +83,7 @@ public class SceneManager : LevelConstruction
             DisplayTimeOfDay(hour, minute);
 
             HandleTimeOfDay(hour);
+            HandleSpawners();
 
             XPRollover.UpdateNr();
             BloodfillRollover.UpdateNr();
@@ -116,6 +117,58 @@ public class SceneManager : LevelConstruction
 
                 var sun = new SunAuraEffect(hour - 5);  // so at 6:00, you lose 1 blood every second, at 7:00 2 blood every second...
                 ApplyAuraEffectEverywhere(sun);
+            }
+        }
+    }
+
+    private void HandleSpawners()
+    {
+        foreach (var obj in this.allObjects)
+        {
+            int x = (int)obj.transform.position.x;
+            int y = (int)obj.transform.position.y;
+            if (x < 0 || y < 0 || x >= mapWidth || y >= mapHeight) continue;
+
+            var construct = this.fullMap[y][x];
+            if (construct != null)
+            {
+                if (construct.Template.IsRandomHumanSpawner)
+                {
+                    if (construct.TimeToSpawn())
+                    {
+                        construct.ResetSpawnTimer();
+
+                        if (Random.value < (1f - construct.Template.SpawnChance))
+                        {
+                            continue;
+                        }
+
+                        if (construct.Template.Direction == ConstructHVDirection.Horizontal)
+                        {
+                            var checkpos = obj.transform.position;
+                            if (IsAreaOkForHuman(x, y))
+                            {
+                                this.SpawnRandomHumanAtPoint(x, y + 1);
+                            }
+                            else if (IsAreaOkForHuman(x, y - 1))
+                            {
+                                this.SpawnRandomHumanAtPoint(x, y - 1);
+                            }
+                        }
+                        else if (construct.Template.Direction == ConstructHVDirection.Vertical)
+                        {
+                            var checkpos = obj.transform.position;
+                            if (IsAreaOkForHuman(x + 1, y))
+                            {
+                                this.SpawnRandomHumanAtPoint(x + 1, y);
+                            }
+                            else if (IsAreaOkForHuman(x - 1, y))
+                            {
+                                this.SpawnRandomHumanAtPoint(x - 1, y);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
