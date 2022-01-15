@@ -51,8 +51,16 @@
         {
             if (human.KnowsWhatsUp())
             {
-                buffRenderer.enabled = true;
-                buffAnim.Play("Alert");
+                if (human.IsDark())
+                {
+                    buffRenderer.enabled = true;
+                    buffAnim.Play("LoveAlert");
+                }
+                else
+                {
+                    buffRenderer.enabled = true;
+                    buffAnim.Play("Alert");
+                }
             }
             else if (human.IsVerySuspicious())
             {
