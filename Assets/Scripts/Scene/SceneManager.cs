@@ -185,8 +185,8 @@ public class SceneManager : LevelConstruction
         XPRollover.setNr(currentPlayerStats.Experience);
         BloodfillRollover.setNr(currentPlayerStats.Bloodfill);
 
-        StrRollover.setNr(player.GetTotalDefense());
-        DefRollover.setNr(player.GetTotalStrength());
+        StrRollover.setNr(player.GetTotalStrength());
+        DefRollover.setNr(player.GetTotalDefense());
         SpdRollover.setNr(player.GetTotalMovementSpeed() * 10);
     }
 
