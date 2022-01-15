@@ -285,7 +285,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20140502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fedb7ced60395164f8d062e2b67c1270, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6065d1c1eb6981444bb481613c4cd11c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733358368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1506,6 +1506,8 @@ MonoBehaviour:
   - {fileID: 1517841448877270, guid: b8e095a15dbdee64a839265e4a10dac3, type: 3}
   Trash:
   - {fileID: 1129704873841428, guid: dd701bbf0b5b4974a8379e64303ebf97, type: 3}
+  PoliceDepartmentH: {fileID: 1532090562282508, guid: ea5db3a4be01ed141bbdaaad2a0d9a5e,
+    type: 3}
   BorderN: {fileID: 1092581643633640, guid: 3996dff398ff7b544ace7648731df6ec, type: 3}
   BorderE: {fileID: 1571359256507172, guid: 9f648433416b96a45b88c11715482487, type: 3}
   BorderS: {fileID: 1645210059342856, guid: 2663b09fba91cfc418972c872eca6259, type: 3}
