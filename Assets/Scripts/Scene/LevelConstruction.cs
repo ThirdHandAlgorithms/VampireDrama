@@ -448,7 +448,14 @@
             var start = new RoyT.AStar.Position((int)from.x, (int)from.y);
             var end = new RoyT.AStar.Position((int)Player.transform.position.x, (int)Player.transform.position.y);
 
-            return mapTest.GetPath(start, end);
+            if (IsWithinMapBounds(start.X, start.Y) && IsWithinMapBounds(end.X, end.Y))
+            {
+                return mapTest.GetPath(start, end);
+            }
+            else
+            {
+                return new RoyT.AStar.Position[0];
+            }
         }
 
         public bool AddItem(ItemStats stats, Vector3 position)
