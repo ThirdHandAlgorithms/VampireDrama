@@ -20,6 +20,8 @@
             nextMoveIsJump = false;
 
             lastInput = Time.time;
+
+            Stats.Bloodfill = 10;
         }
 
         protected void UpdateItemEffects()
@@ -148,7 +150,7 @@
                 strength += item.Stats.Strength;
             }
 
-            return strength;
+            return strength + Stats.Bloodfill;
         }
 
         public float GetTotalDefense()
@@ -172,7 +174,7 @@
                 moveTime += item.Stats.TravelSpeed;
             }
 
-            return moveTime + Stats.Bloodfill;
+            return Mathf.Min(99, moveTime + Stats.Bloodfill);
         }
 
         public bool Fight(Human target, GameObject obj, int hor, int ver)

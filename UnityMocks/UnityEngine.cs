@@ -465,5 +465,17 @@
             if (v < 0) return v * -1;
             return v;
         }
+
+        public static float Min(float a, float b)
+        {
+            if (a < b)
+            {
+                return a;
+            }
+            else
+            {
+                return b;
+            }
+        }
     }
 }
