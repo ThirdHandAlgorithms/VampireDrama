@@ -3,8 +3,9 @@
 ## Movement & Input
 
 - **Grid-based movement** with raycasting for collision. Base speed is 1.0, modified by items and bloodfill: `min(99, baseSpeed + itemTravelSpeed + bloodfill)`. Speed translates to interpolation rate via `1 / (1 - speed/100)`.
-- **Jump** (Fire1): doubles movement distance to 2 tiles. Also triggers full attacks.
+- **Jump** (Left Ctrl / gamepad south): doubles movement distance to 2 tiles. Also triggers full attacks.
 - **Input throttle**: 0.2s delay between inputs to prevent buffering.
+- Uses new Unity Input System via `GameInput` singleton.
 
 ## Combat
 
@@ -39,12 +40,40 @@ Two attack modes depending on the target's **resistance** value:
 
 ## Items & Effects
 
-- **2-slot inventory** (Fire2 to pick up / drop)
+- **2-slot inventory** (Left Alt / gamepad east to pick up / drop)
 - **Item stats**: Strength, Defense, TravelSpeed, ItemLevel, Effects[]
 - Three implemented effects (tick every 1 second):
   - **Holy Aura**: heals nearby humans; burns vampire if bloodfill > experience
   - **Self-Healing**: heals nearby humans; no effect on vampire
   - **Sun**: damages vampire (strength = `hour - 5`, active 6:00-21:59); no effect on humans
+
+## Abilities
+
+Activated with Space / gamepad north. Cycle with Left Shift / gamepad west. All abilities cost blood and have cooldowns.
+
+- **Glamour** (unlocked by default): radius 3 tiles with line-of-sight check (blocked by buildings). Sets suspicion to 0, makes humans drunk (intoxication ≥ 51). Costs 2 blood, 60s cooldown.
+- **Recruit Ghoul**: targets the human directly in front. Human must be weakened (≤ 2L blood). Converts them into a ghoul, removes them from the level. Costs 3 blood, 30s cooldown. Fails if ghoul pack is full (max 3).
+- **Mind Control**: targets the human directly in front. Resets suspicion to 0, pushes them one tile in the facing direction. Costs 1 blood, 20s cooldown.
+
+## Ghoul System
+
+- Up to 3 ghouls, recruited via the Recruit Ghoul ability
+- Each ghoul has a **blood tax** (interval timer, costs blood when due)
+- Ghouls can be assigned tasks: Idle, Stealing, GatheringInfo, Capturing
+- **Intel gathering**: after 3 minutes produces a first report, then updates every 2 minutes. Reports describe the wanted level:
+  - < 20: "The streets seem calm, nothing to report"
+  - 20+: "Police are aware of missing people"
+  - 40+: "Police know about missing people having been murdered"
+  - 60+: "Police suspect animal attacks"
+  - 80+: "Police whispers about vampires"
+
+## Level State (Hidden)
+
+Per-level stats that affect gameplay:
+
+- **Wanted** (0-100): increased by kills (+10), being spotted (+5), ghoul caught (+15). Decays at 0.5/s. Drives extra law enforcement spawns (0-4), human suspicion bonus, and spawner rate multiplier.
+- **Reputation** (0-100): increased by ghoul info-gathering (+5)
+- **Influence** (0-100): increased by undetected feeding (+2), stealing (+3), capturing (+5)
 
 ## Time & Day/Night
 
@@ -54,10 +83,10 @@ Two attack modes depending on the target's **resistance** value:
 
 ## Level Progression
 
-- Map height: `(level+1) * 12` tiles. Human count: `lineCount/6 + (level-1)*2`
+- Map height: `(level+1) * 12` tiles. Human count: `lineCount/6 + (level-1)*2 + extraLawEnforcement`
 - Exit at top of map; reaching it loads ScoreScreen with stats preserved
 - Bloodfill = 0 → GameOver
-- 50% chance an item spawns per level (one per level, on a random road tile)
+- Items always spawn (one per level, on a random road tile)
 
 ## Map Generation
 
@@ -69,9 +98,7 @@ Two attack modes depending on the target's **resistance** value:
 
 ## Not Yet Implemented (from GitHub issues)
 
-- Abilities with cooldowns (Batform, Glamour)
-- Ghoul recruitment system
-- Wanted/Reputation meter
+- Batform ability (needs sprites/animations)
 - Feeding restrictions (witness proximity)
 - Boss encounters / arenas
 - Music / audio system

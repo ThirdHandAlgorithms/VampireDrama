@@ -11,6 +11,13 @@
 
 All stat values animate smoothly over 1.5 seconds when they change (via UiRollover).
 
+## Ability Display (AbilityUI.cs)
+
+- **AbilityNameText** — name of the currently selected ability
+- **AbilityStatusText** — "Ready", "Active", or cooldown countdown (e.g. "45s")
+- **AbilityIcon** — icon image, dims to grey when on cooldown
+- **CooldownOverlay** — radial fill image that drains as cooldown expires
+
 ## Inventory
 
 - 2 item slots shown as icons; empty slots are hidden
@@ -33,6 +40,10 @@ Each human displays two overlay indicators:
 - Bloodstain sprites where humans are killed
 - Item sprites on the ground
 - Streetlights on certain terrain
+
+## Debug Logging
+
+Ability usage is logged to Console with `[Ability]` prefix (cooldown state, activation, failures). To be replaced with proper UI.
 
 ## Score Screen
 
