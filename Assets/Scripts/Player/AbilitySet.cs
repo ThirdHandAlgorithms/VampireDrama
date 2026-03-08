@@ -5,6 +5,8 @@ namespace VampireDrama
     [System.Serializable]
     public class AbilitySet
     {
+        public static AbilitySet Current;
+
         public List<Ability> Abilities;
         public int SelectedIndex;
 

@@ -17,6 +17,7 @@
             base.Start();
 
             Stats = GameGlobals.GetInstance().PlayerStats;
+            AbilitySet.Current = Stats.Abilities;
             nextMoveIsJump = false;
 
             lastInput = Time.time;

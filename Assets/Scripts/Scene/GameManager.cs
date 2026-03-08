@@ -31,6 +31,12 @@ public class GameManager : MonoBehaviour
 
         sceneScript.InitScene(level);
         TriggerInventoryUI();
+
+        foreach (var old in FindObjectsOfType<AbilityUI>())
+        {
+            Destroy(old);
+        }
+        gameObject.AddComponent<AbilityUI>();
     }
 
     private void TriggerInventoryUI()

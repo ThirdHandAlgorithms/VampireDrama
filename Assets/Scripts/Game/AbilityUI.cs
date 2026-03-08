@@ -4,28 +4,115 @@ using VampireDrama;
 
 public class AbilityUI : MonoBehaviour
 {
-    public Text AbilityNameText;
-    public Text AbilityStatusText;
-    public Image AbilityIcon;
-    public Image CooldownOverlay;
-
+    private Text abilityNameText;
+    private Text abilityStatusText;
+    private Image abilityIcon;
+    private Image cooldownOverlay;
     private AbilitySet trackedAbilities;
 
     public void Start()
     {
-        if (CooldownOverlay != null)
+        var canvas = FindObjectOfType<Canvas>();
+        if (canvas == null) return;
+
+        var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        // fallback
+        if (font == null) font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+
+        // Try to find the font used by existing labels
+        var existingText = canvas.GetComponentInChildren<Text>();
+        if (existingText != null && existingText.font != null)
         {
-            CooldownOverlay.type = Image.Type.Filled;
-            CooldownOverlay.fillMethod = Image.FillMethod.Radial360;
-            CooldownOverlay.fillOrigin = (int)Image.Origin360.Top;
-            CooldownOverlay.fillClockwise = false;
+            font = existingText.font;
         }
+
+        // Panel
+        var panel = CreateUIObject("AbilityPanel", canvas.transform);
+        var panelRT = panel.GetComponent<RectTransform>();
+        panelRT.anchorMin = new Vector2(0, 1);
+        panelRT.anchorMax = new Vector2(0, 1);
+        panelRT.pivot = new Vector2(0, 1);
+        panelRT.anchoredPosition = new Vector2(10, -10);
+        panelRT.sizeDelta = new Vector2(120, 50);
+
+        var panelImg = panel.AddComponent<Image>();
+        panelImg.color = new Color(0f, 0f, 0f, 0.4f);
+        panelImg.raycastTarget = false;
+
+        // Ability Name
+        var nameObj = CreateUIObject("AbilityName", panel.transform);
+        var nameRT = nameObj.GetComponent<RectTransform>();
+        nameRT.anchorMin = new Vector2(0, 0.5f);
+        nameRT.anchorMax = new Vector2(1, 1);
+        nameRT.offsetMin = new Vector2(4, 0);
+        nameRT.offsetMax = new Vector2(-4, -2);
+
+        abilityNameText = nameObj.AddComponent<Text>();
+        abilityNameText.font = font;
+        abilityNameText.fontSize = 14;
+        abilityNameText.color = new Color(1f, 0.85f, 0.2f, 1f);
+        abilityNameText.alignment = TextAnchor.MiddleLeft;
+        abilityNameText.raycastTarget = false;
+        abilityNameText.horizontalOverflow = HorizontalWrapMode.Overflow;
+
+        // Status Text
+        var statusObj = CreateUIObject("AbilityStatus", panel.transform);
+        var statusRT = statusObj.GetComponent<RectTransform>();
+        statusRT.anchorMin = new Vector2(0, 0);
+        statusRT.anchorMax = new Vector2(1, 0.5f);
+        statusRT.offsetMin = new Vector2(4, 2);
+        statusRT.offsetMax = new Vector2(-4, 0);
+
+        abilityStatusText = statusObj.AddComponent<Text>();
+        abilityStatusText.font = font;
+        abilityStatusText.fontSize = 12;
+        abilityStatusText.color = new Color(0.7f, 0.7f, 0.7f, 1f);
+        abilityStatusText.alignment = TextAnchor.MiddleLeft;
+        abilityStatusText.raycastTarget = false;
+        abilityStatusText.horizontalOverflow = HorizontalWrapMode.Overflow;
+
+        // Icon (fixed square, right side of panel)
+        var iconObj = CreateUIObject("AbilityIcon", panel.transform);
+        var iconRT = iconObj.GetComponent<RectTransform>();
+        iconRT.anchorMin = new Vector2(1, 0.5f);
+        iconRT.anchorMax = new Vector2(1, 0.5f);
+        iconRT.pivot = new Vector2(1, 0.5f);
+        iconRT.anchoredPosition = new Vector2(-4, 0);
+        iconRT.sizeDelta = new Vector2(30, 30);
+
+        abilityIcon = iconObj.AddComponent<Image>();
+        abilityIcon.color = new Color(0.8f, 0.2f, 0.2f, 1f);
+        abilityIcon.raycastTarget = false;
+
+        // Cooldown overlay on top of icon
+        var cdObj = CreateUIObject("CooldownOverlay", iconObj.transform);
+        var cdRT = cdObj.GetComponent<RectTransform>();
+        cdRT.anchorMin = Vector2.zero;
+        cdRT.anchorMax = Vector2.one;
+        cdRT.offsetMin = Vector2.zero;
+        cdRT.offsetMax = Vector2.zero;
+
+        cooldownOverlay = cdObj.AddComponent<Image>();
+        cooldownOverlay.color = new Color(0f, 0f, 0f, 0.6f);
+        cooldownOverlay.type = Image.Type.Filled;
+        cooldownOverlay.fillMethod = Image.FillMethod.Radial360;
+        cooldownOverlay.fillOrigin = (int)Image.Origin360.Top;
+        cooldownOverlay.fillClockwise = false;
+        cooldownOverlay.raycastTarget = false;
+        cooldownOverlay.enabled = false;
+    }
+
+    private GameObject CreateUIObject(string name, Transform parent)
+    {
+        var obj = new GameObject(name, typeof(RectTransform));
+        obj.transform.SetParent(parent, false);
+        obj.layer = 5; // UI layer
+        return obj;
     }
 
     public void Update()
     {
-        var globals = GameGlobals.GetInstance();
-        trackedAbilities = globals.PlayerStats.Abilities;
+        trackedAbilities = AbilitySet.Current;
 
         if (trackedAbilities == null || trackedAbilities.Abilities.Count == 0)
         {
@@ -40,57 +127,52 @@ public class AbilityUI : MonoBehaviour
             return;
         }
 
-        if (AbilityNameText != null)
+        if (abilityNameText != null)
         {
-            AbilityNameText.text = selected.Name;
+            abilityNameText.text = selected.Name;
         }
 
-        if (AbilityStatusText != null)
+        if (abilityStatusText != null)
         {
             if (selected.IsOnCooldown)
             {
-                AbilityStatusText.text = ((int)selected.CooldownRemaining).ToString() + "s";
+                abilityStatusText.text = ((int)selected.CooldownRemaining).ToString() + "s";
             }
             else if (selected.IsActive)
             {
-                AbilityStatusText.text = "Active";
+                abilityStatusText.text = "Active";
             }
             else
             {
-                AbilityStatusText.text = "Ready";
+                abilityStatusText.text = "Ready";
             }
         }
 
-        if (CooldownOverlay != null)
+        if (cooldownOverlay != null)
         {
             if (selected.IsOnCooldown && selected.CooldownDuration > 0f)
             {
-                CooldownOverlay.enabled = true;
-                CooldownOverlay.fillAmount = selected.CooldownRemaining / selected.CooldownDuration;
+                cooldownOverlay.enabled = true;
+                cooldownOverlay.fillAmount = selected.CooldownRemaining / selected.CooldownDuration;
             }
             else
             {
-                CooldownOverlay.enabled = false;
+                cooldownOverlay.enabled = false;
             }
         }
 
-        if (AbilityIcon != null)
+        if (abilityIcon != null)
         {
-            if (selected.IsOnCooldown)
-            {
-                AbilityIcon.color = new Color(0.5f, 0.5f, 0.5f, 1f);
-            }
-            else
-            {
-                AbilityIcon.color = Color.white;
-            }
+            abilityIcon.color = selected.IsOnCooldown
+                ? new Color(0.5f, 0.5f, 0.5f, 1f)
+                : new Color(0.8f, 0.2f, 0.2f, 1f);
         }
     }
 
     private void SetEmpty()
     {
-        if (AbilityNameText != null) AbilityNameText.text = "";
-        if (AbilityStatusText != null) AbilityStatusText.text = "";
-        if (CooldownOverlay != null) CooldownOverlay.enabled = false;
+        if (abilityNameText != null) abilityNameText.text = "";
+        if (abilityStatusText != null) abilityStatusText.text = "";
+        if (cooldownOverlay != null) cooldownOverlay.enabled = false;
     }
 }
