@@ -33,7 +33,7 @@ public class ScoreScene : MonoBehaviour
 
         // todo: if animations are completed...
 
-        if (Input.GetButtonDown("Fire1"))
+        if (GameInput.GetInstance().ConfirmPressed())
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
         }

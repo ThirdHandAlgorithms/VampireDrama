@@ -8,5 +8,6 @@
         public int Experience;
         public int Bloodfill;
         public List<InventoryItem> Items;
+        public AbilitySet Abilities;
     }
 }

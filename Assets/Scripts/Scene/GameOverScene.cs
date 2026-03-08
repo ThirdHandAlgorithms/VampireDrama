@@ -33,7 +33,7 @@ public class GameOverScene : MonoBehaviour
 
         // todo: if animations are completed...
 
-        if (Input.GetButtonDown("Fire1"))
+        if (GameInput.GetInstance().ConfirmPressed())
         {
             var globals = GameGlobals.GetInstance();
             globals.Reset();

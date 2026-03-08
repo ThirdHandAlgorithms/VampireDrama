@@ -42,6 +42,12 @@
             lastDirection = new Direction(hv.x, hv.y);
         }
 
+        public bool ForceMove(int xDir, int yDir)
+        {
+            RaycastHit2D hit;
+            return Move(xDir, yDir, out hit);
+        }
+
         public float GetResistance()
         {
             // edge case, max draining by attack is until 1litre of blood, this human will not be able to fight back, trust me

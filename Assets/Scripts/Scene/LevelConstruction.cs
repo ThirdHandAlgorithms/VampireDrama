@@ -51,6 +51,7 @@
         protected int mapHeight;
 
         public int Level { get; set; }
+        public LevelState LevelState { get; set; }
 
         public LevelConstruction()
         {
@@ -60,6 +61,7 @@
         {
             Debug.Log("InitScene " + level.ToString());
             Level = level;
+            LevelState = new LevelState();
 
             allObjects = new List<GameObject>();
             humans = new List<GameObject>();
@@ -121,7 +123,7 @@
 
         private int getHumanCountForLevel(int level)
         {
-            return (lineCount / 6) + ((level - 1) * 2);
+            return (lineCount / 6) + ((level - 1) * 2) + LevelState.GetExtraLawEnforcementCount();
         }
 
         private GameObject GetRandomHumanTemplate()
@@ -440,6 +442,67 @@
                 Destroy(obj);
             }
             allObjects.Clear();
+        }
+
+        public List<Human> GetHumansInRadius(Vector3 center, float radius, LayerMask blockingLayer)
+        {
+            var result = new List<Human>();
+            float radiusSq = radius * radius;
+
+            // disable player collider so linecast doesn't hit it
+            var playerCollider = Player.GetComponent<BoxCollider2D>();
+            if (playerCollider != null) playerCollider.enabled = false;
+
+            foreach (var obj in humans)
+            {
+                var diff = obj.transform.position - center;
+                if (diff.sqrMagnitude <= radiusSq)
+                {
+                    // disable target collider so linecast only hits walls
+                    var targetCollider = obj.GetComponent<BoxCollider2D>();
+                    if (targetCollider != null) targetCollider.enabled = false;
+
+                    var hit = Physics2D.Linecast(center, obj.transform.position, blockingLayer);
+                    bool blocked = (hit.transform != null);
+
+                    if (targetCollider != null) targetCollider.enabled = true;
+
+                    if (!blocked)
+                    {
+                        var human = obj.GetComponent<Human>();
+                        if (human != null) result.Add(human);
+                    }
+                }
+            }
+
+            if (playerCollider != null) playerCollider.enabled = true;
+
+            return result;
+        }
+
+        public Human GetHumanFacing(Vector3 position, int dirX, int dirY)
+        {
+            Vector3 target = position + new Vector3(dirX, dirY, 0);
+            foreach (var obj in humans)
+            {
+                if (IsSortOfTheSamePosition(obj.transform.position, target))
+                {
+                    return obj.GetComponent<Human>();
+                }
+            }
+            return null;
+        }
+
+        public void RemoveHuman(Human human)
+        {
+            for (int i = humans.Count - 1; i >= 0; i--)
+            {
+                if (humans[i].GetComponent<Human>() == human)
+                {
+                    humans.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public RoyT.AStar.Position[] GetPathToPlayer(Vector3 from)

@@ -56,18 +56,64 @@
         public override void Update()
 		{
             UpdateItemEffects();
+            Stats.Abilities.Tick(Time.deltaTime);
             base.Update();
             if (isMoving) return;
 
             var timeNow = Time.time;
             if (timeNow - lastInput < 0.2f) return;
 
-            if (Input.GetButtonDown("Fire1"))
+            var input = GameInput.GetInstance();
+
+            if (input.CycleAbilityPressed())
+            {
+                Stats.Abilities.CycleNext();
+                var selected = Stats.Abilities.Selected;
+                if (selected != null)
+                {
+                    Debug.Log("[Ability] Switched to: " + selected.Name);
+                }
+            }
+
+            if (input.UseAbilityPressed())
+            {
+                var selected = Stats.Abilities.Selected;
+                if (selected == null)
+                {
+                    Debug.Log("[Ability] No ability selected");
+                }
+                else if (selected.IsOnCooldown)
+                {
+                    Debug.Log("[Ability] " + selected.Name + " on cooldown: " + selected.CooldownRemaining.ToString("F1") + "s remaining");
+                }
+                else if (selected.IsActive)
+                {
+                    Debug.Log("[Ability] " + selected.Name + " already active: " + selected.ActiveRemaining.ToString("F1") + "s remaining");
+                }
+                else if (Stats.Bloodfill < selected.BloodCost)
+                {
+                    Debug.Log("[Ability] " + selected.Name + " needs " + selected.BloodCost + " blood, you have " + Stats.Bloodfill);
+                }
+                else
+                {
+                    bool success = Stats.Abilities.ActivateSelected(this);
+                    if (success)
+                    {
+                        Debug.Log("[Ability] " + selected.Name + " activated! Cost " + selected.BloodCost + " blood. Cooldown: " + selected.CooldownDuration + "s");
+                    }
+                    else
+                    {
+                        Debug.Log("[Ability] " + selected.Name + " failed (no valid target?)");
+                    }
+                }
+            }
+
+            if (input.JumpPressed())
             {
                 nextMoveIsJump = true;
             }
 
-            if (Input.GetButtonDown("Fire2"))
+            if (input.InteractPressed())
             {
                 RaycastHit2D currentPoshit;
                 if (!IsSomethingAtTheEnd(transform.position, out currentPoshit))
@@ -85,8 +131,9 @@
                 }
             }
 
-            int hor = (int)Input.GetAxisRaw("Horizontal");
-            int ver = (int)Input.GetAxisRaw("Vertical");
+            var moveInput = input.GetMoveInput();
+            int hor = (int)System.Math.Round(moveInput.x);
+            int ver = (int)System.Math.Round(moveInput.y);
 
             RaycastHit2D hit = new RaycastHit2D();
             bool hitSomething = false;
@@ -134,6 +181,11 @@
                     Move(hor, ver, out hit);
                 }
             }
+        }
+
+        public Direction GetFacingDirection()
+        {
+            return lastDirection;
         }
 
         public Inventory GetInventory()

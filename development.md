@@ -2,7 +2,7 @@
 
 ## Requirements:
 
-* Unity 2021.2.7f1
+* Unity 2021.2.8f1
 
 
 # Maps
