@@ -73,7 +73,7 @@ Maps live in `Assets/Resources/` as `.txt` files editable with a text editor or 
 
 ## Scene/Prefab Editing (Python)
 
-Unity YAML files can be parsed with `unityparser`: `uv run --with unityparser python3 script.py`. See `docs/development.md` for full usage guide and `tools/add_ability_ui.py` for a working example.
+Unity YAML files can be parsed with `unityparser`: `uv run --with unityparser python3 script.py`. See `docs/unity-yaml-editing.md` for full usage guide and `tools/add_ability_ui.py` for a working example.
 
 ## Further Documentation
 
