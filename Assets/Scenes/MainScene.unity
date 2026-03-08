@@ -1056,7 +1056,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'XP:'
+  m_Text: 0
 --- !u!222 &688187633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1468,6 +1468,8 @@ GameObject:
   - component: {fileID: 931804143}
   - component: {fileID: 931804145}
   - component: {fileID: 931804144}
+  - component:
+      fileID: 900200000
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2437,7 +2439,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Blood:'
+  m_Text: 0
 --- !u!222 &1762789917
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2771,3 +2773,28 @@ SceneRoots:
   - {fileID: 1338412496}
   - {fileID: 72271895}
   - {fileID: 1212246474}
+--- !u!114 &900200000
+MonoBehaviour:
+  Icons:
+  - AbilityName: Glamour
+    Icon:
+      fileID: 3093879478420113611
+      guid: 34805f69b368dbc3c97b5a7e82e46bd5
+      type: 3
+  m_CorrespondingSourceObject:
+    fileID: 0
+  m_EditorClassIdentifier: ''
+  m_EditorHideFlags: !!int '0'
+  m_Enabled: !!int '1'
+  m_GameObject:
+    fileID: 931804142
+  m_Name: ''
+  m_ObjectHideFlags: !!int '0'
+  m_PrefabAsset:
+    fileID: 0
+  m_PrefabInstance:
+    fileID: 0
+  m_Script:
+    fileID: 11500000
+    guid: a07b7ea3dd0eddb18928dbc7b6a75f84
+    type: 3

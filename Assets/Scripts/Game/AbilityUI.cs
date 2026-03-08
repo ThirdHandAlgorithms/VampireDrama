@@ -9,6 +9,8 @@ public class AbilityUI : MonoBehaviour
     private Image abilityIcon;
     private Image cooldownOverlay;
     private AbilitySet trackedAbilities;
+    private string currentAbilityName;
+    private AbilityIconSet iconSet;
 
     public void Start()
     {
@@ -81,8 +83,9 @@ public class AbilityUI : MonoBehaviour
         iconRT.sizeDelta = new Vector2(30, 30);
 
         abilityIcon = iconObj.AddComponent<Image>();
-        abilityIcon.color = new Color(0.8f, 0.2f, 0.2f, 1f);
+        abilityIcon.color = Color.white;
         abilityIcon.raycastTarget = false;
+        abilityIcon.preserveAspect = true;
 
         // Cooldown overlay on top of icon
         var cdObj = CreateUIObject("CooldownOverlay", iconObj.transform);
@@ -163,9 +166,19 @@ public class AbilityUI : MonoBehaviour
 
         if (abilityIcon != null)
         {
+            if (selected.Name != currentAbilityName)
+            {
+                currentAbilityName = selected.Name;
+                if (iconSet == null) iconSet = FindObjectOfType<AbilityIconSet>();
+                if (iconSet != null)
+                {
+                    abilityIcon.sprite = iconSet.GetIcon(currentAbilityName);
+                }
+            }
+
             abilityIcon.color = selected.IsOnCooldown
                 ? new Color(0.5f, 0.5f, 0.5f, 1f)
-                : new Color(0.8f, 0.2f, 0.2f, 1f);
+                : Color.white;
         }
     }
 
