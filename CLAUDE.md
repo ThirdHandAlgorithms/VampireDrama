@@ -71,6 +71,10 @@ Level size scales with progression: height = `(level+1)*12`, NPC count = `(lineC
 
 Maps live in `Assets/Resources/` as `.txt` files editable with a text editor or REXPaint (use CTRL+T to re-export). Character mappings are in `Assets/Scripts/Map/ConstructionTypes.cs`.
 
+## Scene/Prefab Editing (Python)
+
+Unity YAML files can be parsed with `unityparser`: `uv run --with unityparser python3 script.py`. See `docs/development.md` for full usage guide and `tools/add_ability_ui.py` for a working example.
+
 ## Further Documentation
 
 See the `docs/` directory for detailed documentation:
