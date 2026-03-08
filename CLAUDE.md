@@ -63,6 +63,10 @@ Level size scales with progression: height = `(level+1)*12`, NPC count = `(lineC
 - **Persistent** (in `GameGlobals`): `PlayerStats` (bloodfill, XP, items, abilities), `GhoulPack`
 - **Per-level** (in `LevelConstruction`): `LevelState` (wanted, reputation, influence)
 
+## Important Rules
+
+- **Never revert scene files (.unity) or prefabs (.prefab) without asking.** Unity may have saved runtime or editor changes to these files that are intentional. Always confirm with the user before discarding changes to Unity asset files.
+
 ## Map Editing
 
 Maps live in `Assets/Resources/` as `.txt` files editable with a text editor or REXPaint (use CTRL+T to re-export). Character mappings are in `Assets/Scripts/Map/ConstructionTypes.cs`.
