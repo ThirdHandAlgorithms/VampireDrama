@@ -22,6 +22,11 @@
             lastInput = Time.time;
 
             Stats.Bloodfill = 10;
+
+            if (GetComponent<HideOverlay>() == null)
+            {
+                gameObject.AddComponent<HideOverlay>();
+            }
         }
 
         protected void UpdateItemEffects()

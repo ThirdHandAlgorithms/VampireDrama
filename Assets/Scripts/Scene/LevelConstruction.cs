@@ -116,6 +116,11 @@
             }
         }
 
+        public ConstructionChunk GetFullMap()
+        {
+            return fullMap;
+        }
+
         public Vector2 GetExitPosition()
         {
             return exitInstance.transform.position;
