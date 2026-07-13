@@ -40,6 +40,11 @@
         protected List<GameObject> allObjects;
         protected GameObject exitInstance;
 
+        protected GameObject bossInstance;
+        protected Vector3 bossSpawnPosition;
+        protected bool hasBossSpawn;
+        protected bool bossDefeated;
+
         protected float tileSize = 1.0f;
         public Map currentMap;
         protected ConstructionChunk fullMap;
@@ -75,6 +80,10 @@
             mapHeight = config.Height;
 
             currentMap = new Map();
+            currentMap.BossArenaAtTop = true;
+            hasBossSpawn = false;
+            bossDefeated = false;
+            bossInstance = null;
 
             //int seed = 1;
             //Random.InitState(seed);
@@ -113,6 +122,11 @@
             for (var idx = 0; idx < amountOfHumans; idx++)
             {
                 AddHuman();
+            }
+
+            if (hasBossSpawn)
+            {
+                SpawnBoss(bossSpawnPosition);
             }
         }
 
@@ -270,7 +284,11 @@
 
         private GameObject GetTemplateGameObjectForConstruct(Construct construct)
         {
-            if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Vertical)
+            if (construct.Template.Id == ConstructionType.BossSpawn)
+            {
+                return RoadCrossing[0];
+            }
+            else if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return RoadV[0];
             }
@@ -395,6 +413,12 @@
             var x = 0;
             foreach (var construct in line)
             {
+                if (construct.Template.Id == ConstructionType.BossSpawn)
+                {
+                    bossSpawnPosition = new Vector3(x * tileSize, lineIdx * tileSize, 0f);
+                    hasBossSpawn = true;
+                }
+
                 GameObject templateGameObject = GetTemplateGameObjectForConstruct(construct);
 
                 if (templateGameObject != null)
@@ -433,6 +457,12 @@
         protected void ClearScene()
         {
             Destroy(Player);
+
+            if (bossInstance != null)
+            {
+                Destroy(bossInstance);
+                bossInstance = null;
+            }
 
             foreach (var obj in humans)
             {
@@ -523,6 +553,92 @@
             else
             {
                 return new RoyT.AStar.Position[0];
+            }
+        }
+
+        // Spawns the boss by reusing a normal human prefab (for its collider,
+        // rigidbody and animation), stripping the Human brain and dropping in
+        // the Boss brain in its place. Avoids needing a dedicated boss prefab.
+        protected void SpawnBoss(Vector3 pos)
+        {
+            var template = GetRandomHumanTemplate();
+            var obj = Instantiate(template, pos, Quaternion.identity) as GameObject;
+
+            LayerMask blocking = 0;
+            float speed = 1f;
+
+            var human = obj.GetComponent<Human>();
+            if (human != null)
+            {
+                blocking = human.blockingLayer;
+                speed = human.baseMoveSpeed;
+                DestroyImmediate(human);
+            }
+
+            var boss = obj.AddComponent<Boss>();
+            boss.blockingLayer = blocking;
+            boss.baseMoveSpeed = speed;
+
+            bossInstance = obj;
+        }
+
+        public bool IsExitLocked()
+        {
+            return hasBossSpawn && !bossDefeated;
+        }
+
+        public Vector3 GetPlayerPosition()
+        {
+            if (Player == null) return Vector3.zero;
+            return Player.transform.position;
+        }
+
+        public VampirePlayer GetPlayer()
+        {
+            if (Player == null) return null;
+            return Player.GetComponent<VampirePlayer>();
+        }
+
+        // Called by the Boss when it has been fully drained. Opens the sealed
+        // exit and rewards the player with the Recruit Ghoul ability.
+        public void BossDefeated(Boss boss)
+        {
+            if (bossDefeated) return;
+            bossDefeated = true;
+
+            Vector3 spot = boss.transform.position;
+
+            var abilities = GameGlobals.GetInstance().PlayerStats.Abilities;
+            bool alreadyHas = false;
+            foreach (var ability in abilities.Abilities)
+            {
+                if (ability is RecruitGhoulAbility)
+                {
+                    alreadyHas = true;
+                    break;
+                }
+            }
+
+            if (!alreadyHas)
+            {
+                abilities.Unlock(new RecruitGhoulAbility());
+                Debug.Log("[Boss] The hunter falls. Unlocked ability: Recruit Ghoul. The exit is open.");
+            }
+            else
+            {
+                Debug.Log("[Boss] The hunter falls. The exit is open.");
+            }
+
+            if (bossInstance != null)
+            {
+                Destroy(bossInstance);
+                bossInstance = null;
+            }
+
+            if (Bloodstain != null && Bloodstain.Length > 0)
+            {
+                var bloodstain = Instantiate(Bloodstain[0], spot, Quaternion.identity) as GameObject;
+                allObjects.Add(bloodstain);
             }
         }
 

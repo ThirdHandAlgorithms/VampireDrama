@@ -192,6 +192,13 @@ public class SceneManager : LevelConstruction
 
     public void Kill(Human target, GameObject obj)
     {
+        var boss = target as Boss;
+        if (boss != null)
+        {
+            BossDefeated(boss);
+            return;
+        }
+
         Vector3 killspot = obj.transform.position;
         humans.Remove(obj);
         Destroy(obj);

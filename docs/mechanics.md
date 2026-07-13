@@ -96,11 +96,19 @@ Per-level stats that affect gameplay:
 - Traversability validated via A* — regenerates if no path exists from south to north
 - Light sources on certain constructs reduce darkness values
 
+## Boss Encounters
+
+- Every level ends in a fixed 12x12 **boss arena** placed as the top chunk band (an open plaza with a few lit pillars, marked with `B` for the boss spawn — see `ConstructionType.BossSpawn`).
+- The boss is a **vampire hunter** (`Boss : Human`): reuses a human prefab's body but replaces the wandering brain. It has a large blood pool (40), **self-heals** ~1 blood every 1.5s, and keeps its distance (~3 tiles) as a ranged fighter.
+- **Area-denial attack** (`BossAttackController` + `BossProjectile`): aims a straight line of tiles at the player, flashes a red warning overlay for ~0.9s, then fires an arrow down that line. A hit deals heavy damage (6) via `ReceivePunch`. Change the projectile sprite per boss to reskin the volley.
+- **Defeat**: drain the boss with melee. `GetResistance` keeps the player on the drain path (never instant-kill) until the pool is emptied; `LoseBlood` then reports defeat to the level.
+- The level **exit is sealed** (`IsExitLocked`) until the boss falls. Defeating it opens the exit and **unlocks the Recruit Ghoul ability** (granted once).
+
 ## Not Yet Implemented (from GitHub issues)
 
 - Batform ability (needs sprites/animations)
 - Feeding restrictions (witness proximity)
-- Boss encounters / arenas
+- Rival-vampire / priest boss variants; arena gimmicks (hostages, trigger tiles)
 - Music / audio system
 - Environmental storytelling (books, posters, overheard conversations)
 - Shadow mechanics (buildings blocking sunlight)

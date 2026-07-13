@@ -46,6 +46,10 @@
         private int templateHeight = 12;
         private ChunkTemplates possibleTemplates;
 
+        // When set, the first chunk band generated (which ends up at the top of
+        // the level, next to the exit) is replaced with the fixed boss arena.
+        public bool BossArenaAtTop = false;
+
         public Map()
         {
             possibleTemplates = new ChunkTemplates();
@@ -96,7 +100,14 @@
             {
                 if (line % templateHeight == 0)
                 {
-                    InitNewTemplatesToUse(possibleTemplates);
+                    if (line == 0 && BossArenaAtTop)
+                    {
+                        InitBossArenaTemplate(possibleTemplates);
+                    }
+                    else
+                    {
+                        InitNewTemplatesToUse(possibleTemplates);
+                    }
                 }
 
                 ConstructLineFromTemplate();
@@ -107,6 +118,12 @@
         {
             TemplatesToUse.Clear();
             TemplatesToUse.Add(templates.GetRandomChunk12x12Template());
+        }
+
+        private void InitBossArenaTemplate(ChunkTemplates templates)
+        {
+            TemplatesToUse.Clear();
+            TemplatesToUse.Add(templates.GetBossArenaTemplate());
         }
 
         public void StartNewDynamicMap()

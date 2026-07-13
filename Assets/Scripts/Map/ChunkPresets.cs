@@ -89,6 +89,37 @@
             return All12x12Templates[idxTemplate];
         }
 
+        // A fixed 12x12 boss arena, built in code so it does not depend on
+        // Resources being present (keeps out-of-Unity map tooling working).
+        // Row 0 is nearest the level exit (top); the player enters from the
+        // bottom. 'B' marks where the boss spawns.
+        //
+        // The plaza is kept fully passable on purpose: MapTest probes the west
+        // and east map edges at mid-height, which lands inside this band on the
+        // first level, so any wall on the edge columns there would make the
+        // level untraversable and hang generation. An open plaza also reads
+        // well for the telegraphed area-denial attacks (room to dodge).
+        public ConstructionChunk GetBossArenaTemplate()
+        {
+            var arena = new string[]
+            {
+                "            ",
+                "            ",
+                "      B     ",
+                "            ",
+                "  =      =  ",
+                "            ",
+                "            ",
+                "            ",
+                "  =      =  ",
+                "            ",
+                "            ",
+                "            ",
+            };
+
+            return getFromTextPreset(arena);
+        }
+
         private ConstructionChunk getFromTextPreset(string[] textpreset)
         {
             var preset = new ConstructionChunk(textpreset.Length);
