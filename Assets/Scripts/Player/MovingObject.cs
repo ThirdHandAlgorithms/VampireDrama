@@ -55,22 +55,6 @@
             }
         }
 
-        // Tile this object is heading to (its destination while moving, or its
-        // current tile when standing still). Combined with GetOriginalPosition
-        // this gives both tiles a moving object overlaps, so grid-based combat
-        // can hit it anywhere along its step instead of only dead centre.
-        public Vector2 GetDestinationPosition()
-        {
-            if (isMoving)
-            {
-                return moveTo;
-            }
-            else
-            {
-                return transform.position;
-            }
-        }
-
         protected virtual bool IsSomethingThere(Vector2 start, Vector2 end, out RaycastHit2D hit)
         {
             boxCollider.enabled = false;

@@ -522,11 +522,12 @@
             return result;
         }
 
-        // Finds a meleeable target (human or boss) occupying the given tile,
-        // accounting for movement: a target counts if the tile matches either
-        // the tile it is stepping from or the tile it is stepping to. This lets
-        // melee connect with a target anywhere along its step, instead of only
-        // when a point-raycast happens to land on its collider.
+        // Finds a meleeable target (human or boss) occupying the given tile.
+        // A moving target occupies the single tile it is currently closest to
+        // (its interpolated position rounded), so melee connects once it is at
+        // least halfway onto a tile and stops connecting on a tile it has
+        // mostly vacated. This is more forgiving than a point-raycast on the
+        // collider centre without letting you hit a target that has moved on.
         public Human GetAttackTargetAt(Vector3 tile)
         {
             int tx = Mathf.RoundToInt(tile.x);
@@ -551,18 +552,6 @@
 
         private bool OccupiesTile(GameObject obj, int tx, int ty)
         {
-            var mover = obj.GetComponent<MovingObject>();
-            if (mover != null)
-            {
-                var from = mover.GetOriginalPosition();
-                var to = mover.GetDestinationPosition();
-
-                if (Mathf.RoundToInt(from.x) == tx && Mathf.RoundToInt(from.y) == ty) return true;
-                if (Mathf.RoundToInt(to.x) == tx && Mathf.RoundToInt(to.y) == ty) return true;
-
-                return false;
-            }
-
             return Mathf.RoundToInt(obj.transform.position.x) == tx
                 && Mathf.RoundToInt(obj.transform.position.y) == ty;
         }
