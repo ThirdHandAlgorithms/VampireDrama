@@ -285,6 +285,9 @@
 
         public void Burn(int strength)
         {
+            // no damage while frozen by a cutscene (can't move out of an aura)
+            if (GameInput.GetInstance().Locked) return;
+
             Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
             if (Stats.Bloodfill == 0)
             {
@@ -296,6 +299,9 @@
 
         public void ReceivePunch(int strength)
         {
+            // no damage while frozen by a cutscene (can't dodge or flee)
+            if (GameInput.GetInstance().Locked) return;
+
             var defense = GetTotalDefense();
             if (Random.value < defense / maxDefense)
             {
