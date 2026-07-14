@@ -12,7 +12,7 @@ namespace VampireDrama
     {
         public float AttackCooldown = 3f;
         public float TelegraphDelay = 0.9f;
-        public int Damage = 6;
+        public int Damage = 3;
         public int LineLength = 6;
         public float ProjectileSpeed = 8f;
 
