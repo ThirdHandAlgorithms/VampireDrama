@@ -161,6 +161,24 @@
             return BloodPrefabs[nextPick];
         }
 
+        // Resolves the boss's body prefab from its definition (by name), falling
+        // back to a random human body when unset or not found.
+        private GameObject GetBossBodyTemplate()
+        {
+            if (bossDefinition != null && !string.IsNullOrEmpty(bossDefinition.BodyPrefab) && BloodPrefabs != null)
+            {
+                foreach (var prefab in BloodPrefabs)
+                {
+                    if (prefab != null && prefab.name == bossDefinition.BodyPrefab)
+                    {
+                        return prefab;
+                    }
+                }
+            }
+
+            return GetRandomHumanTemplate();
+        }
+
         protected bool IsSortOfTheSamePosition(Vector3 a, Vector3 b)
         {
             return ((Mathf.Abs(a.x - b.x) <= Mathf.Epsilon) &&
@@ -606,7 +624,7 @@
         // the Boss brain in its place. Avoids needing a dedicated boss prefab.
         protected Boss SpawnBossAt(Vector3 pos)
         {
-            var template = GetRandomHumanTemplate();
+            var template = GetBossBodyTemplate();
             var obj = Instantiate(template, pos, Quaternion.identity) as GameObject;
 
             LayerMask blocking = 0;

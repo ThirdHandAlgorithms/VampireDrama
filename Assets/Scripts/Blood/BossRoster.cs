@@ -30,6 +30,7 @@ namespace VampireDrama
             new BossDefinition
             {
                 Name = "Vampire Hunter",
+                BodyPrefab = "Human1",
                 Dialog = new string[]
                 {
                     "Vampire! You cannot hide from me. Prepare to be put back into the ground!"
@@ -39,6 +40,7 @@ namespace VampireDrama
             new BossDefinition
             {
                 Name = "Zealous Priest",
+                BodyPrefab = "Human2",
                 Dialog = new string[]
                 {
                     "Unholy thing! The Lord's light will burn the night from you.",
@@ -53,6 +55,7 @@ namespace VampireDrama
             new BossDefinition
             {
                 Name = "Old Stalker",
+                BodyPrefab = "Human3",
                 Dialog = new string[]
                 {
                     "I have hunted your kind for forty years.",

@@ -9,6 +9,10 @@ namespace VampireDrama
         public string Name;
         public string[] Dialog;
 
+        // Name of the body prefab to use (matched against LevelConstruction's
+        // BloodPrefabs by GameObject name, e.g. "Human2"). Empty = random.
+        public string BodyPrefab;
+
         // 12x12 arena template appended on top of the city. Row 0 is nearest the
         // exit; 'B' marks the boss's walk-in target. Keep the centre column
         // (index 6) clear so the level stays traversable.
