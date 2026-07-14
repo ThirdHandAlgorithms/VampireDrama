@@ -30,6 +30,9 @@
         public GameObject[] BloodPrefabs;
         public GameObject[] BridgeBottomH;
         public GameObject[] ItemPrefabs;
+        // dedicated boss body prefabs (assigned in the inspector), kept separate
+        // from the civilian BloodPrefabs pool
+        public GameObject[] BossPrefabs;
 
         private bool itemAdded;
         private bool canAddItemToMap;
@@ -161,19 +164,32 @@
             return BloodPrefabs[nextPick];
         }
 
-        // Resolves the boss's body prefab from its definition (by name), falling
-        // back to a random human body when unset or not found.
+        private GameObject FindPrefabByName(GameObject[] prefabs, string name)
+        {
+            if (prefabs == null) return null;
+
+            foreach (var prefab in prefabs)
+            {
+                if (prefab != null && prefab.name == name)
+                {
+                    return prefab;
+                }
+            }
+
+            return null;
+        }
+
+        // Resolves the boss's body prefab from its definition (by name): dedicated
+        // BossPrefabs first, then the civilian BloodPrefabs, else a random human.
         private GameObject GetBossBodyTemplate()
         {
-            if (bossDefinition != null && !string.IsNullOrEmpty(bossDefinition.BodyPrefab) && BloodPrefabs != null)
+            if (bossDefinition != null && !string.IsNullOrEmpty(bossDefinition.BodyPrefab))
             {
-                foreach (var prefab in BloodPrefabs)
-                {
-                    if (prefab != null && prefab.name == bossDefinition.BodyPrefab)
-                    {
-                        return prefab;
-                    }
-                }
+                var fromBossPrefabs = FindPrefabByName(BossPrefabs, bossDefinition.BodyPrefab);
+                if (fromBossPrefabs != null) return fromBossPrefabs;
+
+                var fromBloodPrefabs = FindPrefabByName(BloodPrefabs, bossDefinition.BodyPrefab);
+                if (fromBloodPrefabs != null) return fromBloodPrefabs;
             }
 
             return GetRandomHumanTemplate();
