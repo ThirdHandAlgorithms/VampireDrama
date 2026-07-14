@@ -48,7 +48,7 @@
             return Move(xDir, yDir, out hit);
         }
 
-        public float GetResistance()
+        public virtual float GetResistance()
         {
             // edge case, max draining by attack is until 1litre of blood, this human will not be able to fight back, trust me
             if (LitresOfBlood == 1) return 0f;
@@ -85,7 +85,7 @@
             return KnowsWhatsUp();
         }
 
-        public void LoseBlood(float hitStrength, Vector3 attackerPosition)
+        public virtual void LoseBlood(float hitStrength, Vector3 attackerPosition)
         {
             LitresOfBlood = System.Math.Max(1, LitresOfBlood - (hitStrength * (1 + (Intoxication / 100f))));
 
@@ -375,6 +375,11 @@
             base.Update();
             if (isMoving) return;
 
+            Brain();
+        }
+
+        protected virtual void Brain()
+        {
             var timeNow = Time.time;
             if (timeNow - lastMovement < getMovementTime())
             {

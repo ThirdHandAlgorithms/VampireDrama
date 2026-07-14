@@ -22,7 +22,8 @@
         Mansion = 8,
         Nightclub = 9,
         BridgeBottom = 10,
-        PoliceDepartment = 11
+        PoliceDepartment = 11,
+        BossSpawn = 12
     }
 
     public class PossibleConstruct
@@ -102,6 +103,7 @@
             all.Add(new PossibleConstruct { Ascii = 'C', Id = ConstructionType.Church, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal, IsRandomHumanSpawner = false, IsSpecialSpawner = false });
             all.Add(new PossibleConstruct { Ascii = 'X', Id = ConstructionType.Dumpster, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.Horizontal, IsRandomHumanSpawner = false, IsSpecialSpawner = false });
             all.Add(new PossibleConstruct { Ascii = 'P', Id = ConstructionType.PoliceDepartment, Passable = false, HasLightSource = true, Direction = ConstructHVDirection.Horizontal, IsRandomHumanSpawner = false, IsSpecialSpawner = true, SpawnerCooldown = 20 });
+            all.Add(new PossibleConstruct { Ascii = 'B', Id = ConstructionType.BossSpawn, Passable = true, HasLightSource = false, Direction = ConstructHVDirection.None, IsRandomHumanSpawner = false, IsSpecialSpawner = false });
         }
     }
 }

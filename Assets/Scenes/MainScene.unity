@@ -279,7 +279,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20140502}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6065d1c1eb6981444bb481613c4cd11c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 627f05383f6b58640ac9b1ee9dddbbdc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 32d65bdbcbb545d468277d0fb39d3c3f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fedb7ced60395164f8d062e2b67c1270, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1456,6 +1456,21 @@ Canvas:
   m_SortingLayerID: 2066495187
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &900200000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931804142}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07b7ea3dd0eddb18928dbc7b6a75f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Icons:
+  - AbilityName: Glamour
+    Icon: {fileID: 3093879478420113611, guid: 34805f69b368dbc3c97b5a7e82e46bd5, type: 3}
 --- !u!1 &931804142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,8 +1483,7 @@ GameObject:
   - component: {fileID: 931804143}
   - component: {fileID: 931804145}
   - component: {fileID: 931804144}
-  - component:
-      fileID: 900200000
+  - component: {fileID: 900200000}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1550,7 +1564,6 @@ MonoBehaviour:
   - {fileID: 1053176256474194, guid: 22b65ec108270314abb7a703065d9fec, type: 3}
   - {fileID: 1413321323189438, guid: 96c834e23d6b0cc46b4b05cabcf89b2e, type: 3}
   - {fileID: 1565667635693750, guid: ee4f02036f9c2554e9e9c3a84eb7a806, type: 3}
-  - {fileID: 1389379551073354, guid: 134b637b0dd9d2247b45c7340e74828a, type: 3}
   BridgeBottomH:
   - {fileID: 1517841448877270, guid: eec8b44ff369b324a9761878dfe42824, type: 3}
   ItemPrefabs:
@@ -1558,6 +1571,8 @@ MonoBehaviour:
   - {fileID: 5477247290407607681, guid: f183d5d53b8ad3c4492f606db0653bc2, type: 3}
   - {fileID: 5477247290407607681, guid: 1e2e2c97a1aac214c9d3146f36032a6c, type: 3}
   - {fileID: 5477247290407607681, guid: 4e536bffa16801d45937752cf461f46b, type: 3}
+  BossPrefabs:
+  - {fileID: 1389379551073354, guid: 134b637b0dd9d2247b45c7340e74828a, type: 3}
   XPText: {fileID: 688187632}
   BloodfillText: {fileID: 1762789916}
   TimeOfDayText: {fileID: 1890321003}
@@ -2188,13 +2203,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
+      propertyPath: BossPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
+        type: 2}
       propertyPath: ItemPrefabs.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
       propertyPath: BloodPrefabs.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114616681878518094, guid: f3bbbc2a9aa494c40ba34e989909e805,
         type: 2}
@@ -2773,28 +2793,3 @@ SceneRoots:
   - {fileID: 1338412496}
   - {fileID: 72271895}
   - {fileID: 1212246474}
---- !u!114 &900200000
-MonoBehaviour:
-  Icons:
-  - AbilityName: Glamour
-    Icon:
-      fileID: 3093879478420113611
-      guid: 34805f69b368dbc3c97b5a7e82e46bd5
-      type: 3
-  m_CorrespondingSourceObject:
-    fileID: 0
-  m_EditorClassIdentifier: ''
-  m_EditorHideFlags: !!int '0'
-  m_Enabled: !!int '1'
-  m_GameObject:
-    fileID: 931804142
-  m_Name: ''
-  m_ObjectHideFlags: !!int '0'
-  m_PrefabAsset:
-    fileID: 0
-  m_PrefabInstance:
-    fileID: 0
-  m_Script:
-    fileID: 11500000
-    guid: a07b7ea3dd0eddb18928dbc7b6a75f84
-    type: 3

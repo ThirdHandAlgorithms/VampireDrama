@@ -89,6 +89,16 @@
             return All12x12Templates[idxTemplate];
         }
 
+        // Builds a 12x12 boss-arena chunk from text rows (supplied by a
+        // BossDefinition). Built in code so it does not depend on Resources
+        // being present. The arena is appended on top of the full-size city, so
+        // row 0 sits just below the exit and the bottom row opens onto the city.
+        // Keep the centre column (index 6) clear so the map stays traversable.
+        public ConstructionChunk BuildArena(string[] rows)
+        {
+            return getFromTextPreset(rows);
+        }
+
         private ConstructionChunk getFromTextPreset(string[] textpreset)
         {
             var preset = new ConstructionChunk(textpreset.Length);

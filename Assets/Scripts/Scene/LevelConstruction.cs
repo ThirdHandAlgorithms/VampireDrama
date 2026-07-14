@@ -30,6 +30,9 @@
         public GameObject[] BloodPrefabs;
         public GameObject[] BridgeBottomH;
         public GameObject[] ItemPrefabs;
+        // dedicated boss body prefabs (assigned in the inspector), kept separate
+        // from the civilian BloodPrefabs pool
+        public GameObject[] BossPrefabs;
 
         private bool itemAdded;
         private bool canAddItemToMap;
@@ -40,10 +43,18 @@
         protected List<GameObject> allObjects;
         protected GameObject exitInstance;
 
+        protected GameObject bossInstance;
+        protected Vector3 bossSpawnPosition;
+        protected bool hasBossSpawn;
+        protected bool bossDefeated;
+        protected BossDefinition bossDefinition;
+
         protected float tileSize = 1.0f;
         public Map currentMap;
         protected ConstructionChunk fullMap;
         protected int lineCount;
+        protected int cityHeight;
+        protected const int BossArenaRows = 12;
         protected int startAndExit;
         protected string startOfRandomState;
 
@@ -67,14 +78,26 @@
             humans = new List<GameObject>();
 
             var config = MapConfiguration.getInstance();
-            config.Height = (level + 1) * 12;
+            // Full-size city, plus one extra 12-row band on top for the boss arena.
+            cityHeight = (level + 1) * 12;
+            config.Height = cityHeight + BossArenaRows;
             lineCount = config.Height;
             startAndExit = 6;
+
+            Debug.Log("[Level] level=" + level + " city=" + cityHeight + " arena=" + BossArenaRows + " total(rows)=" + config.Height);
 
             mapWidth = config.Width;
             mapHeight = config.Height;
 
+            // pick which boss (and thus arena + dialogue + tuning) this level uses
+            bossDefinition = BossRoster.PickForLevel(level);
+
             currentMap = new Map();
+            currentMap.BossArenaAtTop = bossDefinition != null && bossDefinition.ArenaTemplate != null;
+            currentMap.BossArenaTemplate = (bossDefinition != null) ? bossDefinition.ArenaTemplate : null;
+            hasBossSpawn = false;
+            bossDefeated = false;
+            bossInstance = null;
 
             //int seed = 1;
             //Random.InitState(seed);
@@ -97,7 +120,7 @@
             //if (Random.value >= 0.5)
             {
                 canAddItemToMap = true;
-                shouldAddItemAtLineIdx = (int)(Random.value * lineCount);
+                shouldAddItemAtLineIdx = (int)(Random.value * cityHeight);
             }
 
             Player = Instantiate(PlayerPrefab, new Vector3(5f, 0f, 0f), Quaternion.identity) as GameObject;
@@ -114,6 +137,10 @@
             {
                 AddHuman();
             }
+
+            // The boss is not placed up front: it walks in from the exit during
+            // the intro cutscene (see SceneManager), triggered when the player
+            // reaches the arena.
         }
 
         public ConstructionChunk GetFullMap()
@@ -128,13 +155,44 @@
 
         private int getHumanCountForLevel(int level)
         {
-            return (lineCount / 6) + ((level - 1) * 2) + LevelState.GetExtraLawEnforcementCount();
+            return (cityHeight / 6) + ((level - 1) * 2) + LevelState.GetExtraLawEnforcementCount();
         }
 
         private GameObject GetRandomHumanTemplate()
         {
             var nextPick = (int)(Random.value * BloodPrefabs.Length);
             return BloodPrefabs[nextPick];
+        }
+
+        private GameObject FindPrefabByName(GameObject[] prefabs, string name)
+        {
+            if (prefabs == null) return null;
+
+            foreach (var prefab in prefabs)
+            {
+                if (prefab != null && prefab.name == name)
+                {
+                    return prefab;
+                }
+            }
+
+            return null;
+        }
+
+        // Resolves the boss's body prefab from its definition (by name): dedicated
+        // BossPrefabs first, then the civilian BloodPrefabs, else a random human.
+        private GameObject GetBossBodyTemplate()
+        {
+            if (bossDefinition != null && !string.IsNullOrEmpty(bossDefinition.BodyPrefab))
+            {
+                var fromBossPrefabs = FindPrefabByName(BossPrefabs, bossDefinition.BodyPrefab);
+                if (fromBossPrefabs != null) return fromBossPrefabs;
+
+                var fromBloodPrefabs = FindPrefabByName(BloodPrefabs, bossDefinition.BodyPrefab);
+                if (fromBloodPrefabs != null) return fromBloodPrefabs;
+            }
+
+            return GetRandomHumanTemplate();
         }
 
         protected bool IsSortOfTheSamePosition(Vector3 a, Vector3 b)
@@ -213,7 +271,8 @@
         private Vector3 GetRandomV3()
         {
             var config = MapConfiguration.getInstance();
-            return new Vector3((int)(Random.value * config.Width), (int)(Random.value * config.Height), 0);
+            // keep spawns in the city, not the sealed boss arena on top
+            return new Vector3((int)(Random.value * config.Width), (int)(Random.value * cityHeight), 0);
         }
 
         private void AddHuman()
@@ -270,7 +329,11 @@
 
         private GameObject GetTemplateGameObjectForConstruct(Construct construct)
         {
-            if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Vertical)
+            if (construct.Template.Id == ConstructionType.BossSpawn)
+            {
+                return RoadCrossing[0];
+            }
+            else if (construct.Template.Id == ConstructionType.Road && construct.Template.Direction == ConstructHVDirection.Vertical)
             {
                 return RoadV[0];
             }
@@ -395,6 +458,12 @@
             var x = 0;
             foreach (var construct in line)
             {
+                if (construct.Template.Id == ConstructionType.BossSpawn)
+                {
+                    bossSpawnPosition = new Vector3(x * tileSize, lineIdx * tileSize, 0f);
+                    hasBossSpawn = true;
+                }
+
                 GameObject templateGameObject = GetTemplateGameObjectForConstruct(construct);
 
                 if (templateGameObject != null)
@@ -433,6 +502,12 @@
         protected void ClearScene()
         {
             Destroy(Player);
+
+            if (bossInstance != null)
+            {
+                Destroy(bossInstance);
+                bossInstance = null;
+            }
 
             foreach (var obj in humans)
             {
@@ -485,6 +560,40 @@
             return result;
         }
 
+        // Finds a meleeable target (human or boss) occupying the given tile.
+        // A moving target occupies the single tile it is currently closest to
+        // (its interpolated position rounded), so melee connects once it is at
+        // least halfway onto a tile and stops connecting on a tile it has
+        // mostly vacated. This is more forgiving than a point-raycast on the
+        // collider centre without letting you hit a target that has moved on.
+        public Human GetAttackTargetAt(Vector3 tile)
+        {
+            int tx = Mathf.RoundToInt(tile.x);
+            int ty = Mathf.RoundToInt(tile.y);
+
+            // the boss is not kept in the humans list
+            if (bossInstance != null && OccupiesTile(bossInstance, tx, ty))
+            {
+                return bossInstance.GetComponent<Human>();
+            }
+
+            foreach (var obj in humans)
+            {
+                if (OccupiesTile(obj, tx, ty))
+                {
+                    return obj.GetComponent<Human>();
+                }
+            }
+
+            return null;
+        }
+
+        private bool OccupiesTile(GameObject obj, int tx, int ty)
+        {
+            return Mathf.RoundToInt(obj.transform.position.x) == tx
+                && Mathf.RoundToInt(obj.transform.position.y) == ty;
+        }
+
         public Human GetHumanFacing(Vector3 position, int dirX, int dirY)
         {
             Vector3 target = position + new Vector3(dirX, dirY, 0);
@@ -523,6 +632,111 @@
             else
             {
                 return new RoyT.AStar.Position[0];
+            }
+        }
+
+        // Spawns the boss by reusing a normal human prefab (for its collider,
+        // rigidbody and animation), stripping the Human brain and dropping in
+        // the Boss brain in its place. Avoids needing a dedicated boss prefab.
+        protected Boss SpawnBossAt(Vector3 pos)
+        {
+            var template = GetBossBodyTemplate();
+            var obj = Instantiate(template, pos, Quaternion.identity) as GameObject;
+
+            LayerMask blocking = 0;
+            float speed = 1f;
+
+            var human = obj.GetComponent<Human>();
+            if (human != null)
+            {
+                blocking = human.blockingLayer;
+                speed = human.baseMoveSpeed;
+                DestroyImmediate(human);
+            }
+
+            var boss = obj.AddComponent<Boss>();
+            boss.blockingLayer = blocking;
+            boss.baseMoveSpeed = speed;
+            // arena is the top 12-row band; keep the boss inside it
+            boss.ArenaMinY = cityHeight;
+            boss.ArenaMaxY = cityHeight + BossArenaRows - 1;
+
+            bossInstance = obj;
+            return boss;
+        }
+
+        // Spawns the boss up at the exit and starts its walk-in, stopping a bit
+        // above the middle of the arena. Called by the intro cutscene.
+        public Boss SpawnBossForIntro()
+        {
+            if (!hasBossSpawn || bossInstance != null) return null;
+
+            Vector2 exit = GetExitPosition();
+            var boss = SpawnBossAt(new Vector3(exit.x, exit.y, 0f));
+            boss.Definition = bossDefinition;
+            boss.InIntro = true;
+            // walk down to wherever the 'B' marker sits in the arena template
+            boss.IntroTargetY = Mathf.RoundToInt(bossSpawnPosition.y);
+            return boss;
+        }
+
+        public bool IsExitLocked()
+        {
+            return hasBossSpawn && !bossDefeated;
+        }
+
+        public Vector3 GetPlayerPosition()
+        {
+            if (Player == null) return Vector3.zero;
+            return Player.transform.position;
+        }
+
+        public VampirePlayer GetPlayer()
+        {
+            if (Player == null) return null;
+            return Player.GetComponent<VampirePlayer>();
+        }
+
+        // Called by the Boss when it has been fully drained. Opens the sealed
+        // exit and rewards the player with the Recruit Ghoul ability.
+        public void BossDefeated(Boss boss)
+        {
+            if (bossDefeated) return;
+            bossDefeated = true;
+
+            Vector3 spot = boss.transform.position;
+
+            var abilities = GameGlobals.GetInstance().PlayerStats.Abilities;
+            bool alreadyHas = false;
+            foreach (var ability in abilities.Abilities)
+            {
+                if (ability is RecruitGhoulAbility)
+                {
+                    alreadyHas = true;
+                    break;
+                }
+            }
+
+            if (!alreadyHas)
+            {
+                abilities.Unlock(new RecruitGhoulAbility());
+                Debug.Log("[Boss] The hunter falls. Unlocked ability: Recruit Ghoul. The exit is open.");
+            }
+            else
+            {
+                Debug.Log("[Boss] The hunter falls. The exit is open.");
+            }
+
+            if (bossInstance != null)
+            {
+                Destroy(bossInstance);
+                bossInstance = null;
+            }
+
+            if (Bloodstain != null && Bloodstain.Length > 0)
+            {
+                var bloodstain = Instantiate(Bloodstain[0], spot, Quaternion.identity) as GameObject;
+                allObjects.Add(bloodstain);
             }
         }
 

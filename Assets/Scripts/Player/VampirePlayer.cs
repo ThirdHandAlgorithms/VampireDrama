@@ -151,15 +151,35 @@
                 nextMoveIsJump = false;
             }
 
-            if ((ver == 0) && (hor != 0))
+            bool isJumpMove = (System.Math.Abs(hor) > 1) || (System.Math.Abs(ver) > 1);
+
+            if (((ver == 0) && (hor != 0)) || ((hor == 0) && (ver != 0)))
             {
-                hitSomething = !Move(hor, ver, out hit);
                 lastInput = timeNow;
-            }
-            else if ((hor == 0) && (ver != 0))
-            {
-                hitSomething = !Move(hor, ver, out hit);
-                lastInput = timeNow;
+
+                var level = GameManager.GetCurrentLevel();
+
+                // Grid-based melee: connect with whatever is on the tile ahead,
+                // even if it was mid-step, instead of relying on a point-raycast
+                // that whiffs on sliding colliders.
+                Human target = null;
+                if (!isJumpMove && level != null)
+                {
+                    Vector3 targetTile = new Vector3(
+                        Mathf.Round(transform.position.x) + hor,
+                        Mathf.Round(transform.position.y) + ver,
+                        0f);
+                    target = level.GetAttackTargetAt(targetTile);
+                }
+
+                if (target != null)
+                {
+                    Fight(target, target.gameObject, hor, ver);
+                }
+                else
+                {
+                    hitSomething = !Move(hor, ver, out hit);
+                }
             }
 
             if (hitSomething)
@@ -167,11 +187,11 @@
                 Transform objectHit = hit.transform;
                 GameObject gameObjHit = objectHit.gameObject;
 
+                // Fallback melee (e.g. a jump landing on a target). No longer
+                // bails out when the target is moving.
                 Human sheep = gameObjHit.GetComponent<Human>();
                 if (sheep != null)
                 {
-                    if (sheep.isMoving) return;
-
                     Fight(sheep, gameObjHit, hor, ver);
                 }
 
@@ -265,6 +285,9 @@
 
         public void Burn(int strength)
         {
+            // no damage while frozen by a cutscene (can't move out of an aura)
+            if (GameInput.GetInstance().Locked) return;
+
             Stats.Bloodfill = System.Math.Max(0, Stats.Bloodfill - strength);
             if (Stats.Bloodfill == 0)
             {
@@ -276,6 +299,9 @@
 
         public void ReceivePunch(int strength)
         {
+            // no damage while frozen by a cutscene (can't dodge or flee)
+            if (GameInput.GetInstance().Locked) return;
+
             var defense = GetTotalDefense();
             if (Random.value < defense / maxDefense)
             {
