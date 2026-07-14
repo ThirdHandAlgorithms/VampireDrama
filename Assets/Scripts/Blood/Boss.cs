@@ -36,6 +36,13 @@ namespace VampireDrama
         // and holds position (and its facing) so it never shoots mid-step.
         public bool IsAttacking;
 
+        // Intro cutscene: the boss walks straight down to IntroTargetY without
+        // hunting or shooting, then holds until BeginFight() starts the fight.
+        public bool InIntro;
+        public int IntroTargetY;
+        public float IntroStepInterval = 0.22f;
+        public bool IntroArrived { get; private set; }
+
         private const float DeathThreshold = 1f;
 
         private float lastMove;
@@ -84,9 +91,23 @@ namespace VampireDrama
             }
         }
 
+        // Ends the intro and switches the boss into its normal combat brain.
+        public void BeginFight()
+        {
+            InIntro = false;
+            IntroArrived = true;
+            Engaged = true;
+        }
+
         protected override void Brain()
         {
             if (defeated) return;
+
+            if (InIntro)
+            {
+                IntroWalk();
+                return;
+            }
 
             var level = GameManager.GetCurrentLevel();
             if (level == null) return;
@@ -157,6 +178,24 @@ namespace VampireDrama
 
             RaycastHit2D hit;
             Move(dx, dy, out hit);
+        }
+
+        private void IntroWalk()
+        {
+            if (IntroArrived) return;
+
+            if (Mathf.RoundToInt(transform.position.y) <= IntroTargetY)
+            {
+                IntroArrived = true;
+                return;
+            }
+
+            float now = Time.time;
+            if (now - lastMove < IntroStepInterval) return;
+            lastMove = now;
+
+            RaycastHit2D hit;
+            Move(0, -1, out hit);
         }
 
         private void SelfHeal(float now)

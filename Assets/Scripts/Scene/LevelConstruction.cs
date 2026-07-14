@@ -130,10 +130,9 @@
                 AddHuman();
             }
 
-            if (hasBossSpawn)
-            {
-                SpawnBoss(bossSpawnPosition);
-            }
+            // The boss is not placed up front: it walks in from the exit during
+            // the intro cutscene (see SceneManager), triggered when the player
+            // reaches the arena.
         }
 
         public ConstructionChunk GetFullMap()
@@ -600,7 +599,7 @@
         // Spawns the boss by reusing a normal human prefab (for its collider,
         // rigidbody and animation), stripping the Human brain and dropping in
         // the Boss brain in its place. Avoids needing a dedicated boss prefab.
-        protected void SpawnBoss(Vector3 pos)
+        protected Boss SpawnBossAt(Vector3 pos)
         {
             var template = GetRandomHumanTemplate();
             var obj = Instantiate(template, pos, Quaternion.identity) as GameObject;
@@ -624,6 +623,20 @@
             boss.ArenaMaxY = cityHeight + BossArenaRows - 1;
 
             bossInstance = obj;
+            return boss;
+        }
+
+        // Spawns the boss up at the exit and starts its walk-in, stopping a bit
+        // above the middle of the arena. Called by the intro cutscene.
+        public Boss SpawnBossForIntro()
+        {
+            if (!hasBossSpawn || bossInstance != null) return null;
+
+            Vector2 exit = GetExitPosition();
+            var boss = SpawnBossAt(new Vector3(exit.x, exit.y, 0f));
+            boss.InIntro = true;
+            boss.IntroTargetY = cityHeight + (BossArenaRows / 2) + 1;
+            return boss;
         }
 
         public bool IsExitLocked()

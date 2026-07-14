@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using VampireDrama;
 
 public class SceneManager : LevelConstruction
 {
+    private bool bossIntroStarted;
+    private bool cameraOverride;
+    private BossDialogUI dialogUI;
+
     public Text XPText;
     public Text BloodfillText;
     public Text TimeOfDayText;
@@ -46,6 +51,10 @@ public class SceneManager : LevelConstruction
     {
         base.InitScene(level);
 
+        bossIntroStarted = false;
+        cameraOverride = false;
+        GameInput.GetInstance().Locked = false;
+
         XPRollover = new UiRollover();
         XPRollover.transitionTxt = XPText;
 
@@ -73,8 +82,19 @@ public class SceneManager : LevelConstruction
         var cameras = Camera.allCameras;
         if ((Player != null) && (cameras.Length > 0))
         {
-            //cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
-            cameras[0].transform.position = new Vector3(6 + (Player.transform.position.x - 6), Player.transform.position.y, -15f);
+            // the intro cutscene takes over the camera while it plays
+            if (!cameraOverride)
+            {
+                //cameras[0].transform.position = new Vector3(6, Player.transform.position.y, -15f);
+                cameras[0].transform.position = new Vector3(6 + (Player.transform.position.x - 6), Player.transform.position.y, -15f);
+            }
+
+            // kick off the boss intro once the player steps into the arena
+            if (!bossIntroStarted && hasBossSpawn && Player.transform.position.y >= cityHeight - 0.5f)
+            {
+                bossIntroStarted = true;
+                StartCoroutine(BossIntroRoutine());
+            }
 
             DisplayPlayerStats();
 
@@ -249,5 +269,71 @@ public class SceneManager : LevelConstruction
 
         var vamp = Player.GetComponent<VampirePlayer>();
         if (vamp != null) effect.Affect(vamp);
+    }
+
+    // Boss intro cutscene: pan up to the arena, walk the boss in from the exit,
+    // show its line, then hand control back and start the fight.
+    private IEnumerator BossIntroRoutine()
+    {
+        var input = GameInput.GetInstance();
+        input.Locked = true;
+        cameraOverride = true;
+
+        var cameras = Camera.allCameras;
+        var cam = (cameras.Length > 0) ? cameras[0] : null;
+
+        // pan up so the arena is in view
+        Vector3 arenaCenter = new Vector3(6f, cityHeight + (BossArenaRows / 2f), -15f);
+        yield return PanCamera(cam, arenaCenter, 1.0f);
+
+        // the boss walks in from the exit (bounded, so a blocked path can't hang)
+        var boss = SpawnBossForIntro();
+        float walkTimeout = 0f;
+        while (boss != null && !boss.IntroArrived && walkTimeout < 10f)
+        {
+            walkTimeout += Time.deltaTime;
+            yield return null;
+        }
+
+        // its line
+        if (dialogUI == null) dialogUI = gameObject.AddComponent<BossDialogUI>();
+        dialogUI.Show("Vampire Hunter", new string[]
+        {
+            "Vampire! You cannot hide from me. Prepare to be put back into the ground!"
+        });
+        while (!dialogUI.Done)
+        {
+            yield return null;
+        }
+        dialogUI.Hide();
+
+        // hand off to the fight
+        if (boss != null) boss.BeginFight();
+
+        // pan back to the player and return control
+        if (cam != null && Player != null)
+        {
+            Vector3 back = new Vector3(6 + (Player.transform.position.x - 6), Player.transform.position.y, -15f);
+            yield return PanCamera(cam, back, 0.6f);
+        }
+
+        cameraOverride = false;
+        input.Locked = false;
+    }
+
+    private IEnumerator PanCamera(Camera cam, Vector3 target, float duration)
+    {
+        if (cam == null) yield break;
+
+        Vector3 start = cam.transform.position;
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float k = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t / duration));
+            cam.transform.position = Vector3.Lerp(start, target, k);
+            yield return null;
+        }
+        cam.transform.position = target;
     }
 }

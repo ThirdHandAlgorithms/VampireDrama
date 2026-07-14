@@ -14,6 +14,10 @@ namespace VampireDrama
         private InputAction useAbilityAction;
         private InputAction confirmAction;
 
+        // When locked (e.g. during the boss intro cutscene) gameplay input is
+        // suppressed, but Confirm stays live so dialogue can be advanced.
+        public bool Locked;
+
         private GameInput()
         {
             moveAction = new InputAction("Move", InputActionType.Value);
@@ -69,26 +73,31 @@ namespace VampireDrama
 
         public Vector2 GetMoveInput()
         {
+            if (Locked) return Vector2.zero;
             return moveAction.ReadValue<Vector2>();
         }
 
         public bool JumpPressed()
         {
+            if (Locked) return false;
             return jumpAction.WasPressedThisFrame();
         }
 
         public bool InteractPressed()
         {
+            if (Locked) return false;
             return interactAction.WasPressedThisFrame();
         }
 
         public bool CycleAbilityPressed()
         {
+            if (Locked) return false;
             return cycleAbilityAction.WasPressedThisFrame();
         }
 
         public bool UseAbilityPressed()
         {
+            if (Locked) return false;
             return useAbilityAction.WasPressedThisFrame();
         }
 
