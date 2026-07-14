@@ -15,13 +15,13 @@ namespace VampireDrama
     {
         public float HealInterval = 1.5f;
         public float HealAmount = 1f;
-        public float MoveInterval = 0.6f;
 
-        // Wander behaviour: mostly random steps, but when it drifts far from the
-        // player it has a chance to step toward them so it doesn't just corner
-        // itself. It never deliberately flees.
-        public float ApproachDistance = 5f;
-        public float ApproachChance = 0.35f;
+        // Movement: the boss holds a spot for a randomized dwell time, then
+        // takes a step. Most steps hunt the player (it is trying to kill them);
+        // the rest are random so it is not perfectly predictable. It never flees.
+        public float HoldMin = 0.8f;
+        public float HoldMax = 2.0f;
+        public float HuntChance = 0.7f;
 
         // The arena band the boss is confined to (inclusive y range). It stays
         // put until the player enters, and never leaves the band — including up
@@ -39,6 +39,7 @@ namespace VampireDrama
         private const float DeathThreshold = 1f;
 
         private float lastMove;
+        private float moveDelay = 1f;
         private float lastHealTime;
         private bool defeated;
 
@@ -113,17 +114,18 @@ namespace VampireDrama
             // hold still (and keep facing the player) while aiming/firing
             if (IsAttacking) return;
 
-            if (now - lastMove < MoveInterval) return;
+            // hold the current spot for a randomized dwell, then take one step
+            if (now - lastMove < moveDelay) return;
             lastMove = now;
+            moveDelay = HoldMin + Random.value * (HoldMax - HoldMin);
 
             Vector3 diff = playerPos - me;
-            float dist = diff.magnitude;
 
             int dx = 0, dy = 0;
 
-            // If it has wandered far, sometimes close in; otherwise wander at
-            // random. It never steps away to keep distance.
-            if (dist > ApproachDistance && Random.value < ApproachChance)
+            // Mostly hunt the player (step toward them on the dominant axis);
+            // occasionally take a random step so it isn't perfectly predictable.
+            if (Random.value < HuntChance)
             {
                 if (System.Math.Abs(diff.x) >= System.Math.Abs(diff.y))
                 {
