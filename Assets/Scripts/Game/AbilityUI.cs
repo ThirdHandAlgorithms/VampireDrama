@@ -14,7 +14,7 @@ public class AbilityUI : MonoBehaviour
 
     public void Start()
     {
-        var canvas = FindObjectOfType<Canvas>();
+        var canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;
 
         var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
@@ -169,7 +169,7 @@ public class AbilityUI : MonoBehaviour
             if (selected.Name != currentAbilityName)
             {
                 currentAbilityName = selected.Name;
-                if (iconSet == null) iconSet = FindObjectOfType<AbilityIconSet>();
+                if (iconSet == null) iconSet = FindFirstObjectByType<AbilityIconSet>();
                 if (iconSet != null)
                 {
                     abilityIcon.sprite = iconSet.GetIcon(currentAbilityName);

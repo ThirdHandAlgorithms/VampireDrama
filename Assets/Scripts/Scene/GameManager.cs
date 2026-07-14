@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         sceneScript.InitScene(level);
         TriggerInventoryUI();
 
-        foreach (var old in FindObjectsOfType<AbilityUI>())
+        foreach (var old in FindObjectsByType<AbilityUI>(FindObjectsSortMode.None))
         {
             Destroy(old);
         }
