@@ -635,7 +635,8 @@
             Vector2 exit = GetExitPosition();
             var boss = SpawnBossAt(new Vector3(exit.x, exit.y, 0f));
             boss.InIntro = true;
-            boss.IntroTargetY = cityHeight + (BossArenaRows / 2) + 1;
+            // walk down to wherever the 'B' marker sits in the arena template
+            boss.IntroTargetY = Mathf.RoundToInt(bossSpawnPosition.y);
             return boss;
         }
 
