@@ -522,6 +522,51 @@
             return result;
         }
 
+        // Finds a meleeable target (human or boss) occupying the given tile,
+        // accounting for movement: a target counts if the tile matches either
+        // the tile it is stepping from or the tile it is stepping to. This lets
+        // melee connect with a target anywhere along its step, instead of only
+        // when a point-raycast happens to land on its collider.
+        public Human GetAttackTargetAt(Vector3 tile)
+        {
+            int tx = Mathf.RoundToInt(tile.x);
+            int ty = Mathf.RoundToInt(tile.y);
+
+            // the boss is not kept in the humans list
+            if (bossInstance != null && OccupiesTile(bossInstance, tx, ty))
+            {
+                return bossInstance.GetComponent<Human>();
+            }
+
+            foreach (var obj in humans)
+            {
+                if (OccupiesTile(obj, tx, ty))
+                {
+                    return obj.GetComponent<Human>();
+                }
+            }
+
+            return null;
+        }
+
+        private bool OccupiesTile(GameObject obj, int tx, int ty)
+        {
+            var mover = obj.GetComponent<MovingObject>();
+            if (mover != null)
+            {
+                var from = mover.GetOriginalPosition();
+                var to = mover.GetDestinationPosition();
+
+                if (Mathf.RoundToInt(from.x) == tx && Mathf.RoundToInt(from.y) == ty) return true;
+                if (Mathf.RoundToInt(to.x) == tx && Mathf.RoundToInt(to.y) == ty) return true;
+
+                return false;
+            }
+
+            return Mathf.RoundToInt(obj.transform.position.x) == tx
+                && Mathf.RoundToInt(obj.transform.position.y) == ty;
+        }
+
         public Human GetHumanFacing(Vector3 position, int dirX, int dirY)
         {
             Vector3 target = position + new Vector3(dirX, dirY, 0);
