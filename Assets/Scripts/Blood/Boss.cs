@@ -18,9 +18,11 @@ namespace VampireDrama
         public float PreferredRange = 3f;
         public float MoveInterval = 0.6f;
 
-        // Bottom edge (y) of the arena band. The boss guards this band: it stays
-        // put until the player steps into it, and never wanders below it.
+        // The arena band the boss is confined to (inclusive y range). It stays
+        // put until the player enters, and never leaves the band — including up
+        // through the exit gap at the top.
         public float ArenaMinY;
+        public float ArenaMaxY;
 
         // True once the player has entered the arena and the fight has begun.
         public bool Engaged { get; private set; }
@@ -128,8 +130,10 @@ namespace VampireDrama
                 dy = (diff.y >= 0 ? 1 : -1) * sign;
             }
 
-            // never leave the arena band (don't chase the player back down the city)
+            // never leave the arena band: don't chase down into the city, and
+            // don't slip up through the exit gap off the top of the map
             if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
+            if (dy > 0 && me.y + dy > ArenaMaxY) dy = 0;
 
             if (dx == 0 && dy == 0) return;
 
@@ -149,6 +153,7 @@ namespace VampireDrama
                 }
 
                 if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
+                if (dy > 0 && me.y + dy > ArenaMaxY) dy = 0;
 
                 if (dx != 0 || dy != 0)
                 {

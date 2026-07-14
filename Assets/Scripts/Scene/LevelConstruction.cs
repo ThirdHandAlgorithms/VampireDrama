@@ -587,6 +587,7 @@
             boss.baseMoveSpeed = speed;
             // arena is the top 12-row band; keep the boss inside it
             boss.ArenaMinY = cityHeight;
+            boss.ArenaMaxY = cityHeight + BossArenaRows - 1;
 
             bossInstance = obj;
         }
