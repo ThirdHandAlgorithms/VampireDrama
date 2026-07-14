@@ -40,8 +40,10 @@ namespace VampireDrama
 
             if (phase == Phase.Waiting)
             {
-                // only fight once the player has entered the arena
-                if (boss != null && !boss.Engaged) return;
+                // Only attack once engaged, and never mid-step: the boss must be
+                // standing still so it can plant, turn, and aim (no shooting while
+                // it is walking away to keep its distance).
+                if (boss != null && (!boss.Engaged || boss.isMoving)) return;
 
                 if (now - phaseStart >= AttackCooldown)
                 {
@@ -80,6 +82,13 @@ namespace VampireDrama
 
             fireOrigin = new Vector3(Mathf.Round(me.x), Mathf.Round(me.y), 0f);
 
+            // Turn to face the player and hold position while winding up the shot.
+            if (boss != null)
+            {
+                boss.lastDirection = new Direction(fireX, fireY);
+                boss.IsAttacking = true;
+            }
+
             ClearTelegraph();
             for (int i = 1; i <= LineLength; i++)
             {
@@ -100,6 +109,9 @@ namespace VampireDrama
 
             var proj = projObj.AddComponent<BossProjectile>();
             proj.Configure(new Vector3(fireX, fireY, 0f), ProjectileSpeed, Damage, LineLength);
+
+            // shot is away; let the boss reposition again
+            if (boss != null) boss.IsAttacking = false;
 
             phase = Phase.Waiting;
             phaseStart = Time.time;

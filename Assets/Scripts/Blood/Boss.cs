@@ -25,6 +25,10 @@ namespace VampireDrama
         // True once the player has entered the arena and the fight has begun.
         public bool Engaged { get; private set; }
 
+        // Set by BossAttackController while it is aiming/firing: the boss plants
+        // and holds position (and its facing) so it never shoots mid-step.
+        public bool IsAttacking;
+
         private const float DeathThreshold = 1f;
 
         private float lastMove;
@@ -98,6 +102,9 @@ namespace VampireDrama
             float now = Time.time;
 
             SelfHeal(now);
+
+            // hold still (and keep facing the player) while aiming/firing
+            if (IsAttacking) return;
 
             if (now - lastMove < MoveInterval) return;
             lastMove = now;
