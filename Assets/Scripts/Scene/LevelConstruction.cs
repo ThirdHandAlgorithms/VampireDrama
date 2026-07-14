@@ -578,6 +578,8 @@
             var boss = obj.AddComponent<Boss>();
             boss.blockingLayer = blocking;
             boss.baseMoveSpeed = speed;
+            // arena is the top 12-row band; keep the boss inside it
+            boss.ArenaMinY = lineCount - 12;
 
             bossInstance = obj;
         }

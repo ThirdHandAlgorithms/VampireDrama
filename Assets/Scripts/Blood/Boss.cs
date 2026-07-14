@@ -18,6 +18,13 @@ namespace VampireDrama
         public float PreferredRange = 3f;
         public float MoveInterval = 0.6f;
 
+        // Bottom edge (y) of the arena band. The boss guards this band: it stays
+        // put until the player steps into it, and never wanders below it.
+        public float ArenaMinY;
+
+        // True once the player has entered the arena and the fight has begun.
+        public bool Engaged { get; private set; }
+
         private const float DeathThreshold = 1f;
 
         private float lastMove;
@@ -67,19 +74,35 @@ namespace VampireDrama
 
         protected override void Brain()
         {
-            float now = Time.time;
-
-            SelfHeal(now);
-
             if (defeated) return;
-            if (now - lastMove < MoveInterval) return;
-            lastMove = now;
 
             var level = GameManager.GetCurrentLevel();
             if (level == null) return;
 
             Vector3 me = transform.position;
-            Vector3 diff = level.GetPlayerPosition() - me;
+            Vector3 playerPos = level.GetPlayerPosition();
+
+            if (!Engaged)
+            {
+                // Guard the arena; only wake up once the player steps into it.
+                if (playerPos.y >= ArenaMinY - 0.5f)
+                {
+                    Engaged = true;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            float now = Time.time;
+
+            SelfHeal(now);
+
+            if (now - lastMove < MoveInterval) return;
+            lastMove = now;
+
+            Vector3 diff = playerPos - me;
             float dist = diff.magnitude;
 
             bool moveToward = dist > PreferredRange + 0.5f;
@@ -98,6 +121,9 @@ namespace VampireDrama
                 dy = (diff.y >= 0 ? 1 : -1) * sign;
             }
 
+            // never leave the arena band (don't chase the player back down the city)
+            if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
+
             if (dx == 0 && dy == 0) return;
 
             RaycastHit2D hit;
@@ -114,6 +140,8 @@ namespace VampireDrama
                     dy = 0;
                     dx = (diff.x >= 0 ? 1 : -1) * sign;
                 }
+
+                if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
 
                 if (dx != 0 || dy != 0)
                 {

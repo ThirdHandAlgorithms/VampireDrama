@@ -24,11 +24,14 @@ namespace VampireDrama
         private Vector3 fireOrigin;
         private readonly List<GameObject> telegraphTiles = new List<GameObject>();
 
+        private Boss boss;
+
         private static Sprite squareSprite;
 
         private void Start()
         {
             phaseStart = Time.time;
+            boss = GetComponent<Boss>();
         }
 
         private void Update()
@@ -37,6 +40,9 @@ namespace VampireDrama
 
             if (phase == Phase.Waiting)
             {
+                // only fight once the player has entered the arena
+                if (boss != null && !boss.Engaged) return;
+
                 if (now - phaseStart >= AttackCooldown)
                 {
                     BeginTelegraph();
