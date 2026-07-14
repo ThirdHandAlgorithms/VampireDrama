@@ -15,8 +15,13 @@ namespace VampireDrama
     {
         public float HealInterval = 1.5f;
         public float HealAmount = 1f;
-        public float PreferredRange = 3f;
         public float MoveInterval = 0.6f;
+
+        // Wander behaviour: mostly random steps, but when it drifts far from the
+        // player it has a chance to step toward them so it doesn't just corner
+        // itself. It never deliberately flees.
+        public float ApproachDistance = 5f;
+        public float ApproachChance = 0.35f;
 
         // The arena band the boss is confined to (inclusive y range). It stays
         // put until the player enters, and never leaves the band — including up
@@ -114,23 +119,34 @@ namespace VampireDrama
             Vector3 diff = playerPos - me;
             float dist = diff.magnitude;
 
-            bool moveToward = dist > PreferredRange + 0.5f;
-            bool moveAway = dist < PreferredRange - 0.5f;
-            if (!moveToward && !moveAway) return;
-
-            int sign = moveToward ? 1 : -1;
-
             int dx = 0, dy = 0;
-            if (System.Math.Abs(diff.x) >= System.Math.Abs(diff.y))
+
+            // If it has wandered far, sometimes close in; otherwise wander at
+            // random. It never steps away to keep distance.
+            if (dist > ApproachDistance && Random.value < ApproachChance)
             {
-                dx = (diff.x >= 0 ? 1 : -1) * sign;
+                if (System.Math.Abs(diff.x) >= System.Math.Abs(diff.y))
+                {
+                    dx = diff.x >= 0 ? 1 : -1;
+                }
+                else
+                {
+                    dy = diff.y >= 0 ? 1 : -1;
+                }
             }
             else
             {
-                dy = (diff.y >= 0 ? 1 : -1) * sign;
+                if (Random.value < 0.5f)
+                {
+                    dx = Random.value < 0.5f ? -1 : 1;
+                }
+                else
+                {
+                    dy = Random.value < 0.5f ? -1 : 1;
+                }
             }
 
-            // never leave the arena band: don't chase down into the city, and
+            // never leave the arena band: don't wander down into the city, and
             // don't slip up through the exit gap off the top of the map
             if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
             if (dy > 0 && me.y + dy > ArenaMaxY) dy = 0;
@@ -138,28 +154,7 @@ namespace VampireDrama
             if (dx == 0 && dy == 0) return;
 
             RaycastHit2D hit;
-            if (!Move(dx, dy, out hit))
-            {
-                // primary axis blocked, try the other one
-                if (dx != 0)
-                {
-                    dx = 0;
-                    dy = (diff.y >= 0 ? 1 : -1) * sign;
-                }
-                else
-                {
-                    dy = 0;
-                    dx = (diff.x >= 0 ? 1 : -1) * sign;
-                }
-
-                if (dy < 0 && me.y + dy < ArenaMinY) dy = 0;
-                if (dy > 0 && me.y + dy > ArenaMaxY) dy = 0;
-
-                if (dx != 0 || dy != 0)
-                {
-                    Move(dx, dy, out hit);
-                }
-            }
+            Move(dx, dy, out hit);
         }
 
         private void SelfHeal(float now)
