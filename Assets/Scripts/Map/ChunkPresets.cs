@@ -91,30 +91,31 @@
 
         // A fixed 12x12 boss arena, built in code so it does not depend on
         // Resources being present (keeps out-of-Unity map tooling working).
-        // Row 0 is nearest the level exit (top); the player enters from the
-        // bottom. 'B' marks where the boss spawns.
+        // It is appended as an extra band on top of the full-size city (it does
+        // not replace any city), so row 0 sits just below the level exit and
+        // row 11 opens onto the city the player climbs up from. 'B' marks the
+        // boss spawn.
         //
-        // The plaza is kept fully passable on purpose: MapTest probes the west
-        // and east map edges at mid-height, which lands inside this band on the
-        // first level, so any wall on the edge columns there would make the
-        // level untraversable and hang generation. An open plaza also reads
-        // well for the telegraphed area-denial attacks (room to dodge).
+        // Enclosed on all four sides with a one-tile gap on the centre column
+        // (index 6): the top gap leads to the exit, the bottom gap is the
+        // entrance from the city. The centre column is clear the whole way so
+        // the map stays traversable to the exit.
         public ConstructionChunk GetBossArenaTemplate()
         {
             var arena = new string[]
             {
-                "            ",
-                "            ",
-                "      B     ",
-                "            ",
-                "  =      =  ",
-                "            ",
-                "            ",
-                "            ",
-                "  =      =  ",
-                "            ",
-                "            ",
-                "            ",
+                "====== =====",
+                "|          |",
+                "|     B    |",
+                "|          |",
+                "|  =    =  |",
+                "|          |",
+                "|          |",
+                "|          |",
+                "|  =    =  |",
+                "|          |",
+                "|          |",
+                "====== =====",
             };
 
             return getFromTextPreset(arena);

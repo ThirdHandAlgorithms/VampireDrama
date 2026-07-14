@@ -49,6 +49,8 @@
         public Map currentMap;
         protected ConstructionChunk fullMap;
         protected int lineCount;
+        protected int cityHeight;
+        protected const int BossArenaRows = 12;
         protected int startAndExit;
         protected string startOfRandomState;
 
@@ -72,9 +74,13 @@
             humans = new List<GameObject>();
 
             var config = MapConfiguration.getInstance();
-            config.Height = (level + 1) * 12;
+            // Full-size city, plus one extra 12-row band on top for the boss arena.
+            cityHeight = (level + 1) * 12;
+            config.Height = cityHeight + BossArenaRows;
             lineCount = config.Height;
             startAndExit = 6;
+
+            Debug.Log("[Level] level=" + level + " city=" + cityHeight + " arena=" + BossArenaRows + " total(rows)=" + config.Height);
 
             mapWidth = config.Width;
             mapHeight = config.Height;
@@ -106,7 +112,7 @@
             //if (Random.value >= 0.5)
             {
                 canAddItemToMap = true;
-                shouldAddItemAtLineIdx = (int)(Random.value * lineCount);
+                shouldAddItemAtLineIdx = (int)(Random.value * cityHeight);
             }
 
             Player = Instantiate(PlayerPrefab, new Vector3(5f, 0f, 0f), Quaternion.identity) as GameObject;
@@ -142,7 +148,7 @@
 
         private int getHumanCountForLevel(int level)
         {
-            return (lineCount / 6) + ((level - 1) * 2) + LevelState.GetExtraLawEnforcementCount();
+            return (cityHeight / 6) + ((level - 1) * 2) + LevelState.GetExtraLawEnforcementCount();
         }
 
         private GameObject GetRandomHumanTemplate()
@@ -227,7 +233,8 @@
         private Vector3 GetRandomV3()
         {
             var config = MapConfiguration.getInstance();
-            return new Vector3((int)(Random.value * config.Width), (int)(Random.value * config.Height), 0);
+            // keep spawns in the city, not the sealed boss arena on top
+            return new Vector3((int)(Random.value * config.Width), (int)(Random.value * cityHeight), 0);
         }
 
         private void AddHuman()
@@ -579,7 +586,7 @@
             boss.blockingLayer = blocking;
             boss.baseMoveSpeed = speed;
             // arena is the top 12-row band; keep the boss inside it
-            boss.ArenaMinY = lineCount - 12;
+            boss.ArenaMinY = cityHeight;
 
             bossInstance = obj;
         }

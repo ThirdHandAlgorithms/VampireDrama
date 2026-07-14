@@ -98,7 +98,7 @@ Per-level stats that affect gameplay:
 
 ## Boss Encounters
 
-- Every level ends in a fixed 12x12 **boss arena** placed as the top chunk band (an open plaza with a few lit pillars, marked with `B` for the boss spawn — see `ConstructionType.BossSpawn`).
+- Every level gets a fixed 12x12 **boss arena** appended as an extra band **on top of the full-size city** (total height = `(level+1)*12` city + 12 arena). The arena is enclosed with a central entrance/exit gap and marked with `B` for the boss spawn (see `ConstructionType.BossSpawn`). Humans and items only spawn in the city, not the sealed arena.
 - The boss is a **vampire hunter** (`Boss : Human`): reuses a human prefab's body but replaces the wandering brain. It has a large blood pool (40), **self-heals** ~1 blood every 1.5s, and keeps its distance (~3 tiles) as a ranged fighter.
 - **Area-denial attack** (`BossAttackController` + `BossProjectile`): aims a straight line of tiles at the player, flashes a red warning overlay for ~0.9s, then fires an arrow down that line. A hit deals heavy damage (6) via `ReceivePunch`. Change the projectile sprite per boss to reskin the volley.
 - **Defeat**: drain the boss with melee. `GetResistance` keeps the player on the drain path (never instant-kill) until the pool is emptied; `LoseBlood` then reports defeat to the level.
