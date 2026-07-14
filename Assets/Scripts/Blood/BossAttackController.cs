@@ -16,6 +16,10 @@ namespace VampireDrama
         public int LineLength = 6;
         public float ProjectileSpeed = 8f;
 
+        // The attack is purely ranged: it does not threaten tiles within melee
+        // range of the boss, so a player standing point-blank is never hit.
+        public int MeleeRange = 1;
+
         private enum Phase { Waiting, Telegraphing }
 
         private Phase phase = Phase.Waiting;
@@ -89,8 +93,9 @@ namespace VampireDrama
                 boss.IsAttacking = true;
             }
 
+            // only warn (and later hit) tiles beyond melee range
             ClearTelegraph();
-            for (int i = 1; i <= LineLength; i++)
+            for (int i = MeleeRange + 1; i <= LineLength; i++)
             {
                 Vector3 tilePos = fireOrigin + new Vector3(fireX * i, fireY * i, 0f);
                 telegraphTiles.Add(CreateTelegraphTile(tilePos));
@@ -107,8 +112,10 @@ namespace VampireDrama
             var projObj = new GameObject("BossProjectile");
             projObj.transform.position = fireOrigin + new Vector3(fireX, fireY, 0f);
 
+            // spawns adjacent to the boss but only arms past melee range, so it
+            // flies harmlessly over a point-blank player
             var proj = projObj.AddComponent<BossProjectile>();
-            proj.Configure(new Vector3(fireX, fireY, 0f), ProjectileSpeed, Damage, LineLength);
+            proj.Configure(new Vector3(fireX, fireY, 0f), ProjectileSpeed, Damage, LineLength, MeleeRange);
 
             // shot is away; let the boss reposition again
             if (boss != null) boss.IsAttacking = false;

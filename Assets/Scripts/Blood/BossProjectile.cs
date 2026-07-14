@@ -11,6 +11,7 @@ namespace VampireDrama
         private float speed;
         private int damage;
         private float maxDistance;
+        private float armDistance;
         private Vector3 startPos;
         private bool hasHit;
 
@@ -18,12 +19,13 @@ namespace VampireDrama
 
         private static Sprite arrowSprite;
 
-        public void Configure(Vector3 direction, float projectileSpeed, int projDamage, float range)
+        public void Configure(Vector3 direction, float projectileSpeed, int projDamage, float range, float arm)
         {
             dir = direction.normalized;
             speed = projectileSpeed;
             damage = projDamage;
             maxDistance = range;
+            armDistance = arm;
             startPos = transform.position;
             hasHit = false;
 
@@ -45,8 +47,12 @@ namespace VampireDrama
 
             transform.position += dir * speed * Time.deltaTime;
 
+            // Explicitly ranged: the arrow only becomes lethal past the boss's
+            // melee range, so a player standing point-blank is never hit.
+            bool armed = (transform.position - startPos).magnitude >= armDistance;
+
             var level = GameManager.GetCurrentLevel();
-            if (level != null)
+            if (armed && level != null)
             {
                 Vector3 playerPos = level.GetPlayerPosition();
                 if ((transform.position - playerPos).sqrMagnitude <= HitRadius * HitRadius)
