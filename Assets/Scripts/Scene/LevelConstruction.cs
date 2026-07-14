@@ -44,6 +44,7 @@
         protected Vector3 bossSpawnPosition;
         protected bool hasBossSpawn;
         protected bool bossDefeated;
+        protected BossDefinition bossDefinition;
 
         protected float tileSize = 1.0f;
         public Map currentMap;
@@ -85,8 +86,12 @@
             mapWidth = config.Width;
             mapHeight = config.Height;
 
+            // pick which boss (and thus arena + dialogue + tuning) this level uses
+            bossDefinition = BossRoster.PickForLevel(level);
+
             currentMap = new Map();
-            currentMap.BossArenaAtTop = true;
+            currentMap.BossArenaAtTop = bossDefinition != null && bossDefinition.ArenaTemplate != null;
+            currentMap.BossArenaTemplate = (bossDefinition != null) ? bossDefinition.ArenaTemplate : null;
             hasBossSpawn = false;
             bossDefeated = false;
             bossInstance = null;
@@ -634,6 +639,7 @@
 
             Vector2 exit = GetExitPosition();
             var boss = SpawnBossAt(new Vector3(exit.x, exit.y, 0f));
+            boss.Definition = bossDefinition;
             boss.InIntro = true;
             // walk down to wherever the 'B' marker sits in the arena template
             boss.IntroTargetY = Mathf.RoundToInt(bossSpawnPosition.y);

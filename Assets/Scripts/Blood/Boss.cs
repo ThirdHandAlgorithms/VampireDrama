@@ -45,6 +45,10 @@ namespace VampireDrama
 
         private const float DeathThreshold = 1f;
 
+        // Data-driven tuning (arena, dialogue, attack) for this encounter. Set
+        // before Start; the attack controller reads it from here too.
+        public BossDefinition Definition;
+
         private float lastMove;
         private float moveDelay = 1f;
         private float lastHealTime;
@@ -54,8 +58,19 @@ namespace VampireDrama
         {
             base.Start();
 
-            MaxBlood = 40f;
-            LitresOfBlood = 40f;
+            if (Definition != null)
+            {
+                MaxBlood = Definition.MaxBlood;
+                HealAmount = Definition.HealAmount;
+                HealInterval = Definition.HealInterval;
+                HuntChance = Definition.HuntChance;
+            }
+            else
+            {
+                MaxBlood = 40f;
+            }
+
+            LitresOfBlood = MaxBlood;
             Suspicion = 100;      // always aware of the vampire
             Intoxication = 0;
             Darkness = 0;

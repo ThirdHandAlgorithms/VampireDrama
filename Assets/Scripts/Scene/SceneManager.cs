@@ -295,12 +295,13 @@ public class SceneManager : LevelConstruction
             yield return null;
         }
 
-        // its line
+        // its line(s), from the chosen boss definition
         if (dialogUI == null) dialogUI = gameObject.AddComponent<BossDialogUI>();
-        dialogUI.Show("Vampire Hunter", new string[]
-        {
-            "Vampire! You cannot hide from me. Prepare to be put back into the ground!"
-        });
+        string speaker = (bossDefinition != null) ? bossDefinition.Name : "Boss";
+        string[] dialog = (bossDefinition != null && bossDefinition.Dialog != null)
+            ? bossDefinition.Dialog
+            : new string[] { "..." };
+        dialogUI.Show(speaker, dialog);
         while (!dialogUI.Done)
         {
             yield return null;

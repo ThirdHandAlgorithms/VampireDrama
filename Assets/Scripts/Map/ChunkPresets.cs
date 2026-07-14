@@ -89,36 +89,14 @@
             return All12x12Templates[idxTemplate];
         }
 
-        // A fixed 12x12 boss arena, built in code so it does not depend on
-        // Resources being present (keeps out-of-Unity map tooling working).
-        // It is appended as an extra band on top of the full-size city (it does
-        // not replace any city), so row 0 sits just below the level exit and
-        // row 11 opens onto the city the player climbs up from. 'B' marks the
-        // boss spawn.
-        //
-        // Enclosed on all four sides with a one-tile gap on the centre column
-        // (index 6): the top gap leads to the exit, the bottom gap is the
-        // entrance from the city. The centre column is clear the whole way so
-        // the map stays traversable to the exit.
-        public ConstructionChunk GetBossArenaTemplate()
+        // Builds a 12x12 boss-arena chunk from text rows (supplied by a
+        // BossDefinition). Built in code so it does not depend on Resources
+        // being present. The arena is appended on top of the full-size city, so
+        // row 0 sits just below the exit and the bottom row opens onto the city.
+        // Keep the centre column (index 6) clear so the map stays traversable.
+        public ConstructionChunk BuildArena(string[] rows)
         {
-            var arena = new string[]
-            {
-                "====== =====",
-                "|          |",
-                "|     B    |",
-                "|          |",
-                "|  =    =  |",
-                "|          |",
-                "|          |",
-                "|          |",
-                "|  =    =  |",
-                "|          |",
-                "|          |",
-                "====== =====",
-            };
-
-            return getFromTextPreset(arena);
+            return getFromTextPreset(rows);
         }
 
         private ConstructionChunk getFromTextPreset(string[] textpreset)

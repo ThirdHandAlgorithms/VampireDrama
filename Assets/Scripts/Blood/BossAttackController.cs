@@ -36,6 +36,17 @@ namespace VampireDrama
         {
             phaseStart = Time.time;
             boss = GetComponent<Boss>();
+
+            if (boss != null && boss.Definition != null)
+            {
+                var d = boss.Definition;
+                Damage = d.ArrowDamage;
+                AttackCooldown = d.AttackCooldown;
+                TelegraphDelay = d.TelegraphDelay;
+                LineLength = d.LineLength;
+                ProjectileSpeed = d.ProjectileSpeed;
+                MeleeRange = d.MeleeRange;
+            }
         }
 
         private void Update()
